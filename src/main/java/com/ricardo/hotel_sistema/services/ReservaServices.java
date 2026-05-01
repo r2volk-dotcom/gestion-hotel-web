@@ -69,4 +69,46 @@ public class ReservaServices {
 
         return null;
     }
+
+    //metodo para registrar check-in de una reserva
+    public Reserva hacerCheckIn(Long id) {
+
+        Optional<Reserva> reservaExistente = reservaRepository.findById(id);
+
+        if (reservaExistente.isPresent()) {
+            Reserva r = reservaExistente.get();
+            r.setEstado("CheckIn");
+
+            return reservaRepository.save(r);
+        }
+        return null;
+    }
+
+    //metodo para registrar check-out de una reserva
+    public Reserva hacerCheckOut(Long id) {
+
+        Optional<Reserva> reservaExistente = reservaRepository.findById(id);
+
+        if (reservaExistente.isPresent()) {
+            Reserva r = reservaExistente.get();
+            r.setEstado("CheckOut");
+
+            return reservaRepository.save(r);
+        }
+        return null;
+    }
+
+    //metodo para registrar check-out de una reserva
+    public Reserva cancelarReserva(Long id) {
+
+        Optional<Reserva> reservaExistente = reservaRepository.findById(id);
+
+        if (reservaExistente.isPresent()) {
+            Reserva r = reservaExistente.get();
+            r.setEstado("Cancelado");
+
+            return reservaRepository.save(r);
+        }
+        return null;
+    }
 }

@@ -28,6 +28,7 @@ public class ReservaController {
 
     @PostMapping
     public Reserva guardar(@RequestBody Reserva reserva) {
+        reserva.setEstado("RESERVADO");
         return reservaServices.guardar(reserva);
     }
 
@@ -39,5 +40,20 @@ public class ReservaController {
     @DeleteMapping("/{id}")
     public Reserva eliminar(@PathVariable Long id) {
         return reservaServices.eliminarReserva(id);
+    }
+
+    @PutMapping("/{id}/checkin")
+    public Reserva hacerCheckin(@PathVariable Long id) {
+        return reservaServices.hacerCheckIn(id);
+    }
+
+    @PutMapping("/{id}/checkout")
+    public Reserva hacerCheckOut(@PathVariable Long id) {
+        return reservaServices.hacerCheckOut(id);
+    }
+
+    @PutMapping("/{id}/cancelar")
+    public Reserva cancelarReserva(@PathVariable Long id) {
+        return reservaServices.cancelarReserva(id);
     }
 }
