@@ -1,0 +1,25 @@
+<h1>Sistema Hotelero</h1>
+
+<h2>Habitaciones</h2>
+
+<button (click)="cargarHabitaciones()">
+  Cargar habitaciones
+</button>
+
+<ul>
+  <li *ngFor="let habitacion of habitaciones">
+    {{ habitacion.id }} - {{ habitacion.tipo }} - S/ {{ habitacion.precio }}
+  </li>
+</ul>
+
+<h2>Clientes</h2>
+
+<button (click)="cargarClientes()">
+  Cargar clientes
+</button>
+
+<ul>
+  <li *ngFor="let cliente of clientes">
+    {{ cliente.nombre }} {{ cliente.apellido }}
+  </li>
+</ul>
