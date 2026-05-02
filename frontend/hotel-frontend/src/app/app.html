@@ -1,25 +1,38 @@
+
 <h1>Sistema Hotelero</h1>
 
 <h2>Habitaciones</h2>
-
-<button (click)="cargarHabitaciones()">
-  Cargar habitaciones
-</button>
-
+<!-- Botón que al hacer click ejecuta una función del TS -->
+<button (click)="cargarHabitaciones()">Cargar habitaciones</button>
+<!-- ul = Lista-->
 <ul>
+  <!--*ngFor = Repite este <li> por cada elemento dentro del arreglo "habitaciones" -->
   <li *ngFor="let habitacion of habitaciones">
+    <!-- {{ }} = interpolación, muestra datos del TS en el HTML -->
     {{ habitacion.id }} - {{ habitacion.tipo }} - S/ {{ habitacion.precio }}
   </li>
 </ul>
 
 <h2>Clientes</h2>
-
-<button (click)="cargarClientes()">
-  Cargar clientes
-</button>
-
+<button (click)="cargarClientes()">Cargar clientes</button>
 <ul>
+  <!-- Recorre lista de clientes -->
   <li *ngFor="let cliente of clientes">
+    <!-- Muestra nombre y apellido -->
     {{ cliente.nombre }} {{ cliente.apellido }}
+  </li>
+</ul>
+
+<h2>Reservas</h2>
+<button (click)="cargarReservas()">Cargar reservas</button>
+<ul>
+  <!-- Recorre lista de reservas -->
+  <li *ngFor="let reserva of reservas">
+     <!-- Muestra datos de la reserva -->
+     Reserva #{{ reserva.id }} -
+     Cliente ID: {{ reserva.clienteId }} -
+     Habitación ID: {{ reserva.habitacionId }} -
+     {{ reserva.fechaEntrada }} a {{ reserva.fechaSalida }} -
+     Estado: {{ reserva.estado }}
   </li>
 </ul>
