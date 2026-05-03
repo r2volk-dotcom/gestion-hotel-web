@@ -1,16 +1,15 @@
-import { Component} from '@angular/core'; // necesario de Angular
+import { Component } from '@angular/core';
+import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router'; // necesario para rutas
 import { Habitaciones } from './componentes/habitaciones/habitaciones';
 import { Clientes } from './componentes/clientes/clientes';
 import { Reservas } from './componentes/reservas/reservas';
 
-// define el componente principal
 @Component({
-  selector: 'app-root', // nombre del componente
-  imports: [Habitaciones, Clientes, Reservas],
-  templateUrl: './app.html', // html que usa
-  styleUrl: './app.css' // estilos
+  selector: 'app-root',
+  imports: [RouterOutlet, RouterLink, RouterLinkActive],
+  templateUrl: './app.html',
+  styleUrl: './app.css'
 })
-
 export class App {
-  // este componente solo muestra los componentes hijos
+
 }

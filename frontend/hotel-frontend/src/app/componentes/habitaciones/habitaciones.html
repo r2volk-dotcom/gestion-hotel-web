@@ -7,7 +7,17 @@
   <div class="form-section">
     <h3>Registrar habitacion</h3>
     <div class="form-grid">
-      <input type="text" placeholder="Tipo" [(ngModel)]="nuevaHabitacion.tipo">
+      <select [(ngModel)]="nuevaHabitacion.tipo">
+        <option value="" disabled selected>Escoge una habitación</option>
+        <option value="Individual">Individual</option>
+        <option value="Doble">Doble</option>
+        <option value="Twin">Twin</option>
+        <option value="Triple">Triple</option>
+        <option value="Cuadruple">Cuádruple</option>
+        <option value="Estandar">Estándar</option>
+        <option value="Deluxe">Deluxe</option>
+        <option value="Suite">Suite</option>
+      </select>
       <input type="number" placeholder="Precio" [(ngModel)]="nuevaHabitacion.precio">
       <div class="checkbox-field">
         <input type="checkbox" id="hab-disponible" [(ngModel)]="nuevaHabitacion.disponible">
@@ -16,7 +26,6 @@
     </div>
     <div class="form-actions">
       <button class="btn btn-primary" (click)="guardarHabitacion()">Guardar habitacion</button>
-      <button class="btn btn-secondary" (click)="cargarHabitaciones()">Cargar habitaciones</button>
     </div>
   </div>
 

@@ -98,9 +98,9 @@ export class Reservas implements OnInit {
       body: JSON.stringify(this.nuevaReserva)
     });
 
-    await respuesta.json();
+    const reservaGuardada = await respuesta.json();
 
-    await this.cargarReservas();
+    this.reservas.push(reservaGuardada);
 
     // limpia formulario
     this.nuevaReserva = {
