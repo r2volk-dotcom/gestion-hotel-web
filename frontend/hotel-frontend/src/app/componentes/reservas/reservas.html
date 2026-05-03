@@ -1,52 +1,80 @@
-
+<!-- seccion principal del componente Reservas -->
 <section class="section">
+  <!-- header de la seccion con titulo -->
   <div class="section-header">
     <h2>Reservas</h2>
   </div>
 
+  <!-- seccion del formulario para registrar reserva -->
   <div class="form-section">
+    <!-- titulo de la seccion del formulario -->
     <h3>Registrar reserva</h3>
 
+    <!-- grid de campos del formulario -->
     <div class="form-grid">
+      <!-- select de cliente con two-way binding al modelo -->
       <select [(ngModel)]="nuevaReserva.clienteId">
+        <!-- opcion por defecto con valor 0 (ningun cliente) -->
         <option [ngValue]="0">Seleccione cliente</option>
+        <!-- repite una opcion por cada cliente en el array -->
         <option *ngFor="let cliente of clientes" [ngValue]="cliente.id">
           {{ cliente.nombre }} {{ cliente.apellido }}
         </option>
       </select>
 
+      <!-- select de habitacion con two-way binding al modelo -->
       <select [(ngModel)]="nuevaReserva.habitacionId">
+        <!-- opcion por defecto con valor 0 (ninguna habitacion) -->
         <option [ngValue]="0">Seleccione habitacion</option>
+        <!-- repite una opcion por cada habitacion en el array -->
         <option *ngFor="let habitacion of habitaciones" [ngValue]="habitacion.id">
           {{ habitacion.tipo }} - S/ {{ habitacion.precio }}
         </option>
       </select>
 
+      <!-- input de fecha de entrada con two-way binding -->
       <input type="date" [(ngModel)]="nuevaReserva.fechaEntrada">
+      <!-- input de fecha de salida con two-way binding -->
       <input type="date" [(ngModel)]="nuevaReserva.fechaSalida">
     </div>
 
+    <!-- contenedor de botones de accion -->
     <div class="form-actions">
+      <!-- boton que ejecuta guardarReserva al hacer click -->
       <button class="btn btn-primary" (click)="guardarReserva()">Guardar reserva</button>
     </div>
   </div>
 
+  <!-- seccion de la lista de reservas -->
   <div class="list-section">
+    <!-- header de la lista con titulo -->
     <div class="list-header">
       <span>Lista de reservas</span>
     </div>
 
+    <!-- lista de reservas: se muestra si hay reservas, sino muestra template noRes -->
     <ul class="list" *ngIf="reservas.length > 0; else noRes">
+      <!-- repite un item por cada reserva en el array -->
       <li class="list-item" *ngFor="let reserva of reservas">
+        <!-- ID de la reserva con clase label (negrita) -->
         <span class="label">#{{ reserva.id }}</span>
+        <!-- separador vertical -->
         <span class="divider">|</span>
+        <!-- nombre del cliente obtenido por ID -->
         Cliente: {{ obtenerNombreCliente(reserva.clienteId) }}
+        <!-- separador vertical -->
         <span class="divider">|</span>
+        <!-- descripcion de la habitacion obtenida por ID -->
         Habitacion: {{ obtenerTextoHabitacion(reserva.habitacionId) }}
+        <!-- separador vertical -->
         <span class="divider">|</span>
+        <!-- fechas de entrada y salida -->
         {{ reserva.fechaEntrada }} a {{ reserva.fechaSalida }}
+        <!-- separador vertical -->
         <span class="divider">|</span>
+        <!-- texto de estado -->
         Estado:
+        <!-- badge con clase dinamica segun el estado de la reserva -->
         <span [ngClass]="{
           'badge badge-reservado': reserva.estado === 'RESERVADO',
           'badge badge-checkin': reserva.estado === 'CHECK_IN',
@@ -58,6 +86,7 @@
       </li>
     </ul>
 
+    <!-- template que se muestra cuando no hay reservas -->
     <ng-template #noRes>
       <div class="empty-list">No hay reservas registradas</div>
     </ng-template>

@@ -1,59 +1,71 @@
-import { Component, OnInit,ChangeDetectorRef } from '@angular/core'; // angular
-import { CommonModule } from '@angular/common'; // ngFor, ngIf
-import { FormsModule } from '@angular/forms'; // ngModel
-import { Cliente } from '../../models'; // interface
+// importa Component, OnInit (ciclo de vida) y ChangeDetectorRef de Angular
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+// importa CommonModule para usar directivas como *ngIf y *ngFor
+import { CommonModule } from '@angular/common';
+// importa FormsModule para usar [(ngModel)] (two-way binding)
+import { FormsModule } from '@angular/forms';
+// importa la interface Cliente desde el archivo de modelos
+import { Cliente } from '../../models';
 
+// decorador que define el componente Clientes
 @Component({
-  selector: 'app-clientes', // etiqueta <app-clientes>
-  imports: [CommonModule, FormsModule],
-  templateUrl: './clientes.html',
-  styleUrl: './clientes.css'
+  selector: 'app-clientes',          // etiqueta HTML: <app-clientes>
+  imports: [CommonModule, FormsModule], // modulos necesarios
+  templateUrl: './clientes.html',    // archivo de plantilla HTML
+  styleUrl: './clientes.css'         // archivo de estilos CSS
 })
+// clase del componente Clientes que implementa OnInit
 export class Clientes implements OnInit {
+  // constructor que inyecta ChangeDetectorRef para deteccion manual de cambios
   constructor(private cdr: ChangeDetectorRef) {}
 
-  // lista de clientes
+  // array que almacena la lista de clientes cargados
   clientes: Cliente[] = [];
 
-  // objeto del formulario
+  // objeto que representa el formulario de nuevo cliente
   nuevoCliente: Cliente = {
-    nombre: '',
-    apellido: '',
-    dni: '',
-    telefono: '',
-    correo: ''
+    nombre: '',                      // campo nombre vacio
+    apellido: '',                    // campo apellido vacio
+    dni: '',                         // campo DNI vacio
+    telefono: '',                    // campo telefono vacio
+    correo: ''                       // campo correo vacio
   };
 
-  // se ejecuta al cargar el componente
+  // metodo del ciclo de vida: se ejecuta al iniciar el componente
   async ngOnInit() {
-    await this.cargarClientes();
+    await this.cargarClientes();     // carga los clientes desde el backend
   }
 
-  // pide clientes al backend
+  // metodo async que obtiene la lista de clientes del backend
   async cargarClientes() {
+    // peticion GET al endpoint de clientes
     const respuesta = await fetch('http://localhost:8080/clientes');
+    // convierte la respuesta a JSON
     const datos = await respuesta.json();
+    // asigna los datos al array de clientes
     this.clientes = datos;
+    // fuerza la deteccion de cambios de Angular
     this.cdr.detectChanges();
   }
 
-  // guarda cliente en backend
+  // metodo async que guarda un nuevo cliente en el backend
   async guardarCliente() {
-
-    // envia los datos al backend
+    // peticion POST al endpoint de clientes
     const respuesta = await fetch('http://localhost:8080/clientes', {
-      method: 'POST',
+      method: 'POST',                // metodo HTTP POST
       headers: {
-        'Content-Type': 'application/json' // formato json
+        'Content-Type': 'application/json' // cabecera JSON
       },
-      body: JSON.stringify(this.nuevoCliente)  // convierte objeto a json
+      body: JSON.stringify(this.nuevoCliente) // cuerpo con datos del cliente
     });
 
-    const clienteGuardado = await respuesta.json(); // respuesta del backend
+    // convierte la respuesta a JSON (cliente guardado)
+    const clienteGuardado = await respuesta.json();
 
-    this.clientes.push(clienteGuardado); // lo agrega a la lista
+    // agrega el nuevo cliente al array local
+    this.clientes.push(clienteGuardado);
 
-    // limpia formulario
+    // reinicia el formulario con valores vacios
     this.nuevoCliente = {
       nombre: '',
       apellido: '',
@@ -61,6 +73,7 @@ export class Clientes implements OnInit {
       telefono: '',
       correo: ''
     };
+    // fuerza la deteccion de cambios de Angular
     this.cdr.detectChanges();
   }
 }

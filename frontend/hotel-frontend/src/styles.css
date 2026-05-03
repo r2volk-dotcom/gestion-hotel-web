@@ -1,310 +1,296 @@
-/* fuente principal */
+/* importa la fuente Geist desde Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap');
 
-/* variables globales de color y tamaño */
+/* ── VARIABLES CSS GLOBALES ──────────────────────────── */
 :root {
-  --font: 'Geist', 'Segoe UI', system-ui, sans-serif;
-  --bg: #f9fafb;           /* fondo general */
-  --surface: #ffffff;      /* fondo de cards y sidebar */
-  --border: #e5e7eb;       /* bordes normales */
-  --border-sm: #f3f4f6;    /* bordes sutiles */
-  --text-primary: #111827; /* texto principal */
-  --text-secondary: #6b7280; /* texto secundario */
-  --text-muted: #9ca3af;   /* texto apagado */
-  --sidebar-w: 220px;      /* ancho del sidebar */
+  --font: 'Geist', 'Segoe UI', system-ui, sans-serif; /* fuente principal */
+  --bg: #f9fafb;           /* color de fondo general de la app */
+  --surface: #ffffff;      /* color de fondo de cards y paneles */
+  --border: #e5e7eb;       /* color de bordes estandar */
+  --border-sm: #f3f4f6;    /* color de bordes mas sutiles */
+  --text-primary: #111827; /* color de texto principal (oscuro) */
+  --text-secondary: #6b7280; /* color de texto secundario (gris) */
+  --text-muted: #9ca3af;   /* color de texto apagado (gris claro) */
+  --sidebar-w: 240px;      /* ancho del sidebar */
   --topbar-h: 60px;        /* alto del topbar */
-  --radius: 8px;
-  --radius-lg: 10px;
+  --radius: 8px;           /* radio de bordes pequeno */
+  --radius-lg: 10px;       /* radio de bordes grande */
 }
 
-/* reset base */
+/* ── RESET GLOBAL ────────────────────────────────────── */
+/* box-sizing border-box para todos los elementos */
 *, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+  box-sizing: border-box;   /* el padding y border se incluyen en el width */
+  margin: 0;                /* elimina margenes por defecto */
+  padding: 0;               /* elimina paddings por defecto */
 }
 
+/* estilos del body */
 body {
-  font-family: var(--font);
-  background: var(--bg);
-  color: var(--text-primary);
-  font-size: 14px;
-  line-height: 1.5;
-  display: flex;       /* sidebar y main lado a lado */
-  min-height: 100vh;
+  font-family: var(--font); /* aplica la fuente principal */
+  background: var(--bg);    /* aplica el fondo gris claro */
+  color: var(--text-primary); /* aplica el color de texto oscuro */
+  font-size: 14px;          /* tamaño base de fuente */
+  line-height: 1.5;         /* altura de linea estandar */
+  min-height: 100vh;        /* altura minima igual a la ventana */
 }
 
-button { font-family: var(--font); cursor: pointer; border: none; background: none; }
-a { text-decoration: none; color: inherit; }
-input, select, textarea { font-family: var(--font); }
-
-/* ── SIDEBAR ─────────────────────────────────────────── */
-
-.sidebar {
-  width: var(--sidebar-w);
-  min-height: 100vh;
-  background: var(--surface);
-  border-right: 1px solid var(--border); /* línea separadora */
-  display: flex;
-  flex-direction: column;
-  position: fixed;   /* fijo al scroll */
-  left: 0; top: 0; bottom: 0;
-  z-index: 100;
+/* botones: sin borde, fuente heredada, cursor pointer */
+button {
+  font-family: var(--font); /* misma fuente que el body */
+  cursor: pointer;          /* cursor de mano al pasar */
+  border: none;             /* sin borde por defecto */
+  background: none;         /* sin fondo por defecto */
 }
 
-.sidebar-header {
-  height: var(--topbar-h);
-  padding: 0 16px;
-  display: flex;
-  align-items: center;
-  border-bottom: 1px solid var(--border);
+/* links: sin subrayado, heredan color del padre */
+a {
+  text-decoration: none;    /* sin subrayado */
+  color: inherit;           /* hereda el color del elemento padre */
 }
 
-.sidebar-logo { display: flex; align-items: center; gap: 9px; }
-
-.logo-icon {
-  width: 28px; height: 28px;
-  background: var(--text-primary); /* fondo negro con ícono blanco */
-  color: white;
-  border-radius: 6px;
-  display: flex; align-items: center; justify-content: center;
+/* inputs y selects: misma fuente que el body */
+input, select, textarea {
+  font-family: var(--font); /* misma fuente que el body */
 }
 
-.logo-text { font-size: 14px; font-weight: 600; color: var(--text-primary); }
-
-.sidebar-nav {
-  flex: 1;           /* ocupa todo el espacio entre header y footer */
-  padding: 12px 10px;
-  overflow-y: auto;
-}
-
-.nav-label {
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
-  padding: 0 8px;
-  margin-bottom: 4px;
-}
-
-.nav-item {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  padding: 7px 10px;
-  border-radius: var(--radius);
-  font-size: 13.5px;
-  color: var(--text-secondary);
-  width: 100%;
-  transition: background 0.12s, color 0.12s;
-  margin-bottom: 1px;
-}
-
-.nav-item:hover { background: var(--bg); color: var(--text-primary); }
-
-.nav-item.active {
-  background: #ebebeb;         /* gris claro para el item activo */
-  color: var(--text-primary);
-  font-weight: 600;
-}
-
-.nav-item svg { flex-shrink: 0; opacity: 0.7; }
-.nav-item.active svg { opacity: 1; }
-
-.sidebar-footer { padding: 12px 10px; border-top: 1px solid var(--border); }
-
-.sidebar-user {
-  display: flex; align-items: center; gap: 9px;
-  padding: 8px 10px;
-  border-radius: var(--radius);
-}
-
-.user-avatar {
-  width: 30px; height: 30px;
-  background: var(--text-primary); /* círculo oscuro con iniciales */
-  color: white;
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 11px; font-weight: 600;
-  flex-shrink: 0;
-}
-
-.user-name { font-size: 13px; font-weight: 500; color: var(--text-primary); line-height: 1.2; }
-.user-role { font-size: 11.5px; color: var(--text-muted); line-height: 1.2; }
-
-/* ── LAYOUT PRINCIPAL ────────────────────────────────── */
-
-.main-wrapper {
-  margin-left: var(--sidebar-w); /* deja espacio para el sidebar */
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-.topbar {
-  height: var(--topbar-h);
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  padding: 0 28px;
-  position: sticky; top: 0; /* se queda fijo al hacer scroll */
-  z-index: 50;
-}
-
-.page-title { font-size: 15px; font-weight: 600; color: var(--text-primary); }
-.page-subtitle { font-size: 12px; color: var(--text-muted); }
-
-.page-content { padding: 24px 28px; flex: 1; }
-
-/* ── SECCIONES (habitaciones, clientes, reservas) ────── */
-
+/* ── SECCIONES (cards principales) ───────────────────── */
 .section {
-  background: var(--surface);
-  border: 1px solid var(--border);
+  background: var(--surface); /* fondo blanco de la card */
+  border: 1px solid var(--border); /* borde sutil */
   border-radius: var(--radius-lg); /* esquinas redondeadas */
-  overflow: hidden;
-  margin-bottom: 20px;
+  overflow: hidden;          /* oculta contenido que se salga */
+  margin-bottom: 20px;       /* espacio debajo de cada seccion */
 }
 
+/* header de la seccion (titulo) */
 .section-header {
-  padding: 14px 18px;
-  border-bottom: 1px solid var(--border-sm);
+  padding: 16px 20px;        /* espacio interno */
+  border-bottom: 1px solid var(--border-sm); /* linea separadora */
 }
 
+/* titulo de la seccion */
 .section-header h2 {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text-primary);
+  font-size: 15px;           /* tamaño del titulo */
+  font-weight: 600;          /* peso semibold */
+  color: var(--text-primary); /* color oscuro */
 }
 
+/* seccion de formulario dentro de la card */
 .form-section {
-  padding: 16px 18px;
-  border-bottom: 1px solid var(--border-sm);
+  padding: 18px 20px;        /* espacio interno */
+  border-bottom: 1px solid var(--border-sm); /* linea separadora */
 }
 
+/* titulo de la seccion de formulario */
 .form-section h3 {
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 12px;
+  font-size: 12px;           /* tamaño pequeno */
+  font-weight: 500;          /* peso medium */
+  color: var(--text-muted);  /* color gris claro */
+  text-transform: uppercase; /* todo en mayusculas */
+  letter-spacing: 0.05em;    /* espacio entre letras */
+  margin-bottom: 14px;       /* espacio debajo del titulo */
 }
 
+/* grid de formulario: campos en columnas responsivas */
 .form-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 8px;
-  margin-bottom: 12px;
+  display: grid;             /* layout de grid */
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* columnas automaticas */
+  gap: 12px;                 /* espacio entre campos */
+  margin-bottom: 14px;       /* espacio debajo del grid */
 }
 
-.form-grid .checkbox-field { display: flex; align-items: center; gap: 8px; }
-.form-grid .checkbox-field label { font-size: 13px; font-weight: 500; cursor: pointer; }
-.form-grid .checkbox-field input[type="checkbox"] { width: auto; accent-color: var(--text-primary); }
+/* campo de checkbox en el formulario */
+.form-grid .checkbox-field {
+  display: flex;             /* layout flexible */
+  align-items: center;       /* centrado vertical */
+  gap: 8px;                  /* espacio entre checkbox y label */
+}
 
-/* inputs y selects con estilo moderno */
+/* label del checkbox */
+.form-grid .checkbox-field label {
+  font-size: 13px;           /* tamaño de fuente */
+  font-weight: 500;          /* peso medium */
+  cursor: pointer;           /* cursor de mano */
+}
+
+/* input de checkbox */
+.form-grid .checkbox-field input[type="checkbox"] {
+  width: auto;               /* ancho automatico */
+  accent-color: var(--text-primary); /* color del checkbox */
+}
+
+/* ── INPUTS Y SELECTS ────────────────────────────────── */
+/* estilos para inputs de texto, numero, fecha, email y selects */
 input[type="text"],
 input[type="number"],
 input[type="date"],
 input[type="email"],
 select {
-  width: 100%;
-  padding: 8px 12px;
-  border: 1px solid var(--border);
-  background: var(--bg);
-  font-size: 13px;
-  color: var(--text-primary);
-  border-radius: var(--radius);
-  transition: border-color 0.15s, background 0.15s;
+  width: 100%;               /* ancho completo del contenedor */
+  padding: 9px 12px;         /* espacio interno */
+  border: 1px solid var(--border); /* borde sutil */
+  background: var(--bg);     /* fondo gris claro */
+  font-size: 13px;           /* tamaño de fuente */
+  color: var(--text-primary); /* color oscuro */
+  border-radius: var(--radius); /* esquinas redondeadas */
+  transition: border-color 0.15s, background 0.15s; /* animacion suave */
 }
 
+/* estado focus de inputs y selects */
 input:focus, select:focus {
-  outline: none;
+  outline: none;             /* elimina outline por defecto */
   border-color: var(--text-primary); /* borde oscuro al enfocar */
-  background: var(--surface);
+  background: var(--surface); /* fondo blanco al enfocar */
 }
 
-.form-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+/* ── ACCIONES DEL FORMULARIO (botones) ───────────────── */
+.form-actions {
+  display: flex;             /* layout flexible */
+  gap: 8px;                  /* espacio entre botones */
+  flex-wrap: wrap;           /* permite saltar de linea si no caben */
+}
 
-/* botones */
+/* ── BOTONES ─────────────────────────────────────────── */
+/* clase base para todos los botones */
 .btn {
-  padding: 8px 16px;
-  font-size: 13px;
-  font-weight: 500;
-  border-radius: var(--radius);
-  cursor: pointer;
-  transition: background 0.15s;
+  padding: 9px 18px;         /* espacio interno */
+  font-size: 13px;           /* tamaño de fuente */
+  font-weight: 500;          /* peso medium */
+  border-radius: var(--radius); /* esquinas redondeadas */
+  cursor: pointer;           /* cursor de mano */
+  transition: background 0.15s; /* animacion de fondo */
 }
 
+/* boton principal (oscuro) */
 .btn-primary {
-  background: var(--text-primary); /* botón principal oscuro */
-  color: white;
-  border: 1px solid var(--text-primary);
+  background: var(--text-primary); /* fondo oscuro */
+  color: white;              /* texto blanco */
+  border: 1px solid var(--text-primary); /* borde oscuro */
 }
 
-.btn-primary:hover { background: #333; }
+/* hover del boton principal */
+.btn-primary:hover {
+  background: #374151;       /* fondo gris oscuro al pasar el mouse */
+}
 
+/* boton secundario (claro con borde) */
 .btn-secondary {
-  background: var(--surface);
-  color: var(--text-primary);
-  border: 1px solid var(--border);
+  background: var(--surface); /* fondo blanco */
+  color: var(--text-primary); /* texto oscuro */
+  border: 1px solid var(--border); /* borde sutil */
 }
 
-.btn-secondary:hover { background: var(--bg); }
+/* hover del boton secundario */
+.btn-secondary:hover {
+  background: var(--bg);     /* fondo gris claro al pasar el mouse */
+}
 
-/* lista de items */
-.list-section { padding: 0; }
+/* ── LISTA DE ITEMS ──────────────────────────────────── */
+/* seccion de lista sin padding */
+.list-section {
+  padding: 0;                /* sin padding */
+}
 
+/* header de la lista */
 .list-section .list-header {
-  padding: 10px 18px;
-  background: var(--bg);
-  border-bottom: 1px solid var(--border-sm);
+  padding: 12px 20px;        /* espacio interno */
+  background: var(--bg);     /* fondo gris claro */
+  border-bottom: 1px solid var(--border-sm); /* linea separadora */
 }
 
+/* texto del header de la lista */
 .list-section .list-header span {
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--text-muted);
+  font-size: 11px;           /* tamaño pequeno */
+  font-weight: 600;          /* peso semibold */
+  text-transform: uppercase; /* mayusculas */
+  letter-spacing: 0.05em;    /* espacio entre letras */
+  color: var(--text-muted);  /* color gris claro */
 }
 
-.list { list-style: none; max-height: 300px; overflow-y: auto; }
+/* contenedor de la lista */
+.list {
+  list-style: none;          /* sin viñetas */
+  max-height: 400px;         /* altura maxima con scroll */
+  overflow-y: auto;          /* scroll vertical si excede */
+}
 
+/* item individual de la lista */
 .list-item {
-  padding: 10px 18px;
-  border-bottom: 1px solid var(--border-sm);
-  font-size: 13px;
-  font-weight: 400;
-  color: var(--text-secondary);
-  transition: background 0.12s;
+  padding: 12px 20px;        /* espacio interno */
+  border-bottom: 1px solid var(--border-sm); /* linea separadora */
+  font-size: 13px;           /* tamaño de fuente */
+  font-weight: 400;          /* peso normal */
+  color: var(--text-secondary); /* color gris */
+  transition: background 0.12s; /* animacion de fondo */
+  display: flex;             /* layout flexible */
+  align-items: center;       /* centrado vertical */
+  flex-wrap: wrap;           /* permite saltos de linea */
+  gap: 4px;                  /* espacio entre elementos */
 }
 
-.list-item:last-child { border-bottom: none; }
-.list-item:hover { background: var(--bg); }
-.list-item .label { font-weight: 600; color: var(--text-primary); }
-.list-item .divider { color: var(--border); margin: 0 6px; }
+/* ultimo item sin borde inferior */
+.list-item:last-child {
+  border-bottom: none;       /* sin borde */
+}
 
-/* badges de estado */
+/* hover del item de la lista */
+.list-item:hover {
+  background: var(--bg);     /* fondo gris claro */
+}
+
+/* etiqueta (label) dentro del item */
+.list-item .label {
+  font-weight: 600;          /* peso semibold */
+  color: var(--text-primary); /* color oscuro */
+}
+
+/* separador vertical entre elementos */
+.list-item .divider {
+  color: var(--border);      /* color del borde */
+  margin: 0 6px;             /* margen horizontal */
+}
+
+/* ── BADGES DE ESTADO ────────────────────────────────── */
+/* clase base para badges */
 .badge {
-  display: inline-block;
-  padding: 2px 8px;
-  font-size: 11px;
-  font-weight: 500;
-  border-radius: 4px;
+  display: inline-block;     /* inline pero con dimensiones */
+  padding: 3px 10px;         /* espacio interno */
+  font-size: 11px;           /* tamaño pequeno */
+  font-weight: 500;          /* peso medium */
+  border-radius: 6px;        /* esquinas redondeadas */
+  line-height: 1.4;          /* altura de linea */
 }
 
-.badge-reservado { background: var(--text-primary); color: white; }
-.badge-checkin   { background: #4b5563; color: white; }  /* gris medio */
-.badge-checkout  { background: var(--border); color: var(--text-primary); }
-.badge-default   { background: var(--bg); color: var(--text-secondary); border: 1px solid var(--border); }
+/* badge para estado RESERVADO */
+.badge-reservado {
+  background: #111827;       /* fondo oscuro */
+  color: white;              /* texto blanco */
+}
 
+/* badge para estado CHECK_IN */
+.badge-checkin {
+  background: #4b5563;       /* fondo gris medio */
+  color: white;              /* texto blanco */
+}
+
+/* badge para estado CHECK_OUT */
+.badge-checkout {
+  background: var(--border); /* fondo gris claro */
+  color: var(--text-primary); /* texto oscuro */
+}
+
+/* badge por defecto para otros estados */
+.badge-default {
+  background: var(--bg);     /* fondo gris claro */
+  color: var(--text-secondary); /* texto gris */
+  border: 1px solid var(--border); /* borde sutil */
+}
+
+/* ── ESTADO VACIO (lista vacia) ──────────────────────── */
 .empty-list {
-  padding: 24px 18px;
-  text-align: center;
-  color: var(--text-muted);
-  font-size: 13px;
+  padding: 32px 20px;        /* espacio interno generoso */
+  text-align: center;        /* texto centrado */
+  color: var(--text-muted);  /* color gris claro */
+  font-size: 13px;           /* tamaño de fuente */
 }

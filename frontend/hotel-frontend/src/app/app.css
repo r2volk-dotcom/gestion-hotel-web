@@ -1,0 +1,238 @@
+/* ── CONTENEDOR PRINCIPAL DEL APP ────────────────────── */
+/* Layout: sidebar fijo a la izquierda + contenido derecho */
+:host {
+  display: flex;            /* pone sidebar y main lado a lado */
+  min-height: 100vh;        /* ocupa toda la altura de la ventana */
+  width: 100%;              /* ancho completo disponible */
+}
+
+/* ── SIDEBAR ─────────────────────────────────────────── */
+.sidebar {
+  width: 240px;             /* ancho fijo del sidebar */
+  min-height: 100vh;        /* altura minima toda la pantalla */
+  background: #ffffff;      /* fondo blanco */
+  border-right: 1px solid #e5e7eb; /* borde derecho sutil */
+  display: flex;            /* layout interno flexible */
+  flex-direction: column;   /* elementos apilados verticalmente */
+  position: fixed;          /* posicion fija, no se mueve con scroll */
+  left: 0;                  /* pegado al borde izquierdo */
+  top: 0;                   /* pegado al borde superior */
+  bottom: 0;                /* pegado al borde inferior */
+  z-index: 100;             /* por encima de otros elementos */
+  overflow: hidden;         /* evita desbordamiento del contenedor */
+}
+
+/* ── HEADER DEL SIDEBAR (logo) ──────────────────────── */
+.sidebar-header {
+  height: 60px;             /* altura fija del header */
+  padding: 0 18px;          /* padding horizontal */
+  display: flex;            /* layout flexible */
+  align-items: center;      /* centra verticalmente */
+  border-bottom: 1px solid #e5e7eb; /* linea separadora inferior */
+  flex-shrink: 0;           /* no se encoge */
+}
+
+.sidebar-logo {
+  display: flex;            /* logo e icono lado a lado */
+  align-items: center;      /* alineacion vertical centrada */
+  gap: 10px;                /* espacio entre icono y texto */
+}
+
+.logo-icon {
+  width: 32px;              /* ancho del cuadrado del icono */
+  height: 32px;             /* alto del cuadrado del icono */
+  background: #111827;      /* fondo oscuro */
+  color: #ffffff;           /* icono blanco */
+  border-radius: 8px;       /* esquinas redondeadas */
+  display: flex;            /* centra el SVG dentro */
+  align-items: center;      /* centrado vertical */
+  justify-content: center;  /* centrado horizontal */
+}
+
+.logo-text {
+  font-size: 15px;          /* tamaño del texto del logo */
+  font-weight: 600;         /* peso de fuente semibold */
+  color: #111827;           /* color oscuro */
+  letter-spacing: -0.3px;   /* letras un poco mas juntas */
+}
+
+/* ── NAVEGACION DEL SIDEBAR ─────────────────────────── */
+.sidebar-nav {
+  flex: 1;                  /* ocupa todo el espacio disponible */
+  padding: 14px 12px;       /* espacio interno */
+  overflow-y: auto;         /* scroll vertical si hay muchos items */
+  overflow-x: hidden;       /* sin scroll horizontal */
+}
+
+/* scrollbar personalizado para navegacion */
+.sidebar-nav::-webkit-scrollbar {
+  width: 4px;               /* ancho del scrollbar */
+}
+
+.sidebar-nav::-webkit-scrollbar-track {
+  background: transparent;  /* fondo transparente */
+}
+
+.sidebar-nav::-webkit-scrollbar-thumb {
+  background: #d1d5db;      /* color del thumb del scrollbar */
+  border-radius: 4px;       /* thumb redondeado */
+}
+
+/* ── ETIQUETAS DE SECCION (Gestion, Otros) ───────────── */
+.nav-label {
+  font-size: 11px;          /* texto pequeno */
+  font-weight: 600;         /* semibold */
+  color: #9ca3af;           /* gris claro */
+  text-transform: uppercase; /* todo en mayusculas */
+  letter-spacing: 0.5px;    /* espacio entre letras */
+  padding: 0 8px;           /* padding horizontal */
+  margin-bottom: 6px;       /* espacio abajo */
+  margin-top: 16px;         /* espacio arriba para separar secciones */
+}
+
+.nav-label:first-child {
+  margin-top: 0;            /* sin margen superior el primer label */
+}
+
+/* ── ITEMS DE NAVEGACION ────────────────────────────── */
+.nav-item {
+  display: flex;            /* icono y texto lado a lado */
+  align-items: center;      /* centrado vertical */
+  gap: 10px;                /* espacio entre icono y texto */
+  padding: 8px 10px;        /* espacio interno del item */
+  border-radius: 8px;       /* esquinas redondeadas */
+  font-size: 13.5px;        /* tamaño de fuente */
+  color: #6b7280;           /* color gris secundario */
+  width: 100%;              /* ancho completo */
+  transition: all 0.15s ease; /* animacion suave para hover/active */
+  margin-bottom: 2px;       /* pequeño espacio entre items */
+  cursor: pointer;          /* cursor de mano al pasar */
+  text-decoration: none;    /* sin subrayado */
+}
+
+.nav-item:hover {
+  background: #f3f4f6;      /* fondo gris claro al pasar el mouse */
+  color: #111827;           /* texto oscuro al pasar el mouse */
+}
+
+.nav-item.active {
+  background: #f3f4f6;      /* fondo del item activo */
+  color: #111827;           /* texto oscuro del item activo */
+  font-weight: 600;         /* texto mas grueso */
+}
+
+.nav-item svg {
+  flex-shrink: 0;           /* el icono no se encoge */
+  opacity: 0.7;             /* icono semi transparente */
+}
+
+.nav-item.active svg {
+  opacity: 1;               /* icono completamente visible cuando activo */
+}
+
+/* ── FOOTER DEL SIDEBAR (usuario) ───────────────────── */
+.sidebar-footer {
+  padding: 12px 12px;       /* espacio interno del footer */
+  border-top: 1px solid #e5e7eb; /* linea separadora superior */
+  flex-shrink: 0;           /* no se encoge */
+}
+
+.sidebar-user {
+  display: flex;            /* avatar e info lado a lado */
+  align-items: center;      /* centrado vertical */
+  gap: 10px;                /* espacio entre avatar e info */
+  padding: 8px 10px;        /* espacio interno */
+  border-radius: 8px;       /* esquinas redondeadas */
+  transition: background 0.15s; /* animacion al pasar el mouse */
+}
+
+.sidebar-user:hover {
+  background: #f9fafb;      /* fondo sutil al pasar el mouse */
+}
+
+.user-avatar {
+  width: 32px;              /* ancho del avatar circular */
+  height: 32px;             /* alto del avatar circular */
+  background: #111827;      /* fondo oscuro */
+  color: #ffffff;           /* texto blanco */
+  border-radius: 50%;       /* circulo perfecto */
+  display: flex;            /* centra las iniciales */
+  align-items: center;      /* centrado vertical */
+  justify-content: center;  /* centrado horizontal */
+  font-size: 11px;          /* tamaño de las iniciales */
+  font-weight: 600;         /* peso semibold */
+  flex-shrink: 0;           /* no se encoge */
+}
+
+.user-info {
+  display: flex;            /* nombre y rol apilados */
+  flex-direction: column;   /* uno encima del otro */
+  gap: 2px;                 /* espacio entre nombre y rol */
+  min-width: 0;             /* permite truncamiento de texto */
+}
+
+.user-name {
+  font-size: 13px;          /* tamaño del nombre */
+  font-weight: 500;         /* peso medium */
+  color: #111827;           /* color oscuro */
+  line-height: 1.2;         /* altura de linea compacta */
+  white-space: nowrap;      /* sin saltos de linea */
+  overflow: hidden;         /* oculta texto que sobra */
+  text-overflow: ellipsis;  /* muestra ... si el texto es largo */
+}
+
+.user-role {
+  font-size: 11.5px;        /* tamaño del rol */
+  color: #9ca3af;           /* color gris claro */
+  line-height: 1.2;         /* altura de linea compacta */
+}
+
+/* ── CONTENEDOR PRINCIPAL (derecha del sidebar) ─────── */
+.main-wrapper {
+  margin-left: 240px;       /* deja espacio para el sidebar fijo */
+  flex: 1;                  /* ocupa todo el espacio restante */
+  display: flex;            /* layout flexible */
+  flex-direction: column;   /* topbar arriba, contenido abajo */
+  min-height: 100vh;        /* altura minima toda la pantalla */
+  background: #f9fafb;      /* fondo gris muy claro */
+}
+
+/* ── TOPBAR (barra superior) ────────────────────────── */
+.topbar {
+  height: 60px;             /* altura fija de la topbar */
+  background: #ffffff;      /* fondo blanco */
+  border-bottom: 1px solid #e5e7eb; /* borde inferior sutil */
+  display: flex;            /* layout flexible */
+  align-items: center;      /* centrado vertical */
+  padding: 0 24px;          /* padding horizontal */
+  position: sticky;         /* se queda fija al hacer scroll */
+  top: 0;                   /* pegada arriba */
+  z-index: 50;              /* por encima del contenido */
+  flex-shrink: 0;           /* no se encoge */
+}
+
+.topbar-left {
+  display: flex;            /* titulo y subtitulo apilados */
+  flex-direction: column;   /* uno encima del otro */
+  gap: 2px;                 /* espacio entre titulo y subtitulo */
+}
+
+.page-title {
+  font-size: 16px;          /* tamaño del titulo */
+  font-weight: 600;         /* peso semibold */
+  color: #111827;           /* color oscuro */
+  line-height: 1.2;         /* altura de linea compacta */
+}
+
+.page-subtitle {
+  font-size: 12.5px;        /* tamaño del subtitulo */
+  color: #9ca3af;           /* color gris claro */
+  line-height: 1.2;         /* altura de linea compacta */
+}
+
+/* ── CONTENIDO PRINCIPAL DE LA PAGINA ───────────────── */
+.page-content {
+  padding: 24px;            /* espacio interno general */
+  flex: 1;                  /* ocupa todo el espacio restante */
+  overflow-y: auto;         /* scroll vertical si es necesario */
+}

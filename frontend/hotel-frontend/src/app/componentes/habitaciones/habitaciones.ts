@@ -1,61 +1,75 @@
-import { Component, OnInit,ChangeDetectorRef } from '@angular/core'; // angular
-import { CommonModule } from '@angular/common'; // ngFor
-import { FormsModule } from '@angular/forms'; // ngModel
-import { Habitacion } from '../../models'; // interface
+// importa Component, OnInit (ciclo de vida) y ChangeDetectorRef de Angular
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+// importa CommonModule para usar directivas como *ngIf y *ngFor
+import { CommonModule } from '@angular/common';
+// importa FormsModule para usar [(ngModel)] (two-way binding)
+import { FormsModule } from '@angular/forms';
+// importa la interface Habitacion desde el archivo de modelos
+import { Habitacion } from '../../models';
 
+// decorador que define el componente Habitaciones
 @Component({
-  selector: 'app-habitaciones', // etiqueta <app-habitaciones>
-  imports: [CommonModule, FormsModule],
-  templateUrl: './habitaciones.html',
-  styleUrl: './habitaciones.css'
+  selector: 'app-habitaciones',      // etiqueta HTML: <app-habitaciones>
+  imports: [CommonModule, FormsModule], // modulos necesarios
+  templateUrl: './habitaciones.html', // archivo de plantilla HTML
+  styleUrl: './habitaciones.css'     // archivo de estilos CSS
 })
-
+// clase del componente Habitaciones que implementa OnInit
 export class Habitaciones implements OnInit {
+  // constructor que inyecta ChangeDetectorRef para deteccion manual de cambios
   constructor(private cdr: ChangeDetectorRef) {}
 
-  // lista de habitaciones
+  // array que almacena la lista de habitaciones cargadas
   habitaciones: Habitacion[] = [];
 
-  // objeto del formulario
+  // objeto que representa el formulario de nueva habitacion
   nuevaHabitacion: Habitacion = {
-    tipo: '',
-    precio: 0,
-    disponible: true
+    tipo: '',                        // campo tipo vacio
+    precio: 0,                       // campo precio en cero
+    disponible: true                 // checkbox disponible activado
   };
 
-  // se ejecuta al cargar el componente
+  // metodo del ciclo de vida: se ejecuta al iniciar el componente
   async ngOnInit() {
-    await this.cargarHabitaciones();
+    await this.cargarHabitaciones(); // carga las habitaciones desde el backend
   }
 
-  // pide habitaciones al backend
+  // metodo async que obtiene la lista de habitaciones del backend
   async cargarHabitaciones() {
+    // peticion GET al endpoint de habitaciones
     const respuesta = await fetch('http://localhost:8080/habitaciones');
+    // convierte la respuesta a JSON
     const datos = await respuesta.json();
+    // asigna los datos al array de habitaciones
     this.habitaciones = datos;
+    // fuerza la deteccion de cambios de Angular
     this.cdr.detectChanges();
   }
 
-  // guarda habitacion en backend
+  // metodo async que guarda una nueva habitacion en el backend
   async guardarHabitacion() {
+    // peticion POST al endpoint de habitaciones
     const respuesta = await fetch('http://localhost:8080/habitaciones', {
-      method: 'POST',
+      method: 'POST',                // metodo HTTP POST
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json' // cabecera JSON
       },
-      body: JSON.stringify(this.nuevaHabitacion)
+      body: JSON.stringify(this.nuevaHabitacion) // cuerpo con datos de la habitacion
     });
 
+    // convierte la respuesta a JSON (habitacion guardada)
     const habitacionGuardada = await respuesta.json();
 
-    this.habitaciones.push(habitacionGuardada); // la agrega a la lista
+    // agrega la nueva habitacion al array local
+    this.habitaciones.push(habitacionGuardada);
 
-    // limpia formulario
+    // reinicia el formulario con valores por defecto
     this.nuevaHabitacion = {
       tipo: '',
       precio: 0,
       disponible: true
     };
+    // fuerza la deteccion de cambios de Angular
     this.cdr.detectChanges();
   }
 }

@@ -1,15 +1,16 @@
+// importa el decorador Component desde Angular
 import { Component } from '@angular/core';
-import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router'; // necesario para rutas
-import { Habitaciones } from './componentes/habitaciones/habitaciones';
-import { Clientes } from './componentes/clientes/clientes';
-import { Reservas } from './componentes/reservas/reservas';
+// importa modulos de enrutamiento: RouterOutlet, RouterLink, RouterLinkActive
+import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 
+// decorador que define el componente principal de la app
 @Component({
-  selector: 'app-root',
-  imports: [RouterOutlet, RouterLink, RouterLinkActive],
-  templateUrl: './app.html',
-  styleUrl: './app.css'
+  selector: 'app-root',              // etiqueta HTML para usar este componente
+  imports: [RouterOutlet, RouterLink, RouterLinkActive], // modulos necesarios
+  templateUrl: './app.html',         // archivo de plantilla HTML
+  styleUrl: './app.css'              // archivo de estilos CSS
 })
+// clase principal del componente de la aplicacion
 export class App {
-
+  // el componente no tiene logica, solo sirve como layout
 }

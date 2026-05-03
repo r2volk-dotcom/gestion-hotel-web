@@ -1,33 +1,53 @@
+<!-- seccion principal del componente Clientes -->
 <section class="section">
+  <!-- header de la seccion con titulo -->
   <div class="section-header">
     <h2>Clientes</h2>
   </div>
 
+  <!-- seccion del formulario para registrar cliente -->
   <div class="form-section">
+    <!-- titulo de la seccion del formulario -->
     <h3>Registrar cliente</h3>
+    <!-- grid de campos del formulario -->
     <div class="form-grid">
+      <!-- input de nombre con two-way binding al modelo -->
       <input type="text" placeholder="Nombre" [(ngModel)]="nuevoCliente.nombre">
+      <!-- input de apellido con two-way binding al modelo -->
       <input type="text" placeholder="Apellido" [(ngModel)]="nuevoCliente.apellido">
+      <!-- input de DNI con two-way binding al modelo -->
       <input type="text" placeholder="DNI" [(ngModel)]="nuevoCliente.dni">
+      <!-- input de telefono con two-way binding al modelo -->
       <input type="text" placeholder="Telefono" [(ngModel)]="nuevoCliente.telefono">
+      <!-- input de correo con two-way binding al modelo -->
       <input type="text" placeholder="Correo" [(ngModel)]="nuevoCliente.correo">
     </div>
+    <!-- contenedor de botones de accion -->
     <div class="form-actions">
+      <!-- boton que ejecuta guardarCliente al hacer click -->
       <button class="btn btn-primary" (click)="guardarCliente()">Guardar cliente</button>
     </div>
   </div>
 
+  <!-- seccion de la lista de clientes -->
   <div class="list-section">
+    <!-- header de la lista con titulo -->
     <div class="list-header">
       <span>Lista de clientes</span>
     </div>
+    <!-- lista de clientes: se muestra si hay clientes, sino muestra template noCli -->
     <ul class="list" *ngIf="clientes.length > 0; else noCli">
+      <!-- repite un item por cada cliente en el array -->
       <li class="list-item" *ngFor="let cliente of clientes">
+        <!-- nombre completo del cliente con clase label (negrita) -->
         <span class="label">{{ cliente.nombre }} {{ cliente.apellido }}</span>
+        <!-- separador vertical -->
         <span class="divider">|</span>
+        <!-- DNI del cliente -->
         DNI: {{ cliente.dni }}
       </li>
     </ul>
+    <!-- template que se muestra cuando no hay clientes -->
     <ng-template #noCli>
       <div class="empty-list">No hay clientes registrados</div>
     </ng-template>
