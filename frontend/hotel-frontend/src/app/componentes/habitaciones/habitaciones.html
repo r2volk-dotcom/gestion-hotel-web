@@ -1,0 +1,40 @@
+
+<section class="section">
+  <div class="section-header">
+    <h2>Habitaciones</h2>
+  </div>
+
+  <div class="form-section">
+    <h3>Registrar habitacion</h3>
+    <div class="form-grid">
+      <input type="text" placeholder="Tipo" [(ngModel)]="nuevaHabitacion.tipo">
+      <input type="number" placeholder="Precio" [(ngModel)]="nuevaHabitacion.precio">
+      <div class="checkbox-field">
+        <input type="checkbox" id="hab-disponible" [(ngModel)]="nuevaHabitacion.disponible">
+        <label for="hab-disponible">Disponible</label>
+      </div>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-primary" (click)="guardarHabitacion()">Guardar habitacion</button>
+      <button class="btn btn-secondary" (click)="cargarHabitaciones()">Cargar habitaciones</button>
+    </div>
+  </div>
+
+  <div class="list-section">
+    <div class="list-header">
+      <span>Lista de habitaciones</span>
+    </div>
+    <ul class="list" *ngIf="habitaciones.length > 0; else noHab">
+      <li class="list-item" *ngFor="let habitacion of habitaciones">
+        <span class="label">#{{ habitacion.id }}</span>
+        <span class="divider">|</span>
+        {{ habitacion.tipo }}
+        <span class="divider">|</span>
+        S/ {{ habitacion.precio }}
+      </li>
+    </ul>
+    <ng-template #noHab>
+      <div class="empty-list">No hay habitaciones registradas</div>
+    </ng-template>
+  </div>
+</section>

@@ -51,6 +51,6 @@ public class ClienteController {
     @DeleteMapping("/{id}")
     public Cliente eliminar(@PathVariable Long id) {
         return clienteServices.eliminarCliente(id);
-    }
 
+    }
 }

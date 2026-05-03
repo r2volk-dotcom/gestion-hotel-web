@@ -1,0 +1,66 @@
+
+<section class="section">
+  <div class="section-header">
+    <h2>Reservas</h2>
+  </div>
+
+  <div class="form-section">
+    <h3>Registrar reserva</h3>
+
+    <div class="form-grid">
+      <select [(ngModel)]="nuevaReserva.clienteId">
+        <option [ngValue]="0">Seleccione cliente</option>
+        <option *ngFor="let cliente of clientes" [ngValue]="cliente.id">
+          {{ cliente.nombre }} {{ cliente.apellido }}
+        </option>
+      </select>
+
+      <select [(ngModel)]="nuevaReserva.habitacionId">
+        <option [ngValue]="0">Seleccione habitacion</option>
+        <option *ngFor="let habitacion of habitaciones" [ngValue]="habitacion.id">
+          {{ habitacion.tipo }} - S/ {{ habitacion.precio }}
+        </option>
+      </select>
+
+      <input type="date" [(ngModel)]="nuevaReserva.fechaEntrada">
+      <input type="date" [(ngModel)]="nuevaReserva.fechaSalida">
+    </div>
+
+    <div class="form-actions">
+      <button class="btn btn-primary" (click)="guardarReserva()">Guardar reserva</button>
+      <button class="btn btn-secondary" (click)="cargarDatos()">Actualizar datos</button>
+    </div>
+  </div>
+
+  <div class="list-section">
+    <div class="list-header">
+      <span>Lista de reservas</span>
+    </div>
+
+    <ul class="list" *ngIf="reservas.length > 0; else noRes">
+      <li class="list-item" *ngFor="let reserva of reservas">
+        <span class="label">#{{ reserva.id }}</span>
+        <span class="divider">|</span>
+        Cliente: {{ obtenerNombreCliente(reserva.clienteId) }}
+        <span class="divider">|</span>
+        Habitacion: {{ obtenerTextoHabitacion(reserva.habitacionId) }}
+        <span class="divider">|</span>
+        {{ reserva.fechaEntrada }} a {{ reserva.fechaSalida }}
+        <span class="divider">|</span>
+        Estado:
+        <span [ngClass]="{
+          'badge badge-reservado': reserva.estado === 'RESERVADO',
+          'badge badge-checkin': reserva.estado === 'CHECK_IN',
+          'badge badge-checkout': reserva.estado === 'CHECK_OUT',
+          'badge badge-default': reserva.estado !== 'RESERVADO' && reserva.estado !== 'CHECK_IN' && reserva.estado !== 'CHECK_OUT'
+        }">
+          {{ reserva.estado }}
+        </span>
+      </li>
+    </ul>
+
+    <ng-template #noRes>
+      <div class="empty-list">No hay reservas registradas</div>
+    </ng-template>
+  </div>
+</section>

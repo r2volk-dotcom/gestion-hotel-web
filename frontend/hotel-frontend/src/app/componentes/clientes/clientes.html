@@ -1,0 +1,36 @@
+<section class="section">
+  <div class="section-header">
+    <h2>Clientes</h2>
+  </div>
+
+  <div class="form-section">
+    <h3>Registrar cliente</h3>
+    <div class="form-grid">
+      <input type="text" placeholder="Nombre" [(ngModel)]="nuevoCliente.nombre">
+      <input type="text" placeholder="Apellido" [(ngModel)]="nuevoCliente.apellido">
+      <input type="text" placeholder="DNI" [(ngModel)]="nuevoCliente.dni">
+      <input type="text" placeholder="Telefono" [(ngModel)]="nuevoCliente.telefono">
+      <input type="text" placeholder="Correo" [(ngModel)]="nuevoCliente.correo">
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-primary" (click)="guardarCliente()">Guardar cliente</button>
+      <button class="btn btn-secondary" (click)="cargarClientes()">Cargar clientes</button>
+    </div>
+  </div>
+
+  <div class="list-section">
+    <div class="list-header">
+      <span>Lista de clientes</span>
+    </div>
+    <ul class="list" *ngIf="clientes.length > 0; else noCli">
+      <li class="list-item" *ngFor="let cliente of clientes">
+        <span class="label">{{ cliente.nombre }} {{ cliente.apellido }}</span>
+        <span class="divider">|</span>
+        DNI: {{ cliente.dni }}
+      </li>
+    </ul>
+    <ng-template #noCli>
+      <div class="empty-list">No hay clientes registrados</div>
+    </ng-template>
+  </div>
+</section>
