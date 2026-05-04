@@ -30,9 +30,34 @@ public class ClienteServices {
         return cliente.orElse(null);
     }
 
+    public List<Cliente> buscarClientePorNombre(String nombre){
+        if (nombre != null && !nombre.isBlank()){
+            String[] nombreApellido = nombre.split("\\s+");
+            if (nombreApellido.length == 1) {
+                return clienteRepository.findByNombre(formatear(nombreApellido[0]));
+            }else if (nombreApellido.length >= 2) {
+                return clienteRepository.findByNombreAndApellido(formatear(nombreApellido[0]),formatear(nombreApellido[1]));
+            }
+        }
+        return List.of();
+    }
+
     //metodo para guardar un cliente a la lista de clientes
     public Cliente guardar(Cliente cliente){
+        cliente.setNombre(formatear(cliente.getNombre()));
+        cliente.setApellido(formatear(cliente.getApellido()));
         return clienteRepository.save(cliente);
+    }
+
+    private String formatear(String texto){
+        if(texto != null){
+            texto = texto.trim();
+            if(!texto.isEmpty()){
+                texto = texto.substring(0, 1).toUpperCase() + texto.substring(1);
+            }
+            return texto;
+        }
+        return null;
     }
 
     //metodo para actualizar cliente

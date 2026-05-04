@@ -19,8 +19,12 @@ export class Clientes implements OnInit {
   // constructor que inyecta ChangeDetectorRef para deteccion manual de cambios
   constructor(private cdr: ChangeDetectorRef) {}
 
+  //nombre a buscar
+  nombreBuscar: string = '';
+
   // array que almacena la lista de clientes cargados
   clientes: Cliente[] = [];
+  clientesBuscados: Cliente[] = [];
 
   // objeto que representa el formulario de nuevo cliente
   nuevoCliente: Cliente = {
@@ -45,6 +49,13 @@ export class Clientes implements OnInit {
     // asigna los datos al array de clientes
     this.clientes = datos;
     // fuerza la deteccion de cambios de Angular
+    this.cdr.detectChanges();
+  }
+
+  async buscarClientes(name:string){
+    //pido get al endoint de clientes
+    const respuesta = await fetch(`http://localhost:8080/clientes/nombre/${name}`);
+    this.clientesBuscados = await respuesta.json();
     this.cdr.detectChanges();
   }
 

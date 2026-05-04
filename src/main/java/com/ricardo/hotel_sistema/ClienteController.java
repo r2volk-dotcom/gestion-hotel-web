@@ -29,9 +29,14 @@ public class ClienteController {
 
     // GetMapping (GET), con endpoint(habitacion/id), para buscar un cliente por ID
     // PathVariable es la variable que va en la url.
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     public Cliente buscarPorId(@PathVariable Long id) {
         return clienteServices.buscarClientePorId(id);
+    }
+
+    @GetMapping("/nombre/{nombre}")
+    public List<Cliente> buscarPorNombre(@PathVariable String nombre) {
+        return clienteServices.buscarClientePorNombre(nombre);
     }
 
     // PostMapping (POST), para enviar (guardar) datos a la BD
