@@ -59,6 +59,24 @@ export class Clientes implements OnInit {
     this.cdr.detectChanges();
   }
 
+  async eliminarCliente(idEliminar:number){
+    console.log(idEliminar)
+    await fetch(`http://localhost:8080/clientes/${idEliminar}`,
+    {
+      method: 'DELETE'
+    });
+
+    // esto actualiza la lista clientes, pero eliminando un cliente si su ID es "idEliminar"
+    this.clientes = this.clientes.filter(
+      cliente => cliente.id !== idEliminar
+    );
+    // lo mismo aca pero con la lista de clientesBuscados
+    this.clientesBuscados = this.clientesBuscados.filter(
+      clientesBuscado => clientesBuscado.id !== idEliminar
+    )
+    this.cdr.detectChanges();
+  }
+
   // metodo async que guarda un nuevo cliente en el backend
   async guardarCliente() {
     // peticion POST al endpoint de clientes

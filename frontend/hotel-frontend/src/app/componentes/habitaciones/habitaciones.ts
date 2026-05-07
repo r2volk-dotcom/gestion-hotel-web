@@ -21,7 +21,7 @@ export class Habitaciones implements OnInit {
 
   // array que almacena la lista de habitaciones cargadas
   habitaciones: Habitacion[] = [];
-
+  
   // objeto que representa el formulario de nueva habitacion
   nuevaHabitacion: Habitacion = {
     tipo: '',                        // campo tipo vacio
@@ -45,6 +45,21 @@ export class Habitaciones implements OnInit {
     // fuerza la deteccion de cambios de Angular
     this.cdr.detectChanges();
   }
+
+
+  async eliminarHabitacion(idEliminar:number){
+    await fetch(`http://localhost:8080/habitaciones/${idEliminar}`,
+    {
+      method: 'DELETE'
+    });
+
+    // esto actualiza la lista habitaciones, pero eliminando una habitacion si su ID es "idEliminar"
+    this.habitaciones = this.habitaciones.filter(
+      cliente => cliente.id !== idEliminar
+    );
+    this.cdr.detectChanges();
+  }
+
 
   // metodo async que guarda una nueva habitacion en el backend
   async guardarHabitacion() {
