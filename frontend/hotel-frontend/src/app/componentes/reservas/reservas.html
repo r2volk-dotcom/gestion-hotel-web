@@ -75,14 +75,33 @@
         <!-- texto de estado -->
         Estado:
         <!-- badge con clase dinamica segun el estado de la reserva -->
-        <span [ngClass]="{
-          'badge badge-reservado': reserva.estado === 'RESERVADO',
-          'badge badge-checkin': reserva.estado === 'CHECK_IN',
-          'badge badge-checkout': reserva.estado === 'CHECK_OUT',
-          'badge badge-default': reserva.estado !== 'RESERVADO' && reserva.estado !== 'CHECK_IN' && reserva.estado !== 'CHECK_OUT'
-        }">
-          {{ reserva.estado }}
-        </span>
+        <div>
+          <span class="badge" [ngClass]="{
+          }" *ngIf="!reserva.editando"> {{reserva.estado}} </span>       
+          <select class="badge-default" [(ngModel)]="reserva.estado" *ngIf="reserva.editando">
+            <option value="CheckOut">CheckOut</option>
+            <option value="CheckIn">CheckIn</option>
+            <option value="Cancelado">Cancelar</option>
+          </select>
+        </div>
+        <button (click)="cambiarEstado(reserva)">
+          <svg *ngIf="!reserva.editando"
+              width="16" height="16" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 20h9"/>
+            <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/>
+          </svg>
+        </button>
+
+        <button (click)="editarEstado(reserva.estado,reserva.id!,reserva)">
+          <svg *ngIf="reserva.editando"
+              width="16" height="16" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+            <polyline points="17 21 17 13 7 13 7 21"/>
+            <polyline points="7 3 7 8 15 8"/>
+          </svg>
+        </button>
       </li>
     </ul>
 

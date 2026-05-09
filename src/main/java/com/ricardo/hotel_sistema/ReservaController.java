@@ -28,7 +28,7 @@ public class ReservaController {
 
     @PostMapping
     public Reserva guardar(@RequestBody Reserva reserva) {
-        reserva.setEstado("RESERVADO");
+        reserva.setEstado("Reservado");
         return reservaServices.guardar(reserva);
     }
 

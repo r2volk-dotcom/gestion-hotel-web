@@ -98,7 +98,7 @@ public class ReservaServices {
         return null;
     }
 
-    //metodo para registrar check-out de una reserva
+    //metodo para registrar "cancelar" de una reserva
     public Reserva cancelarReserva(Long id) {
 
         Optional<Reserva> reservaExistente = reservaRepository.findById(id);

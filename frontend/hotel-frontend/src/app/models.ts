@@ -26,4 +26,7 @@ export interface Reserva {
   fechaEntrada: string;
   fechaSalida: string;
   estado: string;
+
+  //variables opcionales, no vienen del backend
+  editando? : boolean;
 }

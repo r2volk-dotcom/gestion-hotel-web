@@ -26,6 +26,10 @@ export class Reservas implements OnInit {
   // array que almacena la lista de reservas cargadas
   reservas: Reserva[] = [];
 
+  cambiarEstado(reserva: Reserva){
+    reserva.editando = !reserva.editando;
+  }
+
   // objeto que representa el formulario de nueva reserva
   nuevaReserva: Reserva = {
     clienteId: 0,                    // ID de cliente (0 = ninguno)
@@ -55,6 +59,25 @@ export class Reservas implements OnInit {
     const datos = await respuesta.json();
     // asigna los datos al array de clientes
     this.clientes = datos;
+  }
+  
+  async editarEstado(estado:string, id:number, reserva:Reserva){
+    let endpoint = "";
+    if (estado === "CheckOut") {
+        endpoint = "checkout";
+      } else if (estado === "CheckIn") {
+        endpoint = "checkin";
+      } else if (estado === "Cancelado"){
+        endpoint = "cancelar";
+      } else {
+        return;
+      }
+    const respuesta = await fetch(`http://localhost:8080/reservas/${id}/${endpoint}`,{
+        method: 'PUT'
+    })
+
+    reserva.editando = false;
+    this.cargarDatos();
   }
 
   // metodo async que obtiene habitaciones del backend
