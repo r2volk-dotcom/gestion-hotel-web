@@ -130,6 +130,21 @@ export class Reservas implements OnInit {
     return habitacion.tipo + ' - S/ ' + habitacion.precio;
   }
 
+
+  async eliminarReserva(idEliminar:number){
+    console.log(idEliminar)
+    await fetch(`http://localhost:8080/reservas/${idEliminar}`,
+    {
+      method: 'DELETE'
+    });
+
+    this.reservas = this.reservas.filter(
+      reserva => reserva.id !== idEliminar
+    );
+
+    this.cdr.detectChanges();
+  }
+
   // metodo async que guarda una nueva reserva en el backend
   async guardarReserva() {
     // valida que se haya seleccionado cliente y habitacion
