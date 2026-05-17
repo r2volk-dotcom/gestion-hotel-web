@@ -2,7 +2,6 @@ services:
   mysql:
     image: mysql:9
     container_name: mysql-hotel
-    restart: always
 
     environment:
       MYSQL_ROOT_PASSWORD: 1234
