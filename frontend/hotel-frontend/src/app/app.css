@@ -4,3 +4,125 @@
   display: block;
   min-height: 100vh;
 }
+
+/* Contenedor principal del Switch */
+.theme-switch {
+  position: relative;
+  display: inline-block;
+  width: 64px;
+  height: 34px;
+  cursor: pointer;
+}
+
+/* Ocultar el checkbox nativo */
+.theme-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* El cuerpo del slider (Track) */
+.theme-switch .slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #f1f3f5; /* Gris claro de tu app */
+  border: 1px solid #e9ecef;
+  border-radius: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px; /* Ajustado para centrar perfectamente los iconos */
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="dark"] .theme-switch .slider {
+  background-color: #27272a;
+  border-color: #3f3f46;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* La bola deslizante (Knob) */
+.theme-switch .ball {
+  position: absolute;
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 3px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  z-index: 1; /* Por debajo de los iconos */
+}
+
+[data-theme="dark"] .theme-switch .ball {
+  background-color: #09090b;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+}
+
+/* Estilo general para los iconos */
+.theme-switch .icon {
+  width: 16px;
+  height: 16px;
+  z-index: 2; /* POR ENCIMA DE LA BOLA para que no se tapen */
+  transition: color 0.3s ease;
+  pointer-events: none;
+}
+
+/* --- ESTADO INICIAL: MODO CLARO --- */
+
+/* El sol está sobre la bola blanca -> Color oscuro idéntico a tus botones */
+.theme-switch .sun {
+  color: #111111; 
+}
+
+/* La luna está sobre el fondo gris -> Gris medio con presencia */
+.theme-switch .moon {
+  color: #868e96; 
+}
+
+/* --- ESTADO ACTIVO: MODO OSCURO (Checkbox Checked) --- */
+
+/* Fondo del track cambia a negro sólido */
+.theme-switch input:checked + .slider {
+  background-color: #111111;
+  border-color: #222222;
+}
+
+[data-theme="dark"] .theme-switch input:checked + .slider {
+  background-color: #f5f5f5;
+  border-color: #e0e0e0;
+}
+
+/* Movimiento simétrico de la bola hacia la derecha (30px exactos) */
+.theme-switch input:checked + .slider .ball {
+  transform: translateX(30px);
+}
+
+/* El sol ahora está en el fondo negro -> Blanco sutil/translúcido pasivo */
+.theme-switch input:checked + .slider .sun {
+  color: rgba(255, 255, 255, 0.35); 
+}
+
+/* ¡La clave! La luna ahora está sobre la bola blanca -> Se vuelve oscura para resaltar */
+.theme-switch input:checked + .slider .moon {
+  color: #111111; 
+}
+
+[data-theme="dark"] .theme-switch input:checked + .slider .sun {
+  color: rgba(17, 17, 17, 0.35);
+}
+
+[data-theme="dark"] .theme-switch input:checked + .slider .moon {
+  color: #f5f5f5;
+}
+
+/* Accesibilidad */
+.theme-switch input:focus-visible + .slider {
+  outline: 2px solid #000000;
+  outline-offset: 2px;
+}
