@@ -17,9 +17,11 @@
         <!-- opcion por defecto con valor 0 (ningun cliente) -->
         <option [ngValue]="0">Seleccione cliente</option>
         <!-- repite una opcion por cada cliente en el array -->
-        <option *ngFor="let cliente of clientes" [ngValue]="cliente.id">
+        @for (cliente of clientes; track cliente.id) {
+        <option [ngValue]="cliente.id">
           {{ cliente.nombre }} {{ cliente.apellido }}
         </option>
+        }
       </select>
 
       <!-- select de habitacion con two-way binding al modelo -->
@@ -27,9 +29,11 @@
         <!-- opcion por defecto con valor 0 (ninguna habitacion) -->
         <option [ngValue]="0">Seleccione habitacion</option>
         <!-- repite una opcion por cada habitacion en el array -->
-        <option *ngFor="let habitacion of habitaciones" [ngValue]="habitacion.id">
+        @for (habitacion of habitaciones; track habitacion.id) {
+        <option [ngValue]="habitacion.id">
           {{ habitacion.tipo }} - S/ {{ habitacion.precio }}
         </option>
+        }
       </select>
 
       <!-- input de fecha de entrada con two-way binding -->
@@ -53,58 +57,53 @@
     </div>
 
     <!-- lista de reservas: se muestra si hay reservas, sino muestra template noRes -->
-    <ul class="list" *ngIf="reservas.length > 0; else noRes">
-      <!-- repite un item por cada reserva en el array -->
-      <li class="list-item" *ngFor="let reserva of reservas">
-        <!-- ID de la reserva con clase label (negrita) -->
+    @if (reservas.length > 0) {
+    <ul class="list">
+      @for (reserva of reservas; track reserva.id) {
+      <li class="list-item">
         <span class="label">#{{ reserva.id }}</span>
-        <!-- separador vertical -->
         <span class="divider">|</span>
-        <!-- nombre del cliente obtenido por ID -->
         Cliente: {{ obtenerNombreCliente(reserva.clienteId) }}
-        <!-- separador vertical -->
         <span class="divider">|</span>
-        <!-- descripcion de la habitacion obtenida por ID -->
         Habitacion: {{ obtenerTextoHabitacion(reserva.habitacionId) }}
-        <!-- separador vertical -->
         <span class="divider">|</span>
-        <!-- fechas de entrada y salida -->
         {{ reserva.fechaEntrada }} a {{ reserva.fechaSalida }}
-        <!-- separador vertical -->
         <span class="divider">|</span>
-        <!-- texto de estado -->
         Estado:
-        <!-- badge con clase dinamica segun el estado de la reserva -->
         <div>
+          @if (!reserva.editando) {
           <span class="badge" [ngClass]="{
-          }" *ngIf="!reserva.editando"> {{reserva.estado}} </span>       
-          <select class="badge-default" [(ngModel)]="reserva.estado" *ngIf="reserva.editando">
+          }"> {{reserva.estado}} </span>
+          } @else {
+          <select class="badge-default" [(ngModel)]="reserva.estado">
             <option value="CheckOut">CheckOut</option>
             <option value="CheckIn">CheckIn</option>
             <option value="Cancelado">Cancelar</option>
           </select>
+          }
         </div>
         <button (click)="cambiarEstado(reserva)">
-          <svg *ngIf="!reserva.editando"
-              width="16" height="16" viewBox="0 0 24 24"
+          @if (!reserva.editando) {
+          <svg width="16" height="16" viewBox="0 0 24 24"
               fill="none" stroke="currentColor" stroke-width="2">
             <path d="M12 20h9"/>
             <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/>
           </svg>
+          }
         </button>
 
         <button (click)="editarEstado(reserva.estado,reserva.id!,reserva)">
-          <svg *ngIf="reserva.editando"
-              width="16" height="16" viewBox="0 0 24 24"
+          @if (reserva.editando) {
+          <svg width="16" height="16" viewBox="0 0 24 24"
               fill="none" stroke="currentColor" stroke-width="2">
             <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
             <polyline points="17 21 17 13 7 13 7 21"/>
             <polyline points="7 3 7 8 15 8"/>
           </svg>
+          }
         </button>
          
-        <!--Boton de borrar -->
-        <button class="btn-delete" data-id="{{reserva.id}}" (click)="eliminarReserva(reserva.id!)">
+        <button class="btn-delete" [attr.data-id]="reserva.id" (click)="eliminarReserva(reserva.id!)">
           <svg width="17" height="17" viewBox="0 0 24 24"
                 fill="none" stroke="currentColor" stroke-width="2">
             <polyline points="3 6 5 6 21 6"/>
@@ -116,11 +115,10 @@
         </button>
 
       </li>
+      }
     </ul>
-
-    <!-- template que se muestra cuando no hay reservas -->
-    <ng-template #noRes>
+    } @else {
       <div class="empty-list">No hay reservas registradas</div>
-    </ng-template>
+    }
   </div>
 </section>

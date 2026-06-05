@@ -1,6 +1,6 @@
 // importa Component, OnInit (ciclo de vida) y ChangeDetectorRef de Angular
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-// importa CommonModule para usar directivas como *ngIf y *ngFor
+// importa CommonModule para ngClass, ngModel y ngValue
 import { CommonModule } from '@angular/common';
 // importa FormsModule para usar [(ngModel)] (two-way binding)
 import { FormsModule } from '@angular/forms';
@@ -24,9 +24,10 @@ export class Habitaciones implements OnInit {
   
   // objeto que representa el formulario de nueva habitacion
   nuevaHabitacion: Habitacion = {
-    tipo: '',                        // campo tipo vacio
-    precio: 0,                       // campo precio en cero
-    disponible: true                 // checkbox disponible activado
+    tipo: '',                        
+    precio: 0,                       
+    disponible: true,
+    imagen:''             
   };
 
   // metodo del ciclo de vida: se ejecuta al iniciar el componente
@@ -82,7 +83,8 @@ export class Habitaciones implements OnInit {
     this.nuevaHabitacion = {
       tipo: '',
       precio: 0,
-      disponible: true
+      disponible: true,
+      imagen:'' 
     };
     // fuerza la deteccion de cambios de Angular
     this.cdr.detectChanges();

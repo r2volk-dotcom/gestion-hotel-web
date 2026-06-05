@@ -18,8 +18,7 @@ public class Cliente {
     private String correo;
 
     //constructor vacio, necesario para el JPA
-    public Cliente() {
-    }
+    public Cliente() {}
 
     public Cliente(Long id, String nombre, String apellido, String dni, String telefono, String correo){
         this.id = id;

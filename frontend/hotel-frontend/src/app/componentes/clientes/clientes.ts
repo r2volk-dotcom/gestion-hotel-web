@@ -1,6 +1,6 @@
 // importa Component, OnInit (ciclo de vida) y ChangeDetectorRef de Angular
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-// importa CommonModule para usar directivas como *ngIf y *ngFor
+// importa CommonModule para ngClass, ngModel y ngValue
 import { CommonModule } from '@angular/common';
 // importa FormsModule para usar [(ngModel)] (two-way binding)
 import { FormsModule } from '@angular/forms';

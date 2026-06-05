@@ -444,7 +444,7 @@ svg {
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  padding: 28px 42px 22px;
+  padding: 28px 32px 22px;
   border-bottom: 1px solid rgba(228, 228, 231, 0.8);
   background: rgba(247, 247, 248, 0.78);
   backdrop-filter: blur(22px);
@@ -527,9 +527,9 @@ svg {
 }
 
 .page-content {
-  width: min(100%, 1420px);
-  margin: 0 auto;
-  padding: 34px 42px 54px;
+  padding-top: 30px;
+  padding-left: 50px;
+  padding-right: 50px;
 }
 
 .section {

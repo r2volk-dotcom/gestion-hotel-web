@@ -4,27 +4,32 @@ import com.ricardo.hotel_sistema.modelo.Habitacion;
 import com.ricardo.hotel_sistema.repositorio.HabitacionRepository;
 import org.springframework.stereotype.Service;
 
+import com.ricardo.hotel_sistema.modelo.Servicio;
+import com.ricardo.hotel_sistema.repositorio.ServicioRepository;
+import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Optional;
-
 
 @Service
 public class HabitacionServices {
 
-    //variable HabitacionRepository que sabe como consultar la BD
+    //variables que consultan la BD
     private HabitacionRepository habitacionRepository;
+    private ServicioRepository servicioRepository;
 
     //constructor
-    public HabitacionServices(HabitacionRepository habitacionRepository) {
+    public HabitacionServices(HabitacionRepository habitacionRepository, ServicioRepository servicioRepository) {
         this.habitacionRepository = habitacionRepository;
+        this.servicioRepository = servicioRepository;
     }
 
-    //metodo para mostrar la lista de habitaciones
+    //mostrar la lista de habitaciones
     public List<Habitacion> listar() {
         return habitacionRepository.findAll();
     }
 
-    //metodo para buscar una habitacion por ID
+    //buscar una habitacion por ID
     public Habitacion buscarHabitacionPorId(Long id) {
         //variable opcional, porque no sabemos si exite o no
         Optional<Habitacion> habitacion = habitacionRepository.findById(id);
@@ -32,8 +37,14 @@ public class HabitacionServices {
         return habitacion.orElse(null);
     }
 
-    //metodo para guardar una habitacion a la lista de habitaciones
-    public Habitacion guardar(Habitacion habitacion) {
+    //guardar una habitacion nueva
+    public Habitacion guardar(Habitacion habitacion){
+        List<Servicio> serviciosSeleccionados = new ArrayList<>();
+
+        for (Servicio servicio : habitacion.getServicios()) {
+            serviciosSeleccionados.add(servicioRepository.getReferenceById(servicio.getId()));
+        }
+        habitacion.setServicios(serviciosSeleccionados);
         return habitacionRepository.save(habitacion);
     }
 
@@ -47,11 +58,18 @@ public class HabitacionServices {
 
             //pedimos los datos para actualizarlos
             Habitacion h = habitacionExistente.get();
+            List<Servicio> serviciosSeleccionados = new ArrayList<>();
+
+            for (Servicio s : nuevaHabitacion.getServicios()) {
+                serviciosSeleccionados.add(servicioRepository.getReferenceById(s.getId()));
+            }
 
             //actualizamos datos
             h.setTipo(nuevaHabitacion.getTipo());
             h.setPrecio(nuevaHabitacion.getPrecio());
             h.setDisponible(nuevaHabitacion.isDisponible());
+            h.setImagen(nuevaHabitacion.getImagen());
+            h.setServicios(serviciosSeleccionados);
 
             //actualiza el objeto
             return habitacionRepository.save(h);
@@ -62,9 +80,7 @@ public class HabitacionServices {
 
     //metodo para borrar una habitacion
     public Habitacion eliminarHabitacion(Long id) {
-
         Optional<Habitacion> habitacionEliminar = habitacionRepository.findById(id);
-
         if (habitacionEliminar.isPresent()) {
             habitacionRepository.deleteById(id);
             return habitacionEliminar.get();

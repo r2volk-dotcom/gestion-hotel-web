@@ -16,6 +16,7 @@ export interface Habitacion {
   tipo: string;
   precio: number;
   disponible: boolean;
+  imagen: string;
 }
 
 // Interface de Reserva

@@ -1,91 +1,71 @@
-<!-- seccion principal del componente Habitaciones -->
 <section class="section">
-  <!-- header de la seccion con titulo -->
   <div class="section-header">
     <h2>Habitaciones</h2>
   </div>
 
-  <!-- seccion del formulario para registrar habitacion -->
   <div class="form-section">
-    <!-- titulo de la seccion del formulario -->
     <h3>Registrar habitacion</h3>
-    <!-- grid de campos del formulario -->
     <div class="form-grid">
-      <!-- select de tipo de habitacion con two-way binding -->
       <select [(ngModel)]="nuevaHabitacion.tipo">
-        <!-- opcion deshabilitada por defecto -->
         <option value="" disabled selected>Escoge una habitación</option>
-        <!-- opcion Individual -->
         <option value="Individual">Individual</option>
-        <!-- opcion Doble -->
         <option value="Doble">Doble</option>
-        <!-- opcion Twin -->
         <option value="Twin">Twin</option>
-        <!-- opcion Triple -->
         <option value="Triple">Triple</option>
-        <!-- opcion Cuadruple -->
         <option value="Cuadruple">Cuádruple</option>
-        <!-- opcion Estandar -->
-        <option value="Estandar">Estándar</option>
-        <!-- opcion Deluxe -->
         <option value="Deluxe">Deluxe</option>
-        <!-- opcion Suite -->
         <option value="Suite">Suite</option>
       </select>
-      <!-- input de precio numerico con two-way binding -->
       <input type="number" placeholder="Precio" [(ngModel)]="nuevaHabitacion.precio">
-      <!-- campo de checkbox para disponibilidad -->
       <div class="checkbox-field">
-        <!-- checkbox con two-way binding al modelo -->
         <input type="checkbox" id="hab-disponible" [(ngModel)]="nuevaHabitacion.disponible">
-        <!-- label asociado al checkbox por id -->
         <label for="hab-disponible">Disponible</label>
       </div>
     </div>
-    <!-- contenedor de botones de accion -->
     <div class="form-actions">
-      <!-- boton que ejecuta guardarHabitacion al hacer click -->
       <button class="btn btn-primary" (click)="guardarHabitacion()">Guardar habitacion</button>
     </div>
   </div>
 
-  <!-- seccion de la lista de habitaciones -->
   <div class="list-section">
-    <!-- header de la lista con titulo -->
     <div class="list-header">
       <span>Lista de habitaciones</span>
     </div>
-    <!-- lista de habitaciones: se muestra si hay habitaciones, sino muestra template noHab -->
-    <ul class="list" *ngIf="habitaciones.length > 0; else noHab">
-      <!-- repite un item por cada habitacion en el array -->
-      <li class="list-item" *ngFor="let habitacion of habitaciones">
-        <!-- ID de la habitacion con clase label (negrita) -->
-        <span class="label">#{{ habitacion.id }}</span>
-        <!-- separador vertical -->
-        <span class="divider">|</span>
-        <!-- tipo de habitacion -->
-        {{ habitacion.tipo }}
-        <!-- separador vertical -->
-        <span class="divider">|</span>
-        <!-- precio de la habitacion con simbolo de moneda -->
-        S/ {{ habitacion.precio }}
-
-        <!-- boton de borrar habitacion -->
-        <button class="btn-delete" data-id="{{habitacion.id}}" (click)="eliminarHabitacion(habitacion.id!)">
-          <svg width="17" height="17" viewBox="0 0 24 24"
-                fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="3 6 5 6 21 6"/>
-            <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
-            <path d="M10 11v6"/>
-            <path d="M14 11v6"/>
-            <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
-          </svg>
-        </button>
-      </li>
-    </ul>
-    <!-- template que se muestra cuando no hay habitaciones -->
-    <ng-template #noHab>
+    @if (habitaciones.length > 0) {
+      <div class="rooms-grid">
+        @for (habitacion of habitaciones; track habitacion.id) {
+          <div class="room-card">
+            <div class="room-card-image">
+              <img [src]="'assets/images/habitaciones/' + habitacion.imagen" alt="{{ habitacion.tipo }}">
+            </div>
+            <div class="room-card-body">
+              <div class="room-card-header">
+                <h3 class="room-card-type">{{ habitacion.tipo }}</h3>
+                <span class="badge"
+                      [class.badge-available]="habitacion.disponible"
+                      [class.badge-occupied]="!habitacion.disponible">
+                  {{ habitacion.disponible ? "Disponible" : "Ocupado" }}
+                </span>
+              </div>
+              <div class="room-card-footer">
+                <span class="room-card-price">S/ {{ habitacion.precio }}</span>
+                <button class="btn-delete" (click)="eliminarHabitacion(habitacion.id!)">
+                  <svg width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="3 6 5 6 21 6"/>
+                    <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+                    <path d="M10 11v6"/>
+                    <path d="M14 11v6"/>
+                    <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    } @else {
       <div class="empty-list">No hay habitaciones registradas</div>
-    </ng-template>
+    }
   </div>
 </section>
