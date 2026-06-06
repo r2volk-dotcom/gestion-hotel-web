@@ -1,33 +1,7 @@
 <section class="section">
   <div class="section-header">
     <h2>Habitaciones</h2>
-    <div class="form-actions">
-      <button class="btn btn-primary" (click)="abrirFormulario()">Registrar Habitacion</button>
-    </div>
   </div>
-
-  <!-- seccion del formulario para registrar habitacion 
-  <div class="form-section">
-    <h3>Registrar habitacion</h3>
-    <div class="form-grid">
-      <select [(ngModel)]="nuevaHabitacion.tipo">
-        <option value="" disabled selected>Escoge una habitación</option>
-        <option value="Individual">Individual</option>
-        <option value="Doble">Doble</option>
-        <option value="Twin">Twin</option>
-        <option value="Triple">Triple</option>
-        <option value="Cuadruple">Cuádruple</option>
-        <option value="Deluxe">Deluxe</option>
-        <option value="Suite">Suite</option>
-      </select>
-      <input type="number" placeholder="Precio" [(ngModel)]="nuevaHabitacion.precio">
-      <div class="checkbox-field">
-        <input type="checkbox" id="hab-disponible" [(ngModel)]="nuevaHabitacion.disponible">
-        <label for="hab-disponible">Disponible</label>
-      </div>
-    </div>
-  </div>
-  -->
 
   <div class="list-section">
     <div class="list-header">
@@ -38,7 +12,7 @@
         @for (habitacion of habitaciones; track habitacion.id) {
           <div class="room-card">
             <div class="room-card-image">
-              <img [src]="'assets/images/habitaciones/' + habitacion.imagen" alt="{{ habitacion.tipo }}">
+              <img [src]="obtenerImagen(habitacion)" alt="{{ habitacion.tipo }}">
             </div>
             <div class="room-card-body">
               <div class="room-card-header">

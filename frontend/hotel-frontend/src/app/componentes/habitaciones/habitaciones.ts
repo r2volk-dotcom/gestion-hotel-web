@@ -1,16 +1,14 @@
 // importa Component, OnInit (ciclo de vida) y ChangeDetectorRef de Angular
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-// importa CommonModule para ngClass, ngModel y ngValue
+// importa CommonModule para ngClass
 import { CommonModule } from '@angular/common';
-// importa FormsModule para usar [(ngModel)] (two-way binding)
-import { FormsModule } from '@angular/forms';
 // importa la interface Habitacion desde el archivo de modelos
-import { Habitacion, Servicios} from '../../models';
+import { Habitacion } from '../../models';
 
 // decorador que define el componente Habitaciones
 @Component({
   selector: 'app-habitaciones',      // etiqueta HTML: <app-habitaciones>
-  imports: [CommonModule, FormsModule], // modulos necesarios
+  imports: [CommonModule],
   templateUrl: './habitaciones.html', // archivo de plantilla HTML
   styleUrl: './habitaciones.css'     // archivo de estilos CSS
 })
@@ -21,27 +19,10 @@ export class Habitaciones implements OnInit {
 
   // habitaciones cargadas
   habitaciones: Habitacion[] = [];
-  
-  serviciosDisponibles: Servicios[] = [];
-  serviciosSeleccionados: number[] = [];
-  
-  mostrarFormulario: boolean = false;
-  abrirFormulario() { this.mostrarFormulario = true; }
-  cerrarFormulario() { this.mostrarFormulario = false; }
-  
-  // objeto que representa el formulario de nueva habitacion
-  nuevaHabitacion: Habitacion = {
-    tipo: '',                        
-    precio: 0,                       
-    disponible: true,
-    imagen:'',
-    servicios: []      
-  };
 
   // metodo del ciclo de vida: se ejecuta al iniciar el componente
   async ngOnInit() {
     await this.cargarHabitaciones();
-    await this.cargarServicios(); 
   }
 
   // metodo async que obtiene la lista de habitaciones del backend
@@ -56,11 +37,8 @@ export class Habitaciones implements OnInit {
     this.cdr.detectChanges();
   }
 
-  async cargarServicios() {
-    const respuesta = await fetch('http://localhost:8080/servicios');
-    const datos = await respuesta.json();
-    this.serviciosDisponibles = datos;
-    this.cdr.detectChanges();
+  obtenerImagen(habitacion: Habitacion): string {
+    return habitacion.imagen || '';
   }
 
   async eliminarHabitacion(idEliminar:number){
@@ -76,49 +54,4 @@ export class Habitaciones implements OnInit {
     this.cdr.detectChanges();
   }
 
-  toggleServicio(id: number) {
-    const indice = this.serviciosSeleccionados.indexOf(id);
-    if (indice === -1) {
-        this.serviciosSeleccionados.push(id);
-    } else {
-        this.serviciosSeleccionados.splice(indice, 1);
-    }
-  }
-
-
-  // metodo async que guarda una nueva habitacion en el backend
-  async guardarHabitacion() {
-    // convierte los IDs de servicios seleccionados a objetos Servicio con solo el ID
-    this.nuevaHabitacion.servicios = this.serviciosSeleccionados.map(id => {
-      return { id: id } as Servicios;
-    });
-
-    // peticion POST al endpoint de habitaciones
-    const respuesta = await fetch('http://localhost:8080/habitaciones', {
-      method: 'POST',                // metodo HTTP POST
-      headers: {
-        'Content-Type': 'application/json' // cabecera JSON
-      },
-      body: JSON.stringify(this.nuevaHabitacion) // cuerpo con datos de la habitacion
-    });
-
-    // convierte la respuesta a JSON (habitacion guardada)
-    const habitacionGuardada = await respuesta.json();
-
-    // agrega la nueva habitacion al array local
-    this.habitaciones.push(habitacionGuardada);
-
-    // reinicia el formulario con valores por defecto
-    this.nuevaHabitacion = {
-      tipo: '',
-      precio: 0,
-      disponible: true,
-      imagen:'' 
-    };
-
-    this.serviciosSeleccionados = [];
-
-    // fuerza la deteccion de cambios de Angular
-    this.cdr.detectChanges();
-  }
 }

@@ -18,7 +18,10 @@ public class Habitacion {
     private String tipo;
     private double precio;
     private boolean disponible;
+
+    @Column(columnDefinition = "LONGTEXT")
     private String imagen;
+
     @ManyToMany
     @JoinTable(
             //tabla intermedia con 2 columas, habitacion_id y servicio_id
