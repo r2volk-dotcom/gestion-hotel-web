@@ -1,17 +1,17 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Habitacion, Servicios } from '../../models';
 import { GestionServicios } from '../gestion-servicios/gestion-servicios';
-import { Chart } from 'chart.js/auto';
+import { GraficoHabitaciones } from '../grafico-habitaciones/grafico-habitaciones';
 
 @Component({
   selector: 'app-gestion-habitaciones',
-  imports: [CommonModule, FormsModule, GestionServicios],
+  imports: [CommonModule, FormsModule, GestionServicios, GraficoHabitaciones],
   templateUrl: './gestion-habitaciones.html',
   styleUrl: './gestion-habitaciones.css',
 })
-export class GestionHabitaciones implements OnInit, OnDestroy {
+export class GestionHabitaciones implements OnInit {
 
   constructor(private cdr: ChangeDetectorRef) {}
 
@@ -30,24 +30,12 @@ export class GestionHabitaciones implements OnInit, OnDestroy {
     servicios: []      
   };
 
-  chartInstance: any = null;
-  observerTema: MutationObserver | null = null;
   idHabitacionEdicion: number | null = null;
   imagenOriginalEdicion: string = '';
 
   async ngOnInit() {
     await this.cargarHabitaciones();
     await this.cargarServicios(); 
-    this.suscribirseACambiosTema();
-  }
-
-  ngOnDestroy() {
-    if (this.observerTema) {
-      this.observerTema.disconnect();
-    }
-    if (this.chartInstance) {
-      this.chartInstance.destroy();
-    }
   }
 
   async cargarHabitaciones() {
@@ -55,16 +43,19 @@ export class GestionHabitaciones implements OnInit, OnDestroy {
     const datos = await respuesta.json();
     this.habitaciones = datos;
     this.cdr.detectChanges();
-    this.renderizarGrafico();
   }
 
   async cargarServicios() {
     const respuesta = await fetch('http://localhost:8080/servicios');
     const datos = await respuesta.json();
     this.serviciosDisponibles = datos;
+    
+    // Filtrar los servicios seleccionados para remover los que hayan sido borrados
+    const idsDisponibles = this.serviciosDisponibles.map(s => s.id);
+    this.serviciosSeleccionados = this.serviciosSeleccionados.filter(id => idsDisponibles.includes(id));
+    
     this.cdr.detectChanges();
   }
-
 
   async editarHabitacion(id:number, tipo: string, precio: number, disponible:boolean, imagen: string, servicios: Servicios[]){
     const respuesta = await fetch(`http://localhost:8080/habitaciones/${id}`, {
@@ -79,13 +70,11 @@ export class GestionHabitaciones implements OnInit, OnDestroy {
     const index = this.habitaciones.findIndex(h => h.id === id);
     if (index !== -1) {
       this.habitaciones[index] = habitacionActualizada;
+      this.habitaciones = [...this.habitaciones]; // Reasignar para propagar cambios al gráfico
     }
 
     this.cdr.detectChanges();
-    this.renderizarGrafico();
   }
-
-
 
   async eliminarHabitacion(idEliminar:number){
     await fetch(`http://localhost:8080/habitaciones/${idEliminar}`,
@@ -97,7 +86,6 @@ export class GestionHabitaciones implements OnInit, OnDestroy {
       cliente => cliente.id !== idEliminar
     );
     this.cdr.detectChanges();
-    this.renderizarGrafico();
   }
 
   toggleServicio(id: number) {
@@ -156,6 +144,7 @@ export class GestionHabitaciones implements OnInit, OnDestroy {
       const indice = this.habitaciones.findIndex(h => h.id === this.idHabitacionEdicion);
       if (indice !== -1) {
         this.habitaciones[indice] = habitacionGuardada;
+        this.habitaciones = [...this.habitaciones]; // Reasignar para propagar cambios al gráfico
       }
 
       this.idHabitacionEdicion = null;
@@ -172,7 +161,7 @@ export class GestionHabitaciones implements OnInit, OnDestroy {
       });
 
       const habitacionGuardada = await respuesta.json();
-      this.habitaciones.push(habitacionGuardada);
+      this.habitaciones = [...this.habitaciones, habitacionGuardada]; // Reasignar para propagar cambios al gráfico
     }
 
     this.nuevaHabitacion = {
@@ -186,7 +175,6 @@ export class GestionHabitaciones implements OnInit, OnDestroy {
     this.nombreImagen = '';
 
     this.cdr.detectChanges();
-    this.renderizarGrafico();
   }
 
   iniciarEdicion(habitacion: Habitacion) {
@@ -221,125 +209,6 @@ export class GestionHabitaciones implements OnInit, OnDestroy {
     this.serviciosSeleccionados = [];
     this.nombreImagen = '';
     this.cdr.detectChanges();
-  }
-
-  obtenerDatosGrafico() {
-    const conteos: { [key: string]: number } = {};
-    
-    // Lista ordenada de tipos para consistencia visual en el gráfico
-    const tiposOrdenados = ['Individual', 'Doble', 'Twin', 'Triple', 'Cuadruple', 'Deluxe', 'Suite'];
-    tiposOrdenados.forEach(t => conteos[t] = 0);
-
-    this.habitaciones.forEach(h => {
-      if (h.tipo) {
-        conteos[h.tipo] = (conteos[h.tipo] || 0) + 1;
-      }
-    });
-
-    // Filtrar los tipos que no tienen habitaciones para no saturar el gráfico
-    const labels = Object.keys(conteos).filter(tipo => conteos[tipo] > 0);
-    const values = labels.map(tipo => conteos[tipo]);
-
-    return { labels, values };
-  }
-
-  renderizarGrafico() {
-    setTimeout(() => {
-      const ctx = document.getElementById('habitacionesChart') as HTMLCanvasElement;
-      if (!ctx) return;
-
-      const datos = this.obtenerDatosGrafico();
-
-      if (this.chartInstance) {
-        this.chartInstance.destroy();
-      }
-
-      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-      
-      // Colores adaptables al tema claro y oscuro
-      const textColor = isDark ? '#a1a1aa' : '#71717a';
-      const gridColor = isDark ? '#27272a' : '#eeeeef';
-      const barColor = isDark ? '#fafafa' : '#18181b';
-      const barHoverColor = isDark ? '#ffffff' : '#000000';
-      const tooltipBg = isDark ? '#27272a' : '#09090b';
-      const tooltipBorder = isDark ? '#3f3f46' : '#27272a';
-
-      this.chartInstance = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: datos.labels,
-          datasets: [{
-            label: 'Habitaciones',
-            data: datos.values,
-            backgroundColor: barColor,
-            hoverBackgroundColor: barHoverColor,
-            borderRadius: 6,
-            borderSkipped: false,
-            barPercentage: 0.55,
-            categoryPercentage: 0.75,
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          animation: {
-            duration: 500,
-            easing: 'easeOutQuart'
-          },
-          plugins: {
-            legend: { display: false },
-            tooltip: {
-              backgroundColor: tooltipBg,
-              titleColor: '#ffffff',
-              bodyColor: '#d4d4d8',
-              borderColor: tooltipBorder,
-              borderWidth: 1,
-              padding: 10,
-              cornerRadius: 8,
-              displayColors: false,
-              callbacks: {
-                label: (context) => ` ${context.parsed.y} habitación(es)`
-              }
-            }
-          },
-          scales: {
-            x: {
-              grid: { display: false },
-              border: { display: false },
-              ticks: {
-                color: textColor,
-                font: { family: "'Geist', sans-serif", size: 10, weight: 'normal' }
-              }
-            },
-            y: {
-              beginAtZero: true,
-              grid: { color: gridColor },
-              border: { display: false },
-              ticks: {
-                color: textColor,
-                font: { family: "'Geist', sans-serif", size: 10 },
-                stepSize: 1
-              }
-            }
-          }
-        }
-      });
-    }, 0);
-  }
-
-  suscribirseACambiosTema() {
-    this.observerTema = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.attributeName === 'data-theme') {
-          this.renderizarGrafico();
-        }
-      });
-    });
-
-    this.observerTema.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['data-theme']
-    });
   }
 
 }

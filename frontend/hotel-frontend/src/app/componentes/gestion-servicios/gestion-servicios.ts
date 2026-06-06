@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Servicios} from '../../models';
@@ -12,6 +12,8 @@ import { Servicios} from '../../models';
 export class GestionServicios implements OnInit {
 
   constructor(private cdr: ChangeDetectorRef) {}
+
+  @Output() serviciosCambiar = new EventEmitter<void>();
 
   serviciosDisponibles: Servicios[] = [];
   nuevoServicio: string = '';
@@ -38,6 +40,7 @@ export class GestionServicios implements OnInit {
 
     this.nuevoServicio = '';
     await this.cargarServicios();
+    this.serviciosCambiar.emit();
   }
 
   async eliminarServicio(id: number) {
@@ -49,5 +52,7 @@ export class GestionServicios implements OnInit {
       s => s.id !== id
     );
     this.cdr.detectChanges();
+    this.serviciosCambiar.emit();
   }
 }
+

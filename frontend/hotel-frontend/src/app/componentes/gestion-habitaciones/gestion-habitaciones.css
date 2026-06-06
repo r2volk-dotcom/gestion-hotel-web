@@ -8,40 +8,15 @@
 
 .top-row > * {
   height: 430px; /* alto ampliado para mostrar holgadamente 7 servicios con scroll */
+  min-width: 0;
 }
 
-/* Columna B: Asegura que el componente de Angular llene el alto del grid */
-app-gestion-servicios {
+/* Asegura que los componentes de Angular llenen el alto del grid y respeten el ancho */
+app-gestion-servicios,
+app-grafico-habitaciones {
   display: block;
   height: 100%;
-}
-
-.grid-chart {
-  overflow: hidden;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  background: var(--surface);
-  box-shadow: var(--shadow-xs);
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-}
-
-.grid-chart .chart-header h3 {
-  margin: 0 0 16px 0;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text-secondary);
-}
-
-.grid-chart .chart-container {
-  position: relative;
-  flex: 1;
-  width: 100%;
-  min-height: 0; /* permite que flexbox maneje el alto adecuadamente */
+  min-width: 0;
 }
 
 .grid-placeholder {

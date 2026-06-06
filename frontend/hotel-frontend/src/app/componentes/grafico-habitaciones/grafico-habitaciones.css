@@ -1,0 +1,38 @@
+:host {
+  display: block;
+  height: 100%;
+  width: 100%;
+  min-width: 0;
+}
+
+.grid-chart {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-xs);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+  min-width: 0;
+}
+
+.grid-chart .chart-header h3 {
+  margin: 0 0 16px 0;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.grid-chart .chart-container {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  min-width: 0;
+}
