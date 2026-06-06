@@ -21,7 +21,7 @@ public class ServicioController {
     public List<Servicio> listar() {return servicioServices.listar();}
 
     @PostMapping
-    public Servicio guarda(@RequestBody Servicio servicio) {
+    public Servicio guardar(@RequestBody Servicio servicio) {
         return servicioServices.guardar(servicio);
     }
 

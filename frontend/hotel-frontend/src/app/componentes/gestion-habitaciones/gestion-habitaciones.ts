@@ -1,5 +1,4 @@
-// importa Component, OnInit (ciclo de vida) y ChangeDetectorRef de Angular
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef} from '@angular/core';
 // importa CommonModule para ngClass, ngModel y ngValue
 import { CommonModule } from '@angular/common';
 // importa FormsModule para usar [(ngModel)] (two-way binding)
@@ -7,15 +6,15 @@ import { FormsModule } from '@angular/forms';
 // importa la interface Habitacion desde el archivo de modelos
 import { Habitacion, Servicios} from '../../models';
 
-// decorador que define el componente Habitaciones
+
 @Component({
-  selector: 'app-habitaciones',      // etiqueta HTML: <app-habitaciones>
-  imports: [CommonModule, FormsModule], // modulos necesarios
-  templateUrl: './habitaciones.html', // archivo de plantilla HTML
-  styleUrl: './habitaciones.css'     // archivo de estilos CSS
+  selector: 'app-gestion-habitaciones',
+  imports: [CommonModule, FormsModule],
+  templateUrl: './gestion-habitaciones.html',
+  styleUrl: './gestion-habitaciones.css',
 })
-// clase del componente Habitaciones que implementa OnInit
-export class Habitaciones implements OnInit {
+export class GestionHabitaciones {
+
   // constructor que inyecta ChangeDetectorRef para deteccion manual de cambios
   constructor(private cdr: ChangeDetectorRef) {}
 
@@ -121,4 +120,5 @@ export class Habitaciones implements OnInit {
     // fuerza la deteccion de cambios de Angular
     this.cdr.detectChanges();
   }
+
 }

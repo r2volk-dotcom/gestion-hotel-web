@@ -1,8 +1,12 @@
 <section class="section">
   <div class="section-header">
     <h2>Habitaciones</h2>
+    <div class="form-actions">
+      <button class="btn btn-primary" (click)="abrirFormulario()">Registrar Habitacion</button>
+    </div>
   </div>
 
+  <!-- seccion del formulario para registrar habitacion 
   <div class="form-section">
     <h3>Registrar habitacion</h3>
     <div class="form-grid">
@@ -22,10 +26,8 @@
         <label for="hab-disponible">Disponible</label>
       </div>
     </div>
-    <div class="form-actions">
-      <button class="btn btn-primary" (click)="guardarHabitacion()">Guardar habitacion</button>
-    </div>
   </div>
+  -->
 
   <div class="list-section">
     <div class="list-header">
@@ -46,6 +48,11 @@
                       [class.badge-occupied]="!habitacion.disponible">
                   {{ habitacion.disponible ? "Disponible" : "Ocupado" }}
                 </span>
+                <div class="room-card-servicios">
+                  @for (servicio of habitacion.servicios; track servicio.id) {
+                    <span class="servicio-tag">{{ servicio.nombre }}</span>
+                  }
+                </div>
               </div>
               <div class="room-card-footer">
                 <span class="room-card-price">S/ {{ habitacion.precio }}</span>

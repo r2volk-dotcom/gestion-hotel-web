@@ -17,6 +17,9 @@ export interface Habitacion {
   precio: number;
   disponible: boolean;
   imagen: string;
+
+  //variables opcionales, no vienen del backend
+  servicios?: Servicios[]; 
 }
 
 // Interface de Reserva
@@ -30,4 +33,10 @@ export interface Reserva {
 
   //variables opcionales, no vienen del backend
   editando? : boolean;
+}
+
+// Interface de Servicios
+export interface Servicios {
+  id? : number;
+  nombre: string;
 }

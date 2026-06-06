@@ -1,0 +1,45 @@
+
+<div class="section-header">
+    <h2>Habitaciones</h2>
+    <div class="form-actions">
+        <button class="btn btn-primary" (click)="abrirFormulario()">Registrar Habitacion</button>
+    </div>
+</div>
+
+<div class="modal-content" (click)="$event.stopPropagation()">
+    <h3>Registrar habitacion</h3>
+
+    <div class="form-grid">
+        <select [(ngModel)]="nuevaHabitacion.tipo">
+            <option value="" disabled selected>Escoge una habitación</option>
+            <option value="Individual">Individual</option>
+            <option value="Doble">Doble</option>
+            <option value="Twin">Twin</option>
+            <option value="Triple">Triple</option>
+            <option value="Cuadruple">Cuádruple</option>
+            <option value="Deluxe">Deluxe</option>
+            <option value="Suite">Suite</option>
+        </select>
+        <input type="number" placeholder="Precio" [(ngModel)]="nuevaHabitacion.precio">
+        <div class="checkbox-field">
+        <input type="checkbox" id="hab-disponible" [(ngModel)]="nuevaHabitacion.disponible">
+        <label for="hab-disponible">Disponible</label>
+        </div>
+    </div>
+
+    <div class="servicios-section">
+        <h4>Servicios disponibles</h4>
+        @for (servicio of serviciosDisponibles; track servicio.id) {
+        <label class="checkbox-field">
+            <input type="checkbox" 
+                [checked]="serviciosSeleccionados.includes(servicio.id!)"
+                (change)="toggleServicio(servicio.id!)">
+            {{ servicio.nombre }}
+        </label>
+        }
+    </div>
+
+    <div class="form-actions">
+        <button class="btn btn-primary" (click)="guardarHabitacion(); cerrarFormulario()">Guardar</button>
+    </div>
+</div>
