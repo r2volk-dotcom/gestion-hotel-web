@@ -32,6 +32,8 @@ export class GestionHabitaciones implements OnInit, OnDestroy {
 
   chartInstance: any = null;
   observerTema: MutationObserver | null = null;
+  idHabitacionEdicion: number | null = null;
+  imagenOriginalEdicion: string = '';
 
   async ngOnInit() {
     await this.cargarHabitaciones();
@@ -63,9 +65,27 @@ export class GestionHabitaciones implements OnInit, OnDestroy {
     this.cdr.detectChanges();
   }
 
-  obtenerImagen(habitacion: Habitacion): string {
-    return habitacion.imagen || '';
+
+  async editarHabitacion(id:number, tipo: string, precio: number, disponible:boolean, imagen: string, servicios: Servicios[]){
+    const respuesta = await fetch(`http://localhost:8080/habitaciones/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ tipo, precio, disponible, imagen, servicios })
+    });
+
+    const habitacionActualizada = await respuesta.json();
+    const index = this.habitaciones.findIndex(h => h.id === id);
+    if (index !== -1) {
+      this.habitaciones[index] = habitacionActualizada;
+    }
+
+    this.cdr.detectChanges();
+    this.renderizarGrafico();
   }
+
+
 
   async eliminarHabitacion(idEliminar:number){
     await fetch(`http://localhost:8080/habitaciones/${idEliminar}`,
@@ -117,22 +137,49 @@ export class GestionHabitaciones implements OnInit, OnDestroy {
       return { id: id } as Servicios;
     });
 
-    const respuesta = await fetch('http://localhost:8080/habitaciones', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(this.nuevaHabitacion)
-    });
+    if (this.idHabitacionEdicion !== null) {
+      // MODO EDICIÓN: si no se seleccionó nueva imagen, mantener la original
+      if (!this.nuevaHabitacion.imagen) {
+        this.nuevaHabitacion.imagen = this.imagenOriginalEdicion;
+      }
 
-    const habitacionGuardada = await respuesta.json();
-    this.habitaciones.push(habitacionGuardada);
+      const respuesta = await fetch(`http://localhost:8080/habitaciones/${this.idHabitacionEdicion}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(this.nuevaHabitacion)
+      });
+
+      const habitacionGuardada = await respuesta.json();
+      
+      const indice = this.habitaciones.findIndex(h => h.id === this.idHabitacionEdicion);
+      if (indice !== -1) {
+        this.habitaciones[indice] = habitacionGuardada;
+      }
+
+      this.idHabitacionEdicion = null;
+      this.imagenOriginalEdicion = '';
+
+    } else {
+      // MODO REGISTRO
+      const respuesta = await fetch('http://localhost:8080/habitaciones', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(this.nuevaHabitacion)
+      });
+
+      const habitacionGuardada = await respuesta.json();
+      this.habitaciones.push(habitacionGuardada);
+    }
 
     this.nuevaHabitacion = {
       tipo: '',
       precio: 0,
       disponible: true,
-      imagen:'' 
+      imagen: ''
     };
 
     this.serviciosSeleccionados = [];
@@ -140,6 +187,40 @@ export class GestionHabitaciones implements OnInit, OnDestroy {
 
     this.cdr.detectChanges();
     this.renderizarGrafico();
+  }
+
+  iniciarEdicion(habitacion: Habitacion) {
+    this.idHabitacionEdicion = habitacion.id || null;
+    this.imagenOriginalEdicion = habitacion.imagen || '';
+
+    this.nuevaHabitacion = {
+      tipo: habitacion.tipo,
+      precio: habitacion.precio,
+      disponible: habitacion.disponible,
+      imagen: '', // no es necesario rellenar la imagen, pero se permite editarla
+      servicios: habitacion.servicios || []
+    };
+
+    this.serviciosSeleccionados = habitacion.servicios ? habitacion.servicios.map(s => s.id!) : [];
+    this.nombreImagen = '';
+    this.cdr.detectChanges();
+  }
+
+  cancelarEdicion() {
+    this.idHabitacionEdicion = null;
+    this.imagenOriginalEdicion = '';
+    
+    this.nuevaHabitacion = {
+      tipo: '',
+      precio: 0,
+      disponible: true,
+      imagen: '',
+      servicios: []
+    };
+
+    this.serviciosSeleccionados = [];
+    this.nombreImagen = '';
+    this.cdr.detectChanges();
   }
 
   obtenerDatosGrafico() {

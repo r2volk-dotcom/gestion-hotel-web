@@ -432,12 +432,51 @@ app-gestion-servicios {
 
 /* ===== BOTONES ===== */
 .form-actions {
+  display: flex;
+  gap: 10px;
   margin-top: 16px;
 }
 
 .form-actions .btn {
-  width: 100%;
+  flex: 1;
 }
+
+/* ===== BOTONES DE ACCION EN LA TABLA ===== */
+.habitaciones-tabla .btn-edit,
+.habitaciones-tabla .btn-delete {
+  border: none !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  color: var(--text-muted) !important;
+  padding: 6px !important;
+  margin: 0 !important;
+  box-shadow: none !important;
+  min-height: unset !important;
+  height: 28px !important;
+  width: 28px !important;
+  border-radius: 6px !important;
+  transition: color 150ms ease, background-color 150ms ease !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transform: none !important;
+  cursor: pointer;
+}
+
+.habitaciones-tabla .btn-edit:hover {
+  background: var(--surface-soft) !important;
+  background-color: var(--surface-soft) !important;
+  color: var(--text-primary) !important;
+  transform: none !important;
+}
+
+.habitaciones-tabla .btn-delete:hover {
+  background: transparent !important;
+  background-color: transparent !important;
+  color: var(--danger) !important;
+  transform: none !important;
+}
+
 
 .empty-list {
   padding: 24px;
