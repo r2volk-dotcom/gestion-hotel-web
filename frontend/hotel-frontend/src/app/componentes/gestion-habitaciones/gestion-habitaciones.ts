@@ -2,8 +2,8 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Habitacion, Servicios } from '../../models';
-import { GestionServicios } from '../gestion-servicios/gestion-servicios';
-import { GraficoHabitaciones } from '../grafico-habitaciones/grafico-habitaciones';
+import { GestionServicios } from './componentes/gestion-servicios/gestion-servicios';
+import { GraficoHabitaciones } from './componentes/grafico-habitaciones/grafico-habitaciones';
 
 @Component({
   selector: 'app-gestion-habitaciones',

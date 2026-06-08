@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnInit, OnDestroy, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Habitacion } from '../../models';
+import { Habitacion } from '../../../../models';
 import { Chart } from 'chart.js/auto';
 
 @Component({
