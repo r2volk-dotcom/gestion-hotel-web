@@ -5,88 +5,16 @@
     <h2>Clientes</h2>
   </div>
 
-  <!-- seccion del formulario para registrar cliente -->
-  <div class="form-section">
-    <!-- titulo de la seccion del formulario -->
-    <h3>Registrar cliente</h3>
-    <!-- grid de campos del formulario -->
-    <div class="form-grid">
-      <!-- input de nombre con two-way binding al modelo -->
-      <input type="text" placeholder="Nombre" [(ngModel)]="nuevoCliente.nombre">
-      <!-- input de apellido con two-way binding al modelo -->
-      <input type="text" placeholder="Apellido" [(ngModel)]="nuevoCliente.apellido">
-      <!-- input de DNI con two-way binding al modelo -->
-      <input type="text" placeholder="DNI" [(ngModel)]="nuevoCliente.dni">
-      <!-- input de telefono con two-way binding al modelo -->
-      <input type="text" placeholder="Telefono" [(ngModel)]="nuevoCliente.telefono">
-      <!-- input de correo con two-way binding al modelo -->
-      <input type="text" placeholder="Correo" [(ngModel)]="nuevoCliente.correo">
-    </div>
-    <!-- contenedor de botones de accion -->
-    <div class="form-actions">
-      <!-- boton que ejecuta guardarCliente al hacer click -->
-      <button class="btn btn-primary" (click)="guardarCliente()">Guardar cliente</button>
-      <!-- buscar cliente -->
-      <input type="text" placeholder="Nombre y Apellido" [(ngModel)]="nombreBuscar">
-      <button class="btn btn-primary" (click)="buscarClientes(nombreBuscar)">
-        <!-- icono lupa -->
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 1px;">
-          <circle cx="11" cy="11" r="8"/>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-        </svg>
-      </button>
-    </div>
-  </div>
+  <!-- Componente Formulario de Registro y Búsqueda -->
+  <app-formulario-cliente
+    (clienteGuardar)="guardarCliente($event)"
+    (clienteBuscar)="buscarClientes($event)">
+  </app-formulario-cliente>
 
-  <!-- seccion de la lista de clientes -->
-  <div class="list-section">
-    <!-- header de la lista con titulo -->
-    <div class="list-header">
-      <span>Lista de clientes</span>
-    </div>
-    @if (clientes.length > 0) {
-    <ul class="list">
-      @for (cliente of clientes; track cliente.id) {
-      <li class="list-item">
-        <span class="label">{{ cliente.nombre }} {{ cliente.apellido }}</span>
-        <span class="divider">|</span>
-        DNI: {{ cliente.dni }}
-        
-        <button class="btn-delete" [attr.data-id]="cliente.id" (click)="eliminarCliente(cliente.id!)">
-          <svg width="17" height="17" viewBox="0 0 24 24"
-                fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="3 6 5 6 21 6"/>
-            <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
-            <path d="M10 11v6"/>
-            <path d="M14 11v6"/>
-            <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
-          </svg>
-        </button>
-      </li>
-      }
-    </ul>
-    } @else {
-      <div class="empty-list">No hay clientes registrados</div>
-    }
-  </div>
-
-  <div class="list-section">
-    <div class="list-header">
-      @if (clientesBuscados.length > 0) {
-      <ul class="list-item">
-        @for (cliente of clientesBuscados; track cliente.id) {
-        <li class="list-item">
-          <span class="label">{{cliente.nombre}} {{cliente.apellido}}</span>
-          <span class="divider">|</span>
-          <span> DNI: {{cliente.dni}}</span>
-        </li>
-        }
-      </ul>
-      } @else {
-        <div class="empty-list">No hay clientes registrados</div>
-      }
-    </div>
-
-  </div>
-
+  <!-- Componente Tabla de Listados -->
+  <app-tabla-clientes
+    [clientes]="clientes"
+    [clientesBuscados]="clientesBuscados"
+    (clienteEliminar)="eliminarCliente($event)">
+  </app-tabla-clientes>
 </section>

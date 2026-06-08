@@ -320,29 +320,7 @@ svg {
   color: currentColor;
 }
 
-.nav-item:hover {
-  border-color: rgba(228, 228, 231, 0.9);
-  background: rgba(255, 255, 255, 0.82);
-  color: var(--text-primary);
-  transform: translateX(2px);
-}
 
-.nav-item.active {
-  border-color: #d9d9de;
-  background: #ffffff;
-  color: var(--text-primary);
-  box-shadow: var(--shadow-xs);
-}
-
-.nav-item.active::before {
-  position: absolute;
-  left: -7px;
-  width: 3px;
-  height: 18px;
-  border-radius: 999px;
-  background: #09090b;
-  content: "";
-}
 
 .sidebar-footer {
   display: grid;
@@ -926,18 +904,7 @@ select.badge-default {
   border-radius: 999px;
 }
 
-.badge-reservado,
-.badge-checkin {
-  border-color: rgba(21, 128, 61, 0.18);
-  background: var(--success-soft);
-  color: var(--success);
-}
 
-.badge-checkout {
-  border-color: rgba(24, 24, 27, 0.12);
-  background: var(--surface-soft);
-  color: var(--text-primary);
-}
 
 .empty-list {
   padding: 42px 24px;

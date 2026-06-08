@@ -4,6 +4,8 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 // importa la interface Habitacion desde el archivo de modelos
 import { Habitacion } from '../../models';
+// importa la URL base de la API
+import { API_BASE_URL } from '../../api.config';
 
 // decorador que define el componente Habitaciones
 @Component({
@@ -28,7 +30,7 @@ export class Habitaciones implements OnInit {
   // metodo async que obtiene la lista de habitaciones del backend
   async cargarHabitaciones() {
     // peticion GET al endpoint de habitaciones
-    const respuesta = await fetch('http://localhost:8080/habitaciones');
+    const respuesta = await fetch(`${API_BASE_URL}/habitaciones`);
     // convierte la respuesta a JSON
     const datos = await respuesta.json();
     // asigna los datos al array de habitaciones
@@ -42,7 +44,7 @@ export class Habitaciones implements OnInit {
   }
 
   async eliminarHabitacion(idEliminar:number){
-    await fetch(`http://localhost:8080/habitaciones/${idEliminar}`,
+    await fetch(`${API_BASE_URL}/habitaciones/${idEliminar}`,
     {
       method: 'DELETE'
     });

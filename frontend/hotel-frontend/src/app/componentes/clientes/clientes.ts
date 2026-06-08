@@ -2,15 +2,18 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 // importa CommonModule para ngClass, ngModel y ngValue
 import { CommonModule } from '@angular/common';
-// importa FormsModule para usar [(ngModel)] (two-way binding)
-import { FormsModule } from '@angular/forms';
 // importa la interface Cliente desde el archivo de modelos
 import { Cliente } from '../../models';
+// importa la URL base de la API
+import { API_BASE_URL } from '../../api.config';
+// importa los nuevos subcomponentes
+import { FormularioCliente } from './componentes/formulario-cliente/formulario-cliente';
+import { TablaClientes } from './componentes/tabla-clientes/tabla-clientes';
 
 // decorador que define el componente Clientes
 @Component({
   selector: 'app-clientes',          // etiqueta HTML: <app-clientes>
-  imports: [CommonModule, FormsModule], // modulos necesarios
+  imports: [CommonModule, FormularioCliente, TablaClientes], // modulos necesarios
   templateUrl: './clientes.html',    // archivo de plantilla HTML
   styleUrl: './clientes.css'         // archivo de estilos CSS
 })
@@ -19,21 +22,9 @@ export class Clientes implements OnInit {
   // constructor que inyecta ChangeDetectorRef para deteccion manual de cambios
   constructor(private cdr: ChangeDetectorRef) {}
 
-  //nombre a buscar
-  nombreBuscar: string = '';
-
   // array que almacena la lista de clientes cargados
   clientes: Cliente[] = [];
   clientesBuscados: Cliente[] = [];
-
-  // objeto que representa el formulario de nuevo cliente
-  nuevoCliente: Cliente = {
-    nombre: '',                      // campo nombre vacio
-    apellido: '',                    // campo apellido vacio
-    dni: '',                         // campo DNI vacio
-    telefono: '',                    // campo telefono vacio
-    correo: ''                       // campo correo vacio
-  };
 
   // metodo del ciclo de vida: se ejecuta al iniciar el componente
   async ngOnInit() {
@@ -43,7 +34,7 @@ export class Clientes implements OnInit {
   // metodo async que obtiene la lista de clientes del backend
   async cargarClientes() {
     // peticion GET al endpoint de clientes
-    const respuesta = await fetch('http://localhost:8080/clientes');
+    const respuesta = await fetch(`${API_BASE_URL}/clientes`);
     // convierte la respuesta a JSON
     const datos = await respuesta.json();
     // asigna los datos al array de clientes
@@ -54,14 +45,13 @@ export class Clientes implements OnInit {
 
   async buscarClientes(name:string){
     //pido get al endoint de clientes
-    const respuesta = await fetch(`http://localhost:8080/clientes/nombre/${name}`);
+    const respuesta = await fetch(`${API_BASE_URL}/clientes/nombre/${name}`);
     this.clientesBuscados = await respuesta.json();
     this.cdr.detectChanges();
   }
 
   async eliminarCliente(idEliminar:number){
-    console.log(idEliminar)
-    await fetch(`http://localhost:8080/clientes/${idEliminar}`,
+    await fetch(`${API_BASE_URL}/clientes/${idEliminar}`,
     {
       method: 'DELETE'
     });
@@ -78,14 +68,14 @@ export class Clientes implements OnInit {
   }
 
   // metodo async que guarda un nuevo cliente en el backend
-  async guardarCliente() {
+  async guardarCliente(nuevoCliente: Cliente) {
     // peticion POST al endpoint de clientes
-    const respuesta = await fetch('http://localhost:8080/clientes', {
+    const respuesta = await fetch(`${API_BASE_URL}/clientes`, {
       method: 'POST',                // metodo HTTP POST
       headers: {
         'Content-Type': 'application/json' // cabecera JSON
       },
-      body: JSON.stringify(this.nuevoCliente) // cuerpo con datos del cliente
+      body: JSON.stringify(nuevoCliente) // cuerpo con datos del cliente
     });
 
     // convierte la respuesta a JSON (cliente guardado)
@@ -93,15 +83,6 @@ export class Clientes implements OnInit {
 
     // agrega el nuevo cliente al array local
     this.clientes.push(clienteGuardado);
-
-    // reinicia el formulario con valores vacios
-    this.nuevoCliente = {
-      nombre: '',
-      apellido: '',
-      dni: '',
-      telefono: '',
-      correo: ''
-    };
     // fuerza la deteccion de cambios de Angular
     this.cdr.detectChanges();
   }

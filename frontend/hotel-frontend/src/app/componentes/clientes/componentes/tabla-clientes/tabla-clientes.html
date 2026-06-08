@@ -1,0 +1,49 @@
+<!-- seccion de la lista de clientes -->
+<div class="list-section">
+  <!-- header de la lista con titulo -->
+  <div class="list-header">
+    <span>Lista de clientes</span>
+  </div>
+  @if (clientes.length > 0) {
+  <ul class="list">
+    @for (cliente of clientes; track cliente.id) {
+    <li class="list-item">
+      <span class="label">{{ cliente.nombre }} {{ cliente.apellido }}</span>
+      <span class="divider">|</span>
+      DNI: {{ cliente.dni }}
+      
+      <button class="btn-delete" [attr.data-id]="cliente.id" (click)="eliminar(cliente.id!)">
+        <svg width="17" height="17" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="3 6 5 6 21 6"/>
+          <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+          <path d="M10 11v6"/>
+          <path d="M14 11v6"/>
+          <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+        </svg>
+      </button>
+    </li>
+    }
+  </ul>
+  } @else {
+    <div class="empty-list">No hay clientes registrados</div>
+  }
+</div>
+
+<div class="list-section">
+  <div class="list-header">
+    @if (clientesBuscados.length > 0) {
+    <ul class="list-item">
+      @for (cliente of clientesBuscados; track cliente.id) {
+      <li class="list-item">
+        <span class="label">{{cliente.nombre}} {{cliente.apellido}}</span>
+        <span class="divider">|</span>
+        <span> DNI: {{cliente.dni}}</span>
+      </li>
+      }
+    </ul>
+    } @else {
+      <div class="empty-list">No hay clientes registrados</div>
+    }
+  </div>
+</div>

@@ -1,0 +1,48 @@
+.grid-placeholder {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-xs);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+}
+
+.grid-placeholder .placeholder-header h3 {
+  margin: 0 0 16px 0;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.grid-placeholder .placeholder-body {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius);
+  background: var(--surface-soft);
+}
+
+.grid-placeholder .placeholder-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-muted);
+}
+
+.grid-placeholder .placeholder-icon {
+  color: var(--text-muted);
+}
+
+.grid-placeholder .placeholder-content span {
+  font-size: 12px;
+  font-weight: 500;
+}

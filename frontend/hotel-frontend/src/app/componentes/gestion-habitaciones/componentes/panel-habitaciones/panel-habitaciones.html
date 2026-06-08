@@ -1,0 +1,25 @@
+<section class="section">
+  <div class="section-header">
+    <h2>Gestión Habitaciones</h2>
+  </div>
+
+  <div class="content-row">
+    <app-formulario-habitacion
+      [serviciosDisponibles]="serviciosDisponibles"
+      [serviciosSeleccionados]="serviciosSeleccionados"
+      [nombreImagen]="nombreImagen"
+      [nuevaHabitacion]="nuevaHabitacion"
+      [idHabitacionEdicion]="idHabitacionEdicion"
+      (alSeleccionarImagen)="alSeleccionarImagen($event)"
+      (toggleServicio)="toggleServicio($event)"
+      (guardarHabitacion)="guardarHabitacion()"
+      (cancelarEdicion)="cancelarEdicion()">
+    </app-formulario-habitacion>
+
+    <app-tabla-habitaciones
+      [habitaciones]="habitaciones"
+      (iniciarEdicion)="iniciarEdicion($event)"
+      (eliminarHabitacion)="eliminarHabitacion($event)">
+    </app-tabla-habitaciones>
+  </div>
+</section>

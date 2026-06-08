@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectorRef, Output, EventEmitter } from '@ang
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Servicios} from '../../../../models';
+import { API_BASE_URL } from '../../../../api.config';
 
 @Component({
   selector: 'app-gestion-servicios',
@@ -23,7 +24,7 @@ export class GestionServicios implements OnInit {
   }
 
   async cargarServicios() {
-    const respuesta = await fetch('http://localhost:8080/servicios');
+    const respuesta = await fetch(`${API_BASE_URL}/servicios`);
     const datos = await respuesta.json();
     this.serviciosDisponibles = datos;
     this.cdr.detectChanges();
@@ -32,7 +33,7 @@ export class GestionServicios implements OnInit {
   async guardarServicio() {
     if (!this.nuevoServicio.trim()) return;
 
-    await fetch('http://localhost:8080/servicios', {
+    await fetch(`${API_BASE_URL}/servicios`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ nombre: this.nuevoServicio.trim() })
@@ -44,7 +45,7 @@ export class GestionServicios implements OnInit {
   }
 
   async eliminarServicio(id: number) {
-    await fetch(`http://localhost:8080/servicios/${id}`, {
+    await fetch(`${API_BASE_URL}/servicios/${id}`, {
       method: 'DELETE'
     });
 
