@@ -33,7 +33,7 @@ export class ListaReservas {
     if (!habitacion) {
       return 'habitacion no encontrada';
     }
-    return habitacion.tipo + ' - S/ ' + habitacion.precio;
+    return habitacion.tipo + ' / S/ ' + habitacion.precio;
   }
 
   eliminar(id: number) {

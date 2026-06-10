@@ -84,10 +84,10 @@ export class GraficoHabitaciones implements OnChanges, OnInit, OnDestroy {
             data: datos.values,
             backgroundColor: barColor,
             hoverBackgroundColor: barHoverColor,
-            borderRadius: 6,
+            borderRadius: 17,
             borderSkipped: false,
-            barPercentage: 0.55,
-            categoryPercentage: 0.75,
+            barPercentage: 0.80,
+            categoryPercentage: 0.85,
           }]
         },
         options: {

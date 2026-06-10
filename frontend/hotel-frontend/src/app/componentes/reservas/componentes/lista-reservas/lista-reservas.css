@@ -1,1 +1,81 @@
-/* ListaReservas CSS */
+.reservas-tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.reservas-tabla th,
+.reservas-tabla td {
+  padding: 12px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.reservas-tabla th {
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: var(--surface-soft);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  border-bottom: 1px solid var(--border);
+}
+
+.reservas-tabla tbody tr:hover {
+  background: var(--surface-soft);
+}
+
+.col-id {
+  width: 50px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+
+.col-acciones {
+  width: 120px;
+  white-space: nowrap;
+}
+
+.col-acciones button {
+  border: none !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  color: var(--text-muted) !important;
+  padding: 6px !important;
+  margin: 0 !important;
+  box-shadow: none !important;
+  min-height: unset !important;
+  height: 28px !important;
+  width: 28px !important;
+  border-radius: 6px !important;
+  transition: color 150ms ease, background-color 150ms ease !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transform: none !important;
+  cursor: pointer;
+}
+
+.col-acciones button:hover {
+  background: var(--surface-soft) !important;
+  background-color: var(--surface-soft) !important;
+  color: var(--text-primary) !important;
+  transform: none !important;
+}
+
+.col-acciones .btn-delete:hover {
+  background: transparent !important;
+  background-color: transparent !important;
+  color: var(--danger) !important;
+  transform: none !important;
+}
+
+.table-scroll {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+}
