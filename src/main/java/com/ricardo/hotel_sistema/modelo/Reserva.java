@@ -13,20 +13,30 @@ public class Reserva {
 
     private Long clienteId;
     private Long habitacionId;
+    private Long empleadoId; // ID del empleado que realizó/editó la reserva
     private LocalDate fechaEntrada;
     private LocalDate fechaSalida;
     private String estado;
 
+    // Campos de snapshot financiero e histórico
+    private Double precioPorNoche;
+    private Double precioTotal;
+    private String promocionAplicada;
+
     public Reserva() {
     }
 
-    public Reserva(Long id, Long clienteId, Long habitacionId, LocalDate fechaEntrada, LocalDate fechaSalida, String estado) {
+    public Reserva(Long id, Long clienteId, Long habitacionId, Long empleadoId, LocalDate fechaEntrada, LocalDate fechaSalida, String estado, Double precioPorNoche, Double precioTotal, String promocionAplicada) {
         this.id = id;
         this.clienteId = clienteId;
         this.habitacionId = habitacionId;
+        this.empleadoId = empleadoId;
         this.fechaEntrada = fechaEntrada;
         this.fechaSalida = fechaSalida;
         this.estado = estado;
+        this.precioPorNoche = precioPorNoche;
+        this.precioTotal = precioTotal;
+        this.promocionAplicada = promocionAplicada;
     }
 
     public Long getId() {
@@ -75,5 +85,37 @@ public class Reserva {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public Long getEmpleadoId() {
+        return empleadoId;
+    }
+
+    public void setEmpleadoId(Long empleadoId) {
+        this.empleadoId = empleadoId;
+    }
+
+    public Double getPrecioPorNoche() {
+        return precioPorNoche;
+    }
+
+    public void setPrecioPorNoche(Double precioPorNoche) {
+        this.precioPorNoche = precioPorNoche;
+    }
+
+    public Double getPrecioTotal() {
+        return precioTotal;
+    }
+
+    public void setPrecioTotal(Double precioTotal) {
+        this.precioTotal = precioTotal;
+    }
+
+    public String getPromocionAplicada() {
+        return promocionAplicada;
+    }
+
+    public void setPromocionAplicada(String promocionAplicada) {
+        this.promocionAplicada = promocionAplicada;
     }
 }

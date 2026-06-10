@@ -1,7 +1,11 @@
 package com.ricardo.hotel_sistema.services;
 
 import com.ricardo.hotel_sistema.modelo.Reserva;
+import com.ricardo.hotel_sistema.modelo.Habitacion;
+import com.ricardo.hotel_sistema.modelo.Promocion;
 import com.ricardo.hotel_sistema.repositorio.ReservaRepository;
+import com.ricardo.hotel_sistema.repositorio.HabitacionRepository;
+import com.ricardo.hotel_sistema.repositorio.PromocionRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,12 +14,15 @@ import java.util.Optional;
 @Service
 public class ReservaServices {
 
-    //Repositorio que consulta la BD
-    private ReservaRepository reservaRepository;
+    private final ReservaRepository reservaRepository;
+    private final HabitacionRepository habitacionRepository;
+    private final PromocionRepository promocionRepository;
 
-    //constructor
-    public ReservaServices(ReservaRepository reservaRepository) {
+    // constructor
+    public ReservaServices(ReservaRepository reservaRepository, HabitacionRepository habitacionRepository, PromocionRepository promocionRepository) {
         this.reservaRepository = reservaRepository;
+        this.habitacionRepository = habitacionRepository;
+        this.promocionRepository = promocionRepository;
     }
 
     //listar reservas
@@ -33,6 +40,7 @@ public class ReservaServices {
 
     //guardar reserva
     public Reserva guardar(Reserva reserva) {
+        calcularValoresFinancieros(reserva);
         return reservaRepository.save(reserva);
     }
 
@@ -47,14 +55,49 @@ public class ReservaServices {
 
             r.setClienteId(nuevaReserva.getClienteId());
             r.setHabitacionId(nuevaReserva.getHabitacionId());
+            r.setEmpleadoId(nuevaReserva.getEmpleadoId());
             r.setFechaEntrada(nuevaReserva.getFechaEntrada());
             r.setFechaSalida(nuevaReserva.getFechaSalida());
             r.setEstado(nuevaReserva.getEstado());
+
+            // Recalcular valores financieros
+            calcularValoresFinancieros(r);
 
             return reservaRepository.save(r);
         }
 
         return null;
+    }
+
+    private void calcularValoresFinancieros(Reserva reserva) {
+        // Buscar la habitación asociada para obtener el precio actual
+        Habitacion habitacion = habitacionRepository.findById(reserva.getHabitacionId()).orElse(null);
+        if (habitacion == null) return;
+
+        // Calcular noches restando los días de cada fecha
+        long noches = reserva.getFechaSalida().toEpochDay() - reserva.getFechaEntrada().toEpochDay();
+        if (noches <= 0) {
+            noches = 1; // Por seguridad, al menos 1 noche
+        }
+
+        double precioNoche = habitacion.getPrecio();
+        double descuento = 0.0;
+        String nombrePromo = "Sin Promociones";
+
+        // Buscar si hay una promoción activa
+        Promocion promoActiva = promocionRepository.findByActiva(true).orElse(null);
+        if (promoActiva != null) {
+            descuento = promoActiva.getDescuento();
+            nombrePromo = promoActiva.getNombre();
+        }
+
+        // Calcular el precio total final
+        double total = (precioNoche * noches) * (1 - descuento);
+
+        // Guardar datos en la reserva
+        reserva.setPrecioPorNoche(precioNoche);
+        reserva.setPrecioTotal(total);
+        reserva.setPromocionAplicada(nombrePromo);
     }
 
     //eliminar reserva

@@ -27,16 +27,40 @@ export interface Reserva {
   id?: number;
   clienteId: number;
   habitacionId: number;
+  empleadoId?: number; // ID del empleado que realizó/editó la reserva
   fechaEntrada: string;
   fechaSalida: string;
   estado: string;
 
-  //variables opcionales, no vienen del backend
-  editando? : boolean;
+  // Campos financieros e históricos
+  precioPorNoche?: number;
+  precioTotal?: number;
+  promocionAplicada?: string;
+
+  // variables opcionales, no vienen del backend
+  editando?: boolean;
 }
 
 // Interface de Servicios
 export interface Servicios {
-  id? : number;
+  id?: number;
   nombre: string;
+}
+
+// Interface de Empleado
+export interface Empleado {
+  id?: number;
+  nombre: string;
+  apellido: string;
+  usuario: string;
+  contrasena: string;
+  rol: string;
+}
+
+// Interface de Promocion
+export interface Promocion {
+  id?: number;
+  nombre: string;
+  descuento: number; // Ej: 0.10 para 10%
+  activa: boolean;
 }

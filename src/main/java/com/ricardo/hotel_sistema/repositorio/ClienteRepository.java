@@ -5,7 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository; //maneja la entida
 
 import java.util.List;
 
-
 //Repositorio JPA para la entidad Cliente con ID tipo Long (CRUD automático) JpaRepository<tabla,tipo de dato del id>
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 

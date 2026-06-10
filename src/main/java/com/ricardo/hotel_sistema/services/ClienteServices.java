@@ -60,7 +60,7 @@ public class ClienteServices {
         return null;
     }
 
-    //metodo para actualizar cliente
+    // Actualizar cliente existente
     public Cliente actualizarCliente(Long id, Cliente cliente){
 
         //busca si existe la habitacion.
