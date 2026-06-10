@@ -1,0 +1,133 @@
+/* panel de la tabla */
+.table-panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  margin-top: 24px;
+}
+
+.habitaciones-widget {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 480px;
+  box-shadow: var(--shadow-xs);
+}
+
+.habitaciones-widget .list-header {
+  padding: 14px 16px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: var(--surface-soft);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.habitaciones-widget .table-scroll {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+/* tabla y celdas */
+.habitaciones-tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.habitaciones-tabla th,
+.habitaciones-tabla td {
+  padding: 12px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.habitaciones-tabla th {
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: var(--surface-soft);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  border-bottom: 1px solid var(--border);
+}
+
+.habitaciones-tabla tbody tr:hover {
+  background: var(--surface-soft);
+}
+
+.col-id {
+  width: 50px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+
+/* badges de estado disponible/ocupado */
+.badge-available {
+  border-color: rgba(21, 128, 61, 0.18);
+  background: var(--success-soft);
+  color: var(--success);
+}
+
+.badge-occupied {
+  border-color: rgba(220, 38, 38, 0.18);
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+/* botones de accion */
+.habitaciones-tabla .btn-edit,
+.habitaciones-tabla .btn-delete {
+  border: none !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  color: var(--text-muted) !important;
+  padding: 6px !important;
+  margin: 0 !important;
+  box-shadow: none !important;
+  min-height: unset !important;
+  height: 28px !important;
+  width: 28px !important;
+  border-radius: 6px !important;
+  transition: color 150ms ease, background-color 150ms ease !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transform: none !important;
+  cursor: pointer;
+}
+
+.habitaciones-tabla .btn-edit:hover {
+  background: var(--surface-soft) !important;
+  background-color: var(--surface-soft) !important;
+  color: var(--text-primary) !important;
+  transform: none !important;
+}
+
+.habitaciones-tabla .btn-delete:hover {
+  background: transparent !important;
+  background-color: transparent !important;
+  color: var(--danger) !important;
+  transform: none !important;
+}
+
+/* lista vacia */
+.empty-list {
+  padding: 24px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 14px;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+}

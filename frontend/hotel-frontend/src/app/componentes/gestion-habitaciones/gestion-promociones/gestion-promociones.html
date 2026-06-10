@@ -1,0 +1,37 @@
+<!-- gestion de promociones -->
+<div class="grid-placeholder">
+  <div class="placeholder-header">
+    <h3>Espacio Personalizado</h3>
+  </div>
+  <div class="placeholder-body">
+  </div>
+    <div class="servicios-section">
+      <div class="servicios-widget">
+        <table class="servicios-tabla">
+          <thead>
+            <tr>
+              <th>Servicio</th>
+              <th class="col-toggle">Activar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!--
+                        @for (servicio of serviciosDisponibles; track servicio.id) {
+              <tr>
+                <td>{{ servicio.nombre }}</td>
+                <td class="col-toggle">
+                  <label class="toggle">
+                    <input type="checkbox"
+                           [checked]="serviciosSeleccionados.includes(servicio.id!)"
+                           (change)="onToggleServicio(servicio.id!)">
+                    <span class="toggle-slider"></span>
+                  </label>
+                </td>
+              </tr>
+            }
+            -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+</div>

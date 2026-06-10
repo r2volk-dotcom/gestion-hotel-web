@@ -1,0 +1,17 @@
+/* estilos del contenedor de la seccion */
+.section {
+  margin-bottom: 40px;
+}
+
+.section-header h2::before {
+  display: none;
+}
+
+/* diseño de dos columnas en cuadricula */
+.content-row {
+  display: grid;
+  grid-template-columns: 20fr 50fr;
+  grid-template-rows: min-content;
+  gap: 20px;
+  padding: 0 24px 24px;
+}

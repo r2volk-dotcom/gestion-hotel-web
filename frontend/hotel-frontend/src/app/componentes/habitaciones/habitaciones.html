@@ -1,3 +1,4 @@
+<!-- Catalogo de habitaciones -->
 <section class="section">
   <div class="section-header">
     <h2>Habitaciones</h2>
@@ -7,8 +8,10 @@
     <div class="list-header">
       <span>Lista de habitaciones</span>
     </div>
+    <!-- Evalua si hay habitaciones para mostrar -->
     @if (habitaciones.length > 0) {
       <div class="rooms-grid">
+        <!-- Recorre la lista de habitaciones -->
         @for (habitacion of habitaciones; track habitacion.id) {
           <div class="room-card">
             <div class="room-card-image">
@@ -17,12 +20,14 @@
             <div class="room-card-body">
               <div class="room-card-header">
                 <h3 class="room-card-type">{{ habitacion.tipo }}</h3>
+                <!-- Badge dinamico de disponibilidad -->
                 <span class="badge"
                       [class.badge-available]="habitacion.disponible"
                       [class.badge-occupied]="!habitacion.disponible">
                   {{ habitacion.disponible ? "Disponible" : "Ocupado" }}
                 </span>
                 <div class="room-card-servicios">
+                  <!-- Muestra los servicios de la habitacion -->
                   @for (servicio of habitacion.servicios; track servicio.id) {
                     <span class="servicio-tag">{{ servicio.nombre }}</span>
                   }
@@ -30,6 +35,7 @@
               </div>
               <div class="room-card-footer">
                 <span class="room-card-price">S/ {{ habitacion.precio }}</span>
+                <!-- Boton para eliminar la habitacion -->
                 <button class="btn-delete" (click)="eliminarHabitacion(habitacion.id!)">
                   <svg width="17" height="17" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2">

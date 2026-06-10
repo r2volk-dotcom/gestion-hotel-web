@@ -1,15 +1,16 @@
+<!-- fila superior con grafico, promociones y servicios -->
 <div class="top-row">
-  <!-- Columna A: Gráfico -->
+  <!-- grafico de habitaciones -->
   <app-grafico-habitaciones [habitaciones]="habitaciones"></app-grafico-habitaciones>
 
-  <!-- Columna X: Promociones -->
+  <!-- gestion de promociones -->
   <app-gestion-promociones></app-gestion-promociones>
 
-  <!-- Columna B: Servicios -->
+  <!-- gestion de servicios -->
   <app-gestion-servicios (serviciosCambiar)="panelHabitaciones.cargarServicios()"></app-gestion-servicios>
 </div>
 
-<!-- Sección Inferior: Panel de Gestión -->
+<!-- seccion inferior con el panel de administracion -->
 <app-panel-habitaciones
   #panelHabitaciones
   [habitaciones]="habitaciones"

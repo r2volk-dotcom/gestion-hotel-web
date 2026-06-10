@@ -1,18 +1,19 @@
-<!-- seccion principal del componente Reservas -->
+<!-- seccion principal de reservas -->
 <section class="section">
-  <!-- header de la seccion con titulo -->
+  
+  <!-- header con titulo -->
   <div class="section-header">
     <h2>Reservas</h2>
   </div>
 
-  <!-- Componente Formulario de Registro -->
+  <!-- formulario de registro -->
   <app-formulario-reserva
     [clientes]="clientes"
     [habitaciones]="habitaciones"
     (reservaGuardar)="guardarReserva($event)">
   </app-formulario-reserva>
 
-  <!-- Componente Lista de Reservas -->
+  <!-- lista de reservas -->
   <app-lista-reservas
     [reservas]="reservas"
     [clientes]="clientes"

@@ -1,0 +1,39 @@
+<!-- formulario de registro de reserva -->
+<div class="form-section">
+  <h3>Registrar reserva</h3>
+
+  <!-- campos del formulario -->
+  <div class="form-grid">
+    
+    <!-- seleccion de cliente -->
+    <select [(ngModel)]="nuevaReserva.clienteId">
+      <option [ngValue]="0">Seleccione cliente</option>
+      <!-- recorre y muestra la lista de clientes -->
+      @for (cliente of clientes; track cliente.id) {
+      <option [ngValue]="cliente.id">
+        {{ cliente.nombre }} {{ cliente.apellido }}
+      </option>
+      }
+    </select>
+
+    <!-- seleccion de habitacion -->
+    <select [(ngModel)]="nuevaReserva.habitacionId">
+      <option [ngValue]="0">Seleccione habitacion</option>
+      <!-- recorre y muestra la lista de habitaciones -->
+      @for (habitacion of habitaciones; track habitacion.id) {
+      <option [ngValue]="habitacion.id">
+        {{ habitacion.tipo }} - S/ {{ habitacion.precio }}
+      </option>
+      }
+    </select>
+
+    <input type="date" [(ngModel)]="nuevaReserva.fechaEntrada">
+    <input type="date" [(ngModel)]="nuevaReserva.fechaSalida">
+  </div>
+
+  <!-- acciones del formulario -->
+  <div class="form-actions">
+    <!-- ejecuta guardar al hacer click -->
+    <button class="btn btn-primary" (click)="guardar()">Guardar reserva</button>
+  </div>
+</div>

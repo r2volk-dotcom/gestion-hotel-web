@@ -58,7 +58,7 @@ export interface Empleado {
 }
 
 // Interface de Promocion
-export interface Promocion {
+export interface Promociones {
   id?: number;
   nombre: string;
   descuento: number; // Ej: 0.10 para 10%

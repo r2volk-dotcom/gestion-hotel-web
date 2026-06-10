@@ -1,0 +1,30 @@
+<!-- formulario de registro de cliente -->
+<div class="form-section">
+  <h3>Registrar cliente</h3>
+  
+  <!-- campos del formulario -->
+  <div class="form-grid">
+    <input type="text" placeholder="Nombre" [(ngModel)]="nuevoCliente.nombre">
+    <input type="text" placeholder="Apellido" [(ngModel)]="nuevoCliente.apellido">
+    <input type="text" placeholder="DNI" [(ngModel)]="nuevoCliente.dni">
+    <input type="text" placeholder="Telefono" [(ngModel)]="nuevoCliente.telefono">
+    <input type="text" placeholder="Correo" [(ngModel)]="nuevoCliente.correo">
+  </div>
+  
+  <!-- botones de accion -->
+  <div class="form-actions">
+    <!-- ejecuta guardar al hacer click -->
+    <button class="btn btn-primary" (click)="guardar()">Guardar cliente</button>
+    
+    <input type="text" placeholder="Nombre y Apellido" [(ngModel)]="nombreBuscar">
+    
+    <!-- ejecuta buscar al hacer click -->
+    <button class="btn btn-primary" (click)="buscar()">
+      <!-- icono de lupa -->
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 1px;">
+        <circle cx="11" cy="11" r="8"/>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+    </button>
+  </div>
+</div>

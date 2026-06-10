@@ -1,0 +1,30 @@
+<!-- seccion de administracion de habitaciones -->
+<section class="section">
+  <div class="section-header">
+    <h2>Administración de Habitaciones</h2>
+  </div>
+
+  <!-- contenedor de columnas -->
+  <div class="content-row">
+    
+    <!-- formulario para registrar o editar habitacion -->
+    <app-formulario-habitacion
+      [serviciosDisponibles]="serviciosDisponibles"
+      [serviciosSeleccionados]="serviciosSeleccionados"
+      [nombreImagen]="nombreImagen"
+      [nuevaHabitacion]="nuevaHabitacion"
+      [idHabitacionEdicion]="idHabitacionEdicion"
+      (alSeleccionarImagen)="alSeleccionarImagen($event)"
+      (toggleServicio)="toggleServicio($event)"
+      (guardarHabitacion)="guardarHabitacion()"
+      (cancelarEdicion)="cancelarEdicion()">
+    </app-formulario-habitacion>
+
+    <!-- tabla de listado de habitaciones -->
+    <app-tabla-habitaciones
+      [habitaciones]="habitaciones"
+      (iniciarEdicion)="iniciarEdicion($event)"
+      (eliminarHabitacion)="eliminarHabitacion($event)">
+    </app-tabla-habitaciones>
+  </div>
+</section>

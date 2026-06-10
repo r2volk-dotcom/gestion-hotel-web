@@ -1,0 +1,59 @@
+<!-- modulo de gestion de servicios -->
+<section class="section">
+  <div class="section-header">
+    <h2>Gestión Servicios</h2>
+  </div>
+
+  <!-- formulario para agregar servicio -->
+  <div class="form-grid">
+    <input type="text" placeholder="Nuevo Servicio" [(ngModel)]="nuevoServicio">
+    <div class="form-actions">
+      <!-- click guarda el servicio -->
+      <button class="btn btn-primary" (click)="guardarServicio()">✚</button>
+    </div>
+  </div>
+
+  <!-- muestra la lista de servicios si existen -->
+  @if (serviciosDisponibles.length > 0) {
+    <div class="servicios-section">
+      <div class="servicios-widget">
+        <div class="table-scroll">
+          <table class="servicios-tabla">
+            <thead>
+              <tr>
+                <th class="col-id">#</th>
+                <th>Servicio</th>
+                <th class="col-toggle">Borrar</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- recorre y muestra la lista de servicios -->
+              @for (servicio of serviciosDisponibles; track servicio.id) {
+                <tr>
+                  <td class="col-id">{{ servicio.id }}</td>
+                  <td>{{ servicio.nombre }}</td>
+                  <td class="col-toggle">
+                    <!-- click elimina el servicio -->
+                    <button class="btn-delete" (click)="eliminarServicio(servicio.id!)">
+                      <!-- icono de tacho de basura -->
+                      <svg width="17" height="17" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="3 6 5 6 21 6"/>
+                        <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+                        <path d="M10 11v6"/>
+                        <path d="M14 11v6"/>
+                        <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+                      </svg>
+                    </button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  } @else {
+    <div class="empty-list">No hay servicios registrados</div>
+  }
+</section>

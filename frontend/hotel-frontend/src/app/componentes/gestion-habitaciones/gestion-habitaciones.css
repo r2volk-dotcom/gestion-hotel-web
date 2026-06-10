@@ -1,4 +1,4 @@
-/* ===== FILA SUPERIOR (chart + servicios + promociones) ===== */
+/* fila superior con grafico, servicios y promociones */
 .top-row {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -7,11 +7,11 @@
 }
 
 .top-row > * {
-  height: 430px; /* alto ampliado para mostrar holgadamente 7 servicios con scroll */
+  height: 430px;
   min-width: 0;
 }
 
-/* Asegura que los componentes de Angular llenen el alto del grid y respeten el ancho */
+/* comportamiento de los componentes de angular */
 app-gestion-servicios,
 app-grafico-habitaciones,
 app-gestion-promociones {
@@ -20,6 +20,7 @@ app-gestion-promociones {
   min-width: 0;
 }
 
+/* media query para pantallas medianas */
 @media (max-width: 1024px) {
   .top-row {
     grid-template-columns: 1fr;

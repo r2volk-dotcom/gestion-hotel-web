@@ -1,17 +1,18 @@
-<!-- seccion principal del componente Clientes -->
+<!-- seccion principal de clientes -->
 <section class="section">
-  <!-- header de la seccion con titulo -->
+  
+  <!-- header con titulo -->
   <div class="section-header">
     <h2>Clientes</h2>
   </div>
 
-  <!-- Componente Formulario de Registro y Búsqueda -->
+  <!-- formulario de registro y busqueda -->
   <app-formulario-cliente
     (clienteGuardar)="guardarCliente($event)"
     (clienteBuscar)="buscarClientes($event)">
   </app-formulario-cliente>
 
-  <!-- Componente Tabla de Listados -->
+  <!-- tabla de listados -->
   <app-tabla-clientes
     [clientes]="clientes"
     [clientesBuscados]="clientesBuscados"

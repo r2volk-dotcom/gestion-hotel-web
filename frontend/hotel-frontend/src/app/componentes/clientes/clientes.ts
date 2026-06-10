@@ -1,89 +1,95 @@
-// importa Component, OnInit (ciclo de vida) y ChangeDetectorRef de Angular
+// Importa Component, OnInit y ChangeDetectorRef de Angular
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-// importa CommonModule para ngClass, ngModel y ngValue
+// Importa CommonModule para directivas basicas
 import { CommonModule } from '@angular/common';
-// importa la interface Cliente desde el archivo de modelos
+// Importa la interfaz Cliente
 import { Cliente } from '../../models';
-// importa la URL base de la API
+// Importa la URL base del backend
 import { API_BASE_URL } from '../../api.config';
-// importa los nuevos subcomponentes
-import { FormularioCliente } from './componentes/formulario-cliente/formulario-cliente';
-import { TablaClientes } from './componentes/tabla-clientes/tabla-clientes';
+// Importa los subcomponentes del modulo
+import { FormularioCliente } from './formulario-cliente/formulario-cliente';
+import { TablaClientes } from './tabla-clientes/tabla-clientes';
 
-// decorador que define el componente Clientes
+// Decorador del componente
 @Component({
-  selector: 'app-clientes',          // etiqueta HTML: <app-clientes>
-  imports: [CommonModule, FormularioCliente, TablaClientes], // modulos necesarios
-  templateUrl: './clientes.html',    // archivo de plantilla HTML
-  styleUrl: './clientes.css'         // archivo de estilos CSS
+  selector: 'app-clientes', // etiqueta HTML
+  imports: [CommonModule, FormularioCliente, TablaClientes], // modulos importados
+  templateUrl: './clientes.html', // plantilla HTML
+  styleUrl: './clientes.css' // archivo de estilos
 })
-// clase del componente Clientes que implementa OnInit
+// Componente principal para gestionar clientes
 export class Clientes implements OnInit {
-  // constructor que inyecta ChangeDetectorRef para deteccion manual de cambios
+  // Inyecta detector de cambios
   constructor(private cdr: ChangeDetectorRef) {}
 
-  // array que almacena la lista de clientes cargados
+  // Listas de clientes cargados y buscados
   clientes: Cliente[] = [];
   clientesBuscados: Cliente[] = [];
 
-  // metodo del ciclo de vida: se ejecuta al iniciar el componente
+  // Se ejecuta al iniciar el componente
   async ngOnInit() {
-    await this.cargarClientes();     // carga los clientes desde el backend
+    await this.cargarClientes(); // carga inicial de clientes
   }
 
-  // metodo async que obtiene la lista de clientes del backend
+  // Carga todos los clientes desde el servidor
   async cargarClientes() {
-    // peticion GET al endpoint de clientes
+    // Peticion HTTP GET
     const respuesta = await fetch(`${API_BASE_URL}/clientes`);
-    // convierte la respuesta a JSON
+    // Convierte respuesta a JSON
     const datos = await respuesta.json();
-    // asigna los datos al array de clientes
+    // Guarda clientes en la lista
     this.clientes = datos;
-    // fuerza la deteccion de cambios de Angular
+    // Notifica cambios a Angular
     this.cdr.detectChanges();
   }
 
+  // Busca clientes por nombre
   async buscarClientes(name:string){
-    //pido get al endoint de clientes
+    // Peticion de busqueda
     const respuesta = await fetch(`${API_BASE_URL}/clientes/nombre/${name}`);
+    // Convierte resultados a JSON
     this.clientesBuscados = await respuesta.json();
+    // Notifica cambios a Angular
     this.cdr.detectChanges();
   }
 
+  // Elimina un cliente por su ID
   async eliminarCliente(idEliminar:number){
+    // Peticion HTTP DELETE
     await fetch(`${API_BASE_URL}/clientes/${idEliminar}`,
     {
       method: 'DELETE'
     });
 
-    // esto actualiza la lista clientes, pero eliminando un cliente si su ID es "idEliminar"
+    // Remueve el cliente de la lista local
     this.clientes = this.clientes.filter(
       cliente => cliente.id !== idEliminar
     );
-    // lo mismo aca pero con la lista de clientesBuscados
+    // Remueve el cliente de la lista de busqueda
     this.clientesBuscados = this.clientesBuscados.filter(
       clientesBuscado => clientesBuscado.id !== idEliminar
     )
+    // Notifica cambios a Angular
     this.cdr.detectChanges();
   }
 
-  // metodo async que guarda un nuevo cliente en el backend
+  // Guarda un nuevo cliente
   async guardarCliente(nuevoCliente: Cliente) {
-    // peticion POST al endpoint de clientes
+    // Peticion HTTP POST
     const respuesta = await fetch(`${API_BASE_URL}/clientes`, {
-      method: 'POST',                // metodo HTTP POST
+      method: 'POST', // metodo HTTP
       headers: {
         'Content-Type': 'application/json' // cabecera JSON
       },
-      body: JSON.stringify(nuevoCliente) // cuerpo con datos del cliente
+      body: JSON.stringify(nuevoCliente) // datos del cliente
     });
 
-    // convierte la respuesta a JSON (cliente guardado)
+    // Convierte el cliente guardado a JSON
     const clienteGuardado = await respuesta.json();
 
-    // agrega el nuevo cliente al array local
+    // Agrega el cliente a la lista local
     this.clientes.push(clienteGuardado);
-    // fuerza la deteccion de cambios de Angular
+    // Notifica cambios a Angular
     this.cdr.detectChanges();
   }
 }
