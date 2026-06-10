@@ -1,22 +1,41 @@
-// Importa Component, Input, Output, EventEmitter y ElementRef de Angular
-import { Component, Input, Output, EventEmitter, ElementRef } from '@angular/core';
-// Importa CommonModule para directivas basicas
+import { Component, OnInit, Output, EventEmitter, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-// Importa FormsModule para formularios
 import { FormsModule } from '@angular/forms';
-// Importa interfaz de Promociones
 import { Promociones } from '../../../models';
-// Importa la URL base del backend
-import { API_BASE_URL } from '../../../api.config';
+import { API_BASE_URL } from '../../../api.config'; // URL base del backend
 
-// Decorador del componente
 @Component({
-  selector: 'app-gestion-promociones', // selector HTML
-  imports: [CommonModule, FormsModule], // modulos importados
-  templateUrl: './gestion-promociones.html', // plantilla HTML
-  styleUrl: './gestion-promociones.css', // archivo de estilos
+  selector: 'app-gestion-promociones',
+  imports: [CommonModule, FormsModule],
+  templateUrl: './gestion-promociones.html',
+  styleUrl: './gestion-promociones.css',
 })
-// Componente de gestion de promociones (proximamente)
-export class GestionPromociones {
+// OnInit para que se incialicen apartados que definimos en ngOnInit()
+export class GestionPromociones implements OnInit {
+
+  constructor(private cdr: ChangeDetectorRef) {} // detector de cambios
+  
+  // Datos de salida para comunicarse con el padre
+  @Output() promocionesCambiar = new EventEmitter<void>();
+  @Output() TogglePromocion = new EventEmitter<number>();
+
+  promocionesDisponibles: Promociones[] = [];
+  nuevaPromocion: string = '';
+
+  onTogglePromocion(id: number) {
+    this.TogglePromocion.emit(id);
+  }
+
+  async cargarPromociones(){
+    const respuesta = await fetch(`${API_BASE_URL}/promociones`);
+    const datos = await respuesta.json();
+    this.promocionesDisponibles = datos;
+    this.cdr.detectChanges();
+  }
+  
+  async ngOnInit() {
+   await this.cargarPromociones();
+  }
+
   
 }

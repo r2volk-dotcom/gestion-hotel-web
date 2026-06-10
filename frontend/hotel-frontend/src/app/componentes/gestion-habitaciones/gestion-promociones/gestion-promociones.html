@@ -10,26 +10,24 @@
         <table class="servicios-tabla">
           <thead>
             <tr>
-              <th>Servicio</th>
+              <th>Promociones</th>
               <th class="col-toggle">Activar</th>
             </tr>
           </thead>
           <tbody>
-            <!--
-                        @for (servicio of serviciosDisponibles; track servicio.id) {
-              <tr>
-                <td>{{ servicio.nombre }}</td>
-                <td class="col-toggle">
-                  <label class="toggle">
-                    <input type="checkbox"
-                           [checked]="serviciosSeleccionados.includes(servicio.id!)"
-                           (change)="onToggleServicio(servicio.id!)">
-                    <span class="toggle-slider"></span>
-                  </label>
-                </td>
-              </tr>
+              @for (promocion of promocionesDisponibles; track promocion.id) {
+                <tr>
+                  <td>{{ promocion.nombre }}</td>
+                  <td class="col-toggle">
+                    <label class="toggle">
+                      <input type="checkbox"
+                             {{ promocion.nombre }}
+                            (change)="onTogglePromocion(promocion.id!)">
+                      <span class="toggle-slider"></span>
+                    </label>
+                  </td>
+                </tr>
             }
-            -->
           </tbody>
         </table>
       </div>

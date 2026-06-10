@@ -1,30 +1,23 @@
-// Importa Component, OnInit, ChangeDetectorRef, Output, EventEmitter de Angular
 import { Component, OnInit, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
-// Importa CommonModule para directivas basicas
 import { CommonModule } from '@angular/common';
-// Importa FormsModule para enlazar formularios
 import { FormsModule } from '@angular/forms';
-// Importa la interfaz Servicios
 import { Servicios} from '../../../models';
-// Importa la URL base del backend
-import { API_BASE_URL } from '../../../api.config';
+import { API_BASE_URL } from '../../../api.config'; // URL base del backend
 
 // Decorador del componente
 @Component({
-  selector: 'app-gestion-servicios', // etiqueta HTML
-  imports: [CommonModule, FormsModule], // modulos importados
-  templateUrl: './gestion-servicios.html', // plantilla HTML
-  styleUrl: './gestion-servicios.css', // archivo de estilos
+  selector: 'app-gestion-servicios',
+  imports: [CommonModule, FormsModule],
+  templateUrl: './gestion-servicios.html',
+  styleUrl: './gestion-servicios.css',
 })
-// Componente para la administracion de servicios adicionales
+// OnInit para que se incialicen apartados que definimos en ngOnInit()
 export class GestionServicios implements OnInit {
-  // Inyecta detector de cambios
-  constructor(private cdr: ChangeDetectorRef) {}
 
-  // Evento que notifica cambios al panel principal
-  @Output() serviciosCambiar = new EventEmitter<void>();
+  constructor(private cdr: ChangeDetectorRef) {} // detector de cambios
 
-  // Lista local y campo de texto
+  @Output() serviciosCambiar = new EventEmitter<void>(); // notifica cambios al panel principal 
+
   serviciosDisponibles: Servicios[] = [];
   nuevoServicio: string = '';
 
@@ -33,16 +26,11 @@ export class GestionServicios implements OnInit {
     await this.cargarServicios(); // carga inicial de servicios
   }
 
-  // Obtiene los servicios desde el servidor
   async cargarServicios() {
-    // Peticion HTTP GET
     const respuesta = await fetch(`${API_BASE_URL}/servicios`);
-    // Convierte respuesta a JSON
-    const datos = await respuesta.json();
-    // Asigna la lista de servicios
+    const datos = await respuesta.json(); // Convierte respuesta a JSON
     this.serviciosDisponibles = datos;
-    // Notifica cambios a Angular
-    this.cdr.detectChanges();
+    this.cdr.detectChanges(); // Notifica cambios a Angular
   }
 
   // Guarda un nuevo servicio en el servidor

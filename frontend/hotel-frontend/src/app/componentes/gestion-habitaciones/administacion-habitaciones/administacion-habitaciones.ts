@@ -1,23 +1,19 @@
-// Importa Component, OnInit, ChangeDetectorRef, Input, Output y EventEmitter de Angular
 import { Component, OnInit, ChangeDetectorRef, Input, Output, EventEmitter } from '@angular/core';
-// Importa CommonModule para directivas basicas
 import { CommonModule } from '@angular/common';
-// Importa FormsModule para formularios
 import { FormsModule } from '@angular/forms';
-// Importa las interfaces necesarias
-import { Habitacion, Servicios } from '../../../models';
-// Importa la URL base del backend
-import { API_BASE_URL } from '../../../api.config';
-// Importa los subcomponentes del modulo
+import { Habitacion, Servicios } from '../../../models'; // interfaces necesarias
+import { API_BASE_URL } from '../../../api.config'; //URL base del backend
+
+// subcomponentes del modulo
 import { FormularioHabitacion } from './registrar-habitacion/registrar-habitacion';
 import { TablaHabitaciones } from './tabla-habitaciones/tabla-habitaciones';
 
-// Decorador del componente
+
 @Component({
-  selector: 'app-panel-habitaciones', // etiqueta HTML
-  imports: [CommonModule, FormsModule, FormularioHabitacion, TablaHabitaciones], // componentes importados
-  templateUrl: './administacion-habitaciones.html', // plantilla HTML
-  styleUrl: './administacion-habitaciones.css', // archivo de estilos
+  selector: 'app-panel-habitaciones',
+  imports: [CommonModule, FormsModule, FormularioHabitacion, TablaHabitaciones],
+  templateUrl: './administacion-habitaciones.html',
+  styleUrl: './administacion-habitaciones.css',
 })
 // Componente de panel para la administracion de habitaciones
 export class PanelHabitaciones implements OnInit {
@@ -88,7 +84,7 @@ export class PanelHabitaciones implements OnInit {
     }
   }
 
-  // Procesa y convierte la imagen seleccionada a base64
+  // Procesa y convierte la imagen seleccionada a base64 para la BD
   alSeleccionarImagen(event: any) {
     const archivo = event.target.files[0];
     if (!archivo) return;
