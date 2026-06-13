@@ -32,6 +32,34 @@ export class GestionPromociones implements OnInit {
     this.promocionesDisponibles = datos;
     this.cdr.detectChanges();
   }
+
+  //Guarda nueva promocion en el servidor
+  async guardarPromocion(){
+    if (!this.nuevaPromocion.trim()) return;
+
+    //Peticion HTTP POST
+    await fetch(`${API_BASE_URL}/promociones`,{
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ nombre: this.nuevaPromocion.trim(), descuento: 0.1, activa: false})
+    });
+
+    this.nuevaPromocion = '';
+    await this.cargarPromociones();
+  }
+
+  async eliminarPromocion(id:number){
+    await fetch(`${API_BASE_URL}/promociones/${id}`, {
+      method: 'DELETE'
+    });
+
+    // reemplaza la lista antigua, por una nueva sin esa promocion
+    this.promocionesDisponibles = this.promocionesDisponibles.filter(
+      s => s.id != id
+    );
+
+    this.cdr.detectChanges();
+  }
   
   async ngOnInit() {
    await this.cargarPromociones();

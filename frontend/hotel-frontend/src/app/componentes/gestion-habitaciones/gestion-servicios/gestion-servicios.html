@@ -8,7 +8,6 @@
   <div class="form-grid">
     <input type="text" placeholder="Nuevo Servicio" [(ngModel)]="nuevoServicio">
     <div class="form-actions">
-      <!-- click guarda el servicio -->
       <button class="btn btn-primary" (click)="guardarServicio()">✚</button>
     </div>
   </div>
@@ -18,7 +17,7 @@
     <div class="servicios-section">
       <div class="servicios-widget">
         <div class="table-scroll">
-          <table class="servicios-tabla">
+          <table class="tabla-basica">
             <thead>
               <tr>
                 <th class="col-id">#</th>
@@ -33,9 +32,8 @@
                   <td class="col-id">{{ servicio.id }}</td>
                   <td>{{ servicio.nombre }}</td>
                   <td class="col-toggle">
-                    <!-- click elimina el servicio -->
-                    <button class="btn-delete" (click)="eliminarServicio(servicio.id!)">
-                      <!-- icono de tacho de basura -->
+                    <!-- boton elimina el servicio -->
+                    <button class="boton-basura" (click)="eliminarServicio(servicio.id!)">
                       <svg width="17" height="17" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2">
                         <polyline points="3 6 5 6 21 6"/>

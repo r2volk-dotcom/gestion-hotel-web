@@ -8,7 +8,7 @@
     <!-- muestra la tabla si hay habitaciones -->
     @if (habitaciones.length > 0) {
       <div class="table-scroll">
-        <table class="habitaciones-tabla">
+        <table class="tabla-compleja">
           <thead>
             <tr>
               <th>#</th>
@@ -47,7 +47,7 @@
                 </td>
                 <td>
                   <!-- click elimina la habitacion -->
-                  <button class="btn-delete" (click)="onDelete(habitacion.id!)">
+                  <button class="boton-basura" (click)="onDelete(habitacion.id!)">
                     <!-- icono de tacho de basura -->
                     <svg width="17" height="17" viewBox="0 0 24 24"
                           fill="none" stroke="currentColor" stroke-width="2">

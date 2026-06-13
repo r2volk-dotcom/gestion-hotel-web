@@ -1,3 +1,6 @@
+@import "../../../../boton.css";
+@import "../../../../tabla.css";
+
 /* panel de la tabla */
 .table-panel {
   display: flex;
@@ -35,60 +38,8 @@
   min-height: 0;
 }
 
-/* tabla y celdas */
-.habitaciones-tabla {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 14px;
-}
-
-.habitaciones-tabla th,
-.habitaciones-tabla td {
-  padding: 12px 14px;
-  text-align: left;
-  border-bottom: 1px solid var(--border);
-}
-
-.habitaciones-tabla th {
-  font-weight: 600;
-  color: var(--text-secondary);
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  background: var(--surface-soft);
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  border-bottom: 1px solid var(--border);
-}
-
-.habitaciones-tabla tbody tr:hover {
-  background: var(--surface-soft);
-}
-
-.col-id {
-  width: 50px;
-  color: var(--text-muted);
-  font-family: var(--font-mono);
-  font-size: 13px;
-}
-
-/* badges de estado disponible/ocupado */
-.badge-available {
-  border-color: rgba(21, 128, 61, 0.18);
-  background: var(--success-soft);
-  color: var(--success);
-}
-
-.badge-occupied {
-  border-color: rgba(220, 38, 38, 0.18);
-  background: var(--danger-soft);
-  color: var(--danger);
-}
-
 /* botones de accion */
-.habitaciones-tabla .btn-edit,
-.habitaciones-tabla .btn-delete {
+.tabla-compleja .btn-edit {
   border: none !important;
   background: transparent !important;
   background-color: transparent !important;
@@ -108,17 +59,10 @@
   cursor: pointer;
 }
 
-.habitaciones-tabla .btn-edit:hover {
+.tabla-compleja .btn-edit:hover {
   background: var(--surface-soft) !important;
   background-color: var(--surface-soft) !important;
   color: var(--text-primary) !important;
-  transform: none !important;
-}
-
-.habitaciones-tabla .btn-delete:hover {
-  background: transparent !important;
-  background-color: transparent !important;
-  color: var(--danger) !important;
   transform: none !important;
 }
 
@@ -130,4 +74,17 @@
   font-size: 14px;
   border: 1px dashed var(--border);
   border-radius: var(--radius);
+}
+
+/* badges de estado disponible/ocupado */
+.badge-available {
+  border-color: rgba(21, 128, 61, 0.18);
+  background: var(--success-soft);
+  color: var(--success);
+}
+
+.badge-occupied {
+  border-color: rgba(220, 38, 38, 0.18);
+  background: var(--danger-soft);
+  color: var(--danger);
 }

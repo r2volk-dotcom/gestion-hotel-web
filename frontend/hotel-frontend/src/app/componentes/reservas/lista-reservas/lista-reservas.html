@@ -7,7 +7,7 @@
   <!-- muestra la tabla si hay reservas -->
   @if (reservas.length > 0) {
   <div class="table-scroll">
-    <table class="reservas-tabla">
+    <table class="tabla-compleja">
       <thead>
         <tr>
           <th class="col-id">#</th>
@@ -66,7 +66,7 @@
             </button>
              
             <!-- elimina la reserva al hacer click -->
-            <button class="btn-delete" [attr.data-id]="reserva.id" (click)="eliminar(reserva.id!)">
+            <button class="boton-basura" [attr.data-id]="reserva.id" (click)="eliminar(reserva.id!)">
               <!-- icono de tacho de basura -->
               <svg width="17" height="17" viewBox="0 0 24 24"
                     fill="none" stroke="currentColor" stroke-width="2">

@@ -1,3 +1,5 @@
+@import "../../../../tabla.css";
+
 /* panel del formulario */
 .form-panel {
   display: flex;
@@ -133,57 +135,27 @@
   overflow: hidden;
 }
 
-.servicios-tabla {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 14px;
-}
-
-.servicios-tabla thead {
+.tabla-basica thead {
   display: table;
   width: 100%;
   table-layout: fixed;
 }
 
-.servicios-tabla tbody {
+.tabla-basica tbody {
   display: block;
   max-height: 185px;
   overflow-y: auto;
 }
 
-.servicios-tabla tbody tr {
+.tabla-basica tbody tr {
   display: table;
   width: 100%;
   table-layout: fixed;
 }
 
-.servicios-tabla th,
-.servicios-tabla td {
-  padding: 8px 12px;
-  text-align: left;
-  border-bottom: 1px solid var(--border);
-}
-
-.servicios-tabla tbody tr:last-child td {
-  border-bottom: none;
-}
-
-.servicios-tabla th {
-  font-weight: 600;
-  color: var(--text-secondary);
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  background: var(--surface-soft);
-}
-
-.servicios-tabla tbody tr:hover {
-  background: var(--surface-soft);
-}
-
-.col-toggle {
-  width: 80px;
-  text-align: center;
+.tabla-basica .col-toggle {
+  width: 80px !important;
+  text-align: center !important;
 }
 
 /* switch toggle */

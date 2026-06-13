@@ -16,7 +16,7 @@ export class GestionServicios implements OnInit {
 
   constructor(private cdr: ChangeDetectorRef) {} // detector de cambios
 
-  @Output() serviciosCambiar = new EventEmitter<void>(); // notifica cambios al panel principal 
+  @Output() serviciosCambiar = new EventEmitter<void>(); // envia cambios al panel (registrar habitacion)
 
   serviciosDisponibles: Servicios[] = [];
   nuevoServicio: string = '';
@@ -57,7 +57,7 @@ export class GestionServicios implements OnInit {
       method: 'DELETE'
     });
 
-    // Filtra la lista local de servicios
+    // reemplaza la lista antigua, por una nueva sin ese servicio
     this.serviciosDisponibles = this.serviciosDisponibles.filter(
       s => s.id !== id
     );

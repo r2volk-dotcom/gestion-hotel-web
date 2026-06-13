@@ -7,7 +7,7 @@
   <!-- muestra la tabla si hay clientes -->
   @if (clientes.length > 0) {
   <div class="table-scroll">
-    <table class="clientes-tabla">
+    <table class="tabla-compleja">
       <thead>
         <tr>
           <th class="col-id">#</th>
@@ -29,7 +29,7 @@
           <td>{{ cliente.correo }}</td>
           <td class="col-acciones">
             <!-- elimina el cliente al hacer click -->
-            <button class="btn-delete" [attr.data-id]="cliente.id" (click)="eliminar(cliente.id!)">
+            <button class="boton-basura" [attr.data-id]="cliente.id" (click)="eliminar(cliente.id!)">
               <!-- icono de tacho de basura -->
               <svg width="17" height="17" viewBox="0 0 24 24"
                     fill="none" stroke="currentColor" stroke-width="2">

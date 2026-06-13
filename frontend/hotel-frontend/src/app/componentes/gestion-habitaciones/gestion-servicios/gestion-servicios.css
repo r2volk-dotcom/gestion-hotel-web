@@ -1,3 +1,6 @@
+@import "../../../boton.css";
+@import "../../../tabla.css";
+
 :host {
   display: block;
   height: 100%;
@@ -63,76 +66,6 @@
   min-height: 0;
 }
 
-.servicios-tabla {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 13px;
-}
-
-.servicios-tabla th,
-.servicios-tabla td {
-  padding: 6px 12px; /* filas compactas para asegurar que quepan 7 */
-  text-align: left;
-  border-bottom: 1px solid var(--border);
-}
-
-.servicios-tabla tbody tr:last-child td {
-  border-bottom: none;
-}
-
-.servicios-tabla th {
-  font-weight: 600;
-  color: var(--text-secondary);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  background: var(--surface-soft);
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  border-bottom: 1px solid var(--border);
-}
-
-.servicios-tabla tbody tr:hover {
-  background: var(--surface-soft);
-}
-
-.col-id {
-  width: 36px;
-  color: var(--text-muted);
-  font-family: var(--font-mono);
-  font-size: 12px;
-}
-
-.col-toggle {
-  width: 52px;
-  text-align: center;
-}
-
-/* boton de borrar personalizado */
-.servicios-tabla .btn-delete {
-  border: none !important;
-  background: transparent !important;
-  color: var(--text-muted) !important;
-  padding: 4px !important;
-  margin: 0 !important;
-  box-shadow: none !important;
-  min-height: unset !important;
-  height: 26px !important;
-  width: 26px !important;
-  border-radius: 6px !important;
-  transition: color 150ms ease, background-color 150ms ease !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
-
-.servicios-tabla .btn-delete:hover {
-  background: transparent !important;
-  background-color: transparent !important;
-  color: var(--danger) !important;
-  transform: none !important;
-}
 
 .empty-list {
   padding: 16px;

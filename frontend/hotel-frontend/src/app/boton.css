@@ -1,0 +1,57 @@
+/* Estilos comunes para botones de basura */
+
+/* Boton de basura simple sin bordes */
+.boton-basura {
+  border: none !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  color: var(--text-muted) !important;
+  padding: 6px !important;
+  margin: 0 !important;
+  box-shadow: none !important;
+  min-height: unset !important;
+  height: 28px !important;
+  width: 28px !important;
+  border-radius: 6px !important;
+  transition: color 150ms ease, background-color 150ms ease !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transform: none !important;
+  cursor: pointer;
+}
+
+.boton-basura:hover {
+  background: transparent !important;
+  background-color: transparent !important;
+  color: var(--danger) !important;
+  transform: none !important;
+}
+
+/* Boton de basura con borde y fondo suave en hover */
+.boton-basura-bordeado {
+  border: 1px solid var(--border) !important;
+  background: var(--surface) !important;
+  color: var(--text-secondary) !important;
+  padding: 6px !important;
+  margin: 0 !important;
+  box-shadow: none !important;
+  min-height: unset !important;
+  height: 28px !important;
+  width: 28px !important;
+  border-radius: 6px !important;
+  transition: color 150ms ease, background-color 150ms ease, border-color 150ms ease !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transform: none !important;
+  cursor: pointer;
+}
+
+.boton-basura-bordeado:hover {
+  border-color: rgba(220, 38, 38, 0.24) !important;
+  background: var(--danger-soft) !important;
+  background-color: var(--danger-soft) !important;
+  color: var(--danger) !important;
+  transform: none !important;
+}

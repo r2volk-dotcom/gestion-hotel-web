@@ -1,35 +1,67 @@
-<!-- gestion de promociones -->
-<div class="grid-placeholder">
-  <div class="placeholder-header">
-    <h3>Espacio Personalizado</h3>
+<!-- modulo de gestion de promociones -->
+<section class="section">
+  <div class="section-header">
+    <h2>Gestión Promociones</h2>
   </div>
-  <div class="placeholder-body">
+
+  <div class="form-grid">
+      <input type="text" placeholder="Nueva Promoción" [(ngModel)]="nuevaPromocion"> 
+    <div class="form-actions">
+      <button class="btn btn-primary" (click)="guardarPromocion()">✚</button>
+    </div>
   </div>
-    <div class="servicios-section">
-      <div class="servicios-widget">
-        <table class="servicios-tabla">
-          <thead>
-            <tr>
-              <th>Promociones</th>
-              <th class="col-toggle">Activar</th>
-            </tr>
-          </thead>
-          <tbody>
+
+  <!-- muestra la lista de promociones si existen -->
+  @if (promocionesDisponibles.length > 0) {
+    <div class="promociones-section">
+      <div class="promociones-widget">
+        <div class="table-scroll">
+          <table class="tabla-basica">
+            <thead>
+              <tr>
+                <th class="col-id">#</th>
+                <th>Promoción</th>
+                <th>Descuento</th>
+                <th class="col-toggle">Activar</th>
+                <th>Borrar</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- recorre y muestra la lista de promociones -->
               @for (promocion of promocionesDisponibles; track promocion.id) {
                 <tr>
+                  <td class="col-id">{{ promocion.id }}</td>
                   <td>{{ promocion.nombre }}</td>
+                  <td>{{ (promocion.descuento * 100) }}%</td>
                   <td class="col-toggle">
                     <label class="toggle">
+                      <!-- checkbox para cambiar el estado activo de la promocion -->
                       <input type="checkbox"
-                             {{ promocion.nombre }}
-                            (change)="onTogglePromocion(promocion.id!)">
+                             [checked]="promocion.activa"
+                             (change)="onTogglePromocion(promocion.id!)">
                       <span class="toggle-slider"></span>
                     </label>
                   </td>
+                  <td>
+                    <button class="boton-basura-bordeado" (click)="eliminarPromocion(promocion.id!)">
+                      <svg width="17" height="17" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="3 6 5 6 21 6"/>
+                        <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+                        <path d="M10 11v6"/>
+                        <path d="M14 11v6"/>
+                        <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+                      </svg>
+                    </button>
+                  </td>
                 </tr>
-            }
-          </tbody>
-        </table>
+              }
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
-</div>
+  } @else {
+    <div class="empty-list">No hay promociones registradas</div>
+  }
+</section>

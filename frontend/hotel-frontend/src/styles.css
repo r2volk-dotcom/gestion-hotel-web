@@ -665,8 +665,7 @@ select:focus {
 .btn,
 .btn-primary,
 .btn-secondary,
-.btn-delete,
-.list-item > button:not(.btn-delete) {
+.list-item > button:not(.boton-basura):not(.boton-basura-bordeado) {
   position: relative;
   display: inline-flex;
   min-height: 38px;
@@ -684,8 +683,7 @@ select:focus {
 .btn:hover,
 .btn-primary:hover,
 .btn-secondary:hover,
-.btn-delete:hover,
-.list-item > button:not(.btn-delete):hover {
+.list-item > button:not(.boton-basura):not(.boton-basura-bordeado):hover {
   transform: translateY(-1px);
 }
 
@@ -828,8 +826,7 @@ select:focus {
   color: #6b7280; /* Tailwind gray-500, buen contraste sobre fondos oscuros */
 }
 
-.btn-delete,
-.list-item > button:not(.btn-delete) {
+.list-item > button:not(.boton-basura):not(.boton-basura-bordeado) {
   width: 36px;
   min-width: 36px;
   height: 36px;
@@ -840,24 +837,17 @@ select:focus {
   color: var(--text-secondary);
 }
 
-[data-theme="dark"] .btn-delete,
-[data-theme="dark"] .list-item > button:not(.btn-delete) {
+[data-theme="dark"] .list-item > button:not(.boton-basura):not(.boton-basura-bordeado) {
   background: #27272a;
 }
 
-.btn-delete:hover {
-  border-color: rgba(220, 38, 38, 0.24);
-  background: var(--danger-soft);
-  color: var(--danger);
-}
-
-.list-item > button:not(.btn-delete):hover {
+.list-item > button:not(.boton-basura):not(.boton-basura-bordeado):hover {
   border-color: var(--border-strong);
   background: #ffffff;
   color: var(--text-primary);
 }
 
-[data-theme="dark"] .list-item > button:not(.btn-delete):hover {
+[data-theme="dark"] .list-item > button:not(.boton-basura):not(.boton-basura-bordeado):hover {
   background: #3f3f46;
 }
 

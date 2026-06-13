@@ -1,48 +1,12 @@
-/* tabla de reservas */
-.reservas-tabla {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 14px;
-}
-
-.reservas-tabla th,
-.reservas-tabla td {
-  padding: 12px 14px;
-  text-align: left;
-  border-bottom: 1px solid var(--border);
-}
-
-.reservas-tabla th {
-  font-weight: 600;
-  color: var(--text-secondary);
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  background: var(--surface-soft);
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  border-bottom: 1px solid var(--border);
-}
-
-.reservas-tabla tbody tr:hover {
-  background: var(--surface-soft);
-}
-
-/* columnas y botones */
-.col-id {
-  width: 50px;
-  color: var(--text-muted);
-  font-family: var(--font-mono);
-  font-size: 13px;
-}
+@import "../../../boton.css";
+@import "../../../tabla.css";
 
 .col-acciones {
   width: 120px;
   white-space: nowrap;
 }
 
-.col-acciones button {
+.col-acciones button:not(.boton-basura) {
   border: none !important;
   background: transparent !important;
   background-color: transparent !important;
@@ -62,17 +26,10 @@
   cursor: pointer;
 }
 
-.col-acciones button:hover {
+.col-acciones button:not(.boton-basura):hover {
   background: var(--surface-soft) !important;
   background-color: var(--surface-soft) !important;
   color: var(--text-primary) !important;
-  transform: none !important;
-}
-
-.col-acciones .btn-delete:hover {
-  background: transparent !important;
-  background-color: transparent !important;
-  color: var(--danger) !important;
   transform: none !important;
 }
 

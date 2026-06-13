@@ -1,0 +1,86 @@
+/* Estilos comunes para tablas del sistema */
+
+/* Tabla de diseno amplio para listados generales */
+.tabla-compleja {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  font-size: 14px !important;
+}
+
+.tabla-compleja th,
+.tabla-compleja td {
+  padding: 12px 14px !important;
+  text-align: left !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+
+.tabla-compleja th {
+  font-weight: 600 !important;
+  color: var(--text-secondary) !important;
+  font-size: 12px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  background: var(--surface-soft) !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 10 !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+
+.tabla-compleja tbody tr:hover {
+  background: var(--surface-soft) !important;
+}
+
+.tabla-compleja .col-id {
+  width: 50px !important;
+  color: var(--text-muted) !important;
+  font-family: var(--font-mono) !important;
+  font-size: 13px !important;
+}
+
+/* Tabla de diseno compacto para widgets o formularios */
+.tabla-basica {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  font-size: 13px !important;
+}
+
+.tabla-basica th,
+.tabla-basica td {
+  padding: 8px 12px !important;
+  text-align: left !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+
+.tabla-basica tbody tr:last-child td {
+  border-bottom: none !important;
+}
+
+.tabla-basica th {
+  font-weight: 600 !important;
+  color: var(--text-secondary) !important;
+  font-size: 11px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  background: var(--surface-soft) !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 10 !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+
+.tabla-basica tbody tr:hover {
+  background: var(--surface-soft) !important;
+}
+
+.tabla-basica .col-id {
+  width: 36px !important;
+  color: var(--text-muted) !important;
+  font-family: var(--font-mono) !important;
+  font-size: 12px !important;
+}
+
+.tabla-basica .col-toggle {
+  width: 52px !important;
+  text-align: center !important;
+}
