@@ -45,6 +45,7 @@ public class HabitacionServices {
             serviciosSeleccionados.add(servicioRepository.getReferenceById(servicio.getId()));
         }
         habitacion.setServicios(serviciosSeleccionados);
+        habitacion.setCodigo(formatearCodigo(habitacion.getCodigo(),habitacion.getTipo()));
         return habitacionRepository.save(habitacion);
     }
 
@@ -66,8 +67,10 @@ public class HabitacionServices {
 
             //actualizamos datos
             h.setTipo(nuevaHabitacion.getTipo());
+            h.setCodigo(formatearCodigo(nuevaHabitacion.getCodigo(), nuevaHabitacion.getTipo()));
             h.setPrecio(nuevaHabitacion.getPrecio());
             h.setDisponible(nuevaHabitacion.isDisponible());
+            h.setDescripcion(nuevaHabitacion.getDescripcion());
             h.setImagen(nuevaHabitacion.getImagen());
             h.setServicios(serviciosSeleccionados);
 
@@ -77,6 +80,35 @@ public class HabitacionServices {
         return null; // si no existe, retorna null
     }
 
+    public String formatearCodigo(String codigo, String tipo) {
+        // Valida que el codigo no sea nulo o vacio
+        if (codigo == null || codigo.trim().isEmpty()) {
+            return codigo;
+        }
+
+        String prefijo = "";
+        if ("Individual".equals(tipo)) {
+            prefijo = "IND-";
+        } else if ("Doble".equals(tipo)) {
+            prefijo = "DOB-";
+        } else if ("Twin".equals(tipo)) {
+            prefijo = "TWN-";
+        } else if ("Triple".equals(tipo)) {
+            prefijo = "TRI-";
+        } else if ("Cuadruple".equals(tipo) || "Cuádruple".equals(tipo)) {
+            prefijo = "CUA-";
+        } else if ("Deluxe".equals(tipo)) {
+            prefijo = "DLX-";
+        } else if ("Suite".equals(tipo)) {
+            prefijo = "STE-";
+        }
+
+        // Evita duplicar el prefijo si ya existe
+        if (!prefijo.isEmpty() && !codigo.startsWith(prefijo)) {
+            return prefijo + codigo;
+        }
+        return codigo;
+    }
 
     //metodo para borrar una habitacion
     public Habitacion eliminarHabitacion(Long id) {

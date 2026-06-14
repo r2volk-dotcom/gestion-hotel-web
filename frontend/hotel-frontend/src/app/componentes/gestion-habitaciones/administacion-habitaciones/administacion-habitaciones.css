@@ -10,8 +10,8 @@
 /* diseño de dos columnas en cuadricula */
 .content-row {
   display: grid;
-  grid-template-columns: 20fr 50fr;
+  grid-template-columns: 1fr 1.5fr;
   grid-template-rows: min-content;
-  gap: 20px;
+  gap: 24px;
   padding: 0 24px 24px;
 }

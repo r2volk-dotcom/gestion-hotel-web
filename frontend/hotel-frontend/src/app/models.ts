@@ -17,8 +17,8 @@ export interface Habitacion {
   precio: number | null;
   disponible: boolean;
   imagen: string;
-  codigo?: string | null;
-  descripcion?: string | null;
+  codigo: string | null;
+  descripcion: string | null;
 
   //variables opcionales, no vienen del backend
   servicios?: Servicios[]; 

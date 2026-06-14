@@ -16,8 +16,10 @@ public class Habitacion {
     //Variables
     private Long id;
     private String tipo;
+    private String codigo;
     private double precio;
     private boolean disponible;
+    private String descripcion;
 
     @Column(columnDefinition = "LONGTEXT")
     private String imagen;
@@ -36,11 +38,13 @@ public class Habitacion {
     }
 
     //constructor
-    public Habitacion(Long id, String tipo, double precio, boolean disponible, String imagen, List<Servicio> servicios) {
+    public Habitacion(Long id, String codigo, String tipo, double precio, boolean disponible,String descripcion, String imagen, List<Servicio> servicios) {
         this.id = id;
         this.tipo = tipo;
+        this.codigo = codigo;
         this.precio = precio;
         this.disponible = disponible;
+        this.descripcion = descripcion;
         this.imagen = imagen;
         this.servicios = servicios;
     }
@@ -66,6 +70,14 @@ public class Habitacion {
 
     public String getImagen() {return imagen;}
 
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
     //setters
     public void setId(Long id) {
         this.id = id;
@@ -86,4 +98,12 @@ public class Habitacion {
     public void setImagen(String imagen) {this.imagen = imagen;}
 
     public void setServicios(List<Servicio> servicios) { this.servicios = servicios; }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
 }

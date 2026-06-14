@@ -4,33 +4,48 @@
 .form-panel {
   display: flex;
   flex-direction: column;
+  min-height: 0;
+  margin-top: 24px; /* alinea con .table-panel */
 }
 
-.form-panel .form-section {
-  background: transparent !important;
-  border: none !important;
-  border-bottom: none !important;
-  padding: 16px 0 0 0 !important;
-  box-shadow: none !important;
+/* tarjeta contenedora del formulario */
+.form-widget {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 480px; /* igual al de habitaciones-widget */
+  box-shadow: var(--shadow-xs);
+  box-sizing: border-box;
 }
 
-.form-section {
-  padding: 12px 24px 12px 19px;
-}
-
-.form-section h3 {
-  margin: 10px 0 0;
-  font-size: 14px;
+.form-widget .list-header {
+  padding: 14px 16px;
   font-weight: 600;
-  color: var(--text-primary);
+  color: var(--text-secondary);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: var(--surface-soft);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.form-widget .form-scroll {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 /* cuadricula de campos del formulario */
 .form-grid-layout {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-top: 14px;
+  gap: 16px; /* mas espacio entre campos */
 }
 
 .grid-item {
@@ -51,19 +66,36 @@
   width: 100%;
 }
 
-/* checkbox de disponible */
+/* checkbox de disponible con diseno de tarjeta interactiva */
 .checkbox-field {
   display: flex;
   flex-direction: row !important;
   justify-content: flex-start;
   min-height: 42px;
   align-items: center;
-  gap: 9px;
+  gap: 10px;
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 0 12px;
+  padding: 0 16px;
   background: var(--surface);
   box-sizing: border-box;
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+
+.checkbox-field:hover {
+  border-color: var(--border-strong);
+  background: var(--surface-soft);
+}
+
+.checkbox-field:has(input[type="checkbox"]:checked) {
+  border-color: rgba(21, 128, 61, 0.4);
+  background: rgba(21, 128, 61, 0.05);
+}
+
+:host-context([data-theme="dark"]) .checkbox-field:has(input[type="checkbox"]:checked) {
+  border-color: rgba(34, 197, 94, 0.4);
+  background: rgba(34, 197, 94, 0.08);
 }
 
 .checkbox-field label {
@@ -71,12 +103,14 @@
   font-size: 13px;
   font-weight: 580;
   cursor: pointer;
+  user-select: none;
 }
 
 .checkbox-field input[type="checkbox"] {
   width: 16px;
   height: 16px;
   accent-color: var(--text-primary);
+  margin: 0;
 }
 
 /* boton de imagen */
@@ -130,8 +164,7 @@
 /* descripcion textarea */
 .descripcion-textarea {
   width: 100%;
-  height: 100%;
-  min-height: 220px;
+  height: 215px !important;
   border: 1px solid var(--border);
   border-radius: var(--radius);
   background: #ffffff;
@@ -169,6 +202,14 @@
   border-radius: var(--radius);
   overflow: hidden;
   box-sizing: border-box;
+  height: 215px !important;
+  background: var(--surface);
+}
+
+.tabla-basica {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  font-size: 13px !important;
 }
 
 .tabla-basica thead {
@@ -179,7 +220,7 @@
 
 .tabla-basica tbody {
   display: block;
-  max-height: 185px;
+  max-height: 175px !important; /* limite para scroll interno */
   overflow-y: auto;
 }
 
@@ -254,6 +295,12 @@
 @media (max-width: 760px) {
   .form-grid-layout {
     grid-template-columns: 1fr;
-    gap: 10px;
+    gap: 12px;
+  }
+  .servicios-widget {
+    height: 180px !important;
+  }
+  .descripcion-textarea {
+    height: 120px !important;
   }
 }
