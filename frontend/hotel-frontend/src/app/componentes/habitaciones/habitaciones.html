@@ -34,7 +34,15 @@
                 </div>
               </div>
               <div class="room-card-footer">
-                <span class="room-card-price">S/ {{ habitacion.precio }}</span>
+                <!-- Muestra precio con descuento si hay promocion activa -->
+                @if (promocionService.promocionActiva) {
+                  <div class="price-container">
+                    <span class="room-card-price-original">S/ {{ habitacion.precio }}</span>
+                    <span class="room-card-price-discounted">S/ {{ promocionService.calcularPrecioFinal(habitacion.precio) | number:'1.2-2' }}</span>
+                  </div>
+                } @else {
+                  <span class="room-card-price">S/ {{ habitacion.precio }}</span>
+                }
                 <!-- Boton para eliminar la habitacion -->
                 <button class="boton-basura-bordeado" (click)="eliminarHabitacion(habitacion.id!)">
                   <svg width="17" height="17" viewBox="0 0 24 24"

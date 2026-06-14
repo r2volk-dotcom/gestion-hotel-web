@@ -89,3 +89,24 @@
   font-size: 12px;
   margin: 2px;
 }
+
+/* Contenedor de precios */
+.price-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Precio base original tachado y en gris */
+.room-card-price-original {
+  color: var(--text-muted);
+  font-size: 14px;
+  text-decoration: line-through;
+}
+
+/* Precio con descuento en rojo y mas grande */
+.room-card-price-discounted {
+  color: var(--danger);
+  font-size: 19px;
+  font-weight: 700;
+}

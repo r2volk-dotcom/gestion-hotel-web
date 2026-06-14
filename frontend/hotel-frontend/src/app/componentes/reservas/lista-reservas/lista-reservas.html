@@ -13,6 +13,8 @@
           <th class="col-id">#</th>
           <th>Cliente</th>
           <th>Habitación</th>
+          <th>Precio</th>
+          <th>Promocion</th>
           <th>Fecha Entrada / Salida</th>
           <th>Estado</th>
           <th class="col-acciones">Acciones</th>
@@ -26,6 +28,8 @@
           <td>{{ obtenerNombreCliente(reserva.clienteId) }}</td>
           <!-- pasa la reserva completa para obtener el texto correcto -->
           <td>{{ obtenerTextoHabitacion(reserva) }}</td>
+          <td>S/ {{ reserva.precioTotal}}</td>
+          <td>{{ reserva.promocionAplicada}}</td>
           <td>{{ reserva.fechaEntrada }} / {{ reserva.fechaSalida }}</td>
           <td>
             <!-- muestra estado o selector de edicion -->

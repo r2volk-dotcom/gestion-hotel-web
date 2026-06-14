@@ -4,90 +4,97 @@
     <!-- muestra titulo dinamico segun el modo -->
     <h3>{{ idHabitacionEdicion ? 'Editar habitación #' + idHabitacionEdicion : 'Registrar habitación' }}</h3>
     
-    <!-- pila de campos principales -->
-    <div class="form-stack">
-      <select [(ngModel)]="nuevaHabitacion.tipo">
-        <option value="" disabled selected>Escoge una habitación</option>
-        <option value="Individual">Individual</option>
-        <option value="Doble">Doble</option>
-        <option value="Twin">Twin</option>
-        <option value="Triple">Triple</option>
-        <option value="Cuadruple">Cuádruple</option>
-        <option value="Deluxe">Deluxe</option>
-        <option value="Suite">Suite</option>
-      </select>
-
-      <input type="number" placeholder="Precio" [(ngModel)]="nuevaHabitacion.precio">
-
-      <!-- fila de imagen y checkbox -->
-      <div class="form-row-group">
-        <div class="imagen-field">
-          <!-- click ejecuta la seleccion de archivo -->
-          <button type="button" class="btn-image" (click)="imagenInput.click()">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 4px; vertical-align: middle;">
-              <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-              <circle cx="8.5" cy="8.5" r="1.5" />
-              <polyline points="21 15 16 10 5 21" />
-            </svg>
-            + Imagen
-          </button>
-          <!-- input oculto para subir imagen -->
-          <input type="file" #imagenInput accept="image/png" (change)="onFileSelected($event)" hidden>
-        </div>
-
-        <div class="checkbox-field">
-          <input type="checkbox" id="hab-disponible" [(ngModel)]="nuevaHabitacion.disponible">
-          <label for="hab-disponible">Disponible</label>
-        </div>
+    <!-- cuadricula de campos del formulario -->
+    <div class="form-grid-layout">
+      <!-- Fila 1: Codigo (b) y Escoger habitacion (a) -->
+      <div class="grid-item">
+        <input type="text" placeholder="Código" [(ngModel)]="nuevaHabitacion.codigo">
       </div>
-      
-      <!-- muestra el nombre del archivo seleccionado -->
-      @if (nombreImagen) {
-        <div class="imagen-nombre-wrapper">
-          <span class="imagen-nombre">✓ {{ nombreImagen }}</span>
-        </div>
-      }
-    </div>
+      <div class="grid-item">
+        <select [(ngModel)]="nuevaHabitacion.tipo">
+          <option value="" disabled selected>Escoge una habitación</option>
+          <option value="Individual">Individual</option>
+          <option value="Doble">Doble</option>
+          <option value="Twin">Twin</option>
+          <option value="Triple">Triple</option>
+          <option value="Cuadruple">Cuádruple</option>
+          <option value="Deluxe">Deluxe</option>
+          <option value="Suite">Suite</option>
+        </select>
+      </div>
 
-    <!-- seccion de asociacion de servicios -->
-    <div class="servicios-section">
-      <div class="servicios-widget">
-        <table class="tabla-basica">
-          <thead>
-            <tr>
-              <th>Servicio</th>
-              <th class="col-toggle">Activar</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- recorre y muestra la lista de servicios -->
-            @for (servicio of serviciosDisponibles; track servicio.id) {
+      <!-- Fila 2: Imagen (d) y Precio (c) -->
+      <div class="grid-item imagen-field-container">
+        <!-- click ejecuta la seleccion de archivo -->
+        <button type="button" class="btn-image" (click)="imagenInput.click()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 4px; vertical-align: middle;">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+            <circle cx="8.5" cy="8.5" r="1.5" />
+            <polyline points="21 15 16 10 5 21" />
+          </svg>
+          + Imagen
+        </button>
+        <!-- input oculto para subir imagen -->
+        <input type="file" #imagenInput accept="image/png" (change)="onFileSelected($event)" hidden>
+        
+        <!-- muestra el nombre del archivo seleccionado -->
+        @if (nombreImagen) {
+          <div class="imagen-nombre-wrapper">
+            <span class="imagen-nombre">✓ {{ nombreImagen }}</span>
+          </div>
+        }
+      </div>
+      <div class="grid-item">
+        <input type="number" placeholder="Precio (S/.)" [(ngModel)]="nuevaHabitacion.precio">
+      </div>
+
+      <!-- Fila 3: Descripcion (h) y tabla Servicios (e) -->
+      <div class="grid-item textarea-item">
+        <textarea placeholder="Descripción" [(ngModel)]="nuevaHabitacion.descripcion" class="descripcion-textarea"></textarea>
+      </div>
+      <div class="grid-item servicios-section">
+        <div class="servicios-widget">
+          <table class="tabla-basica">
+            <thead>
               <tr>
-                <td>{{ servicio.nombre }}</td>
-                <td class="col-toggle">
-                  <label class="toggle">
-                    <!-- marca si esta seleccionado y permite cambiarlo -->
-                    <input type="checkbox"
-                           [checked]="serviciosSeleccionados.includes(servicio.id!)"
-                           (change)="onToggleServicio(servicio.id!)">
-                    <span class="toggle-slider"></span>
-                  </label>
-                </td>
+                <th>Servicio</th>
+                <th class="col-toggle">Activar</th>
               </tr>
-            }
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              <!-- recorre y muestra la lista de servicios -->
+              @for (servicio of serviciosDisponibles; track servicio.id) {
+                <tr>
+                  <td>{{ servicio.nombre }}</td>
+                  <td class="col-toggle">
+                    <label class="toggle">
+                      <!-- marca si esta seleccionado y permite cambiarlo -->
+                      <input type="checkbox"
+                             [checked]="serviciosSeleccionados.includes(servicio.id!)"
+                             (change)="onToggleServicio(servicio.id!)">
+                      <span class="toggle-slider"></span>
+                    </label>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
 
-    <!-- acciones de guardar o cancelar -->
-    <div class="form-actions">
-      <!-- boton de confirmacion -->
-      <button class="btn btn-primary" (click)="onSubmit()">{{ idHabitacionEdicion ? 'Guardar' : 'Registrar Habitación' }}</button>
-      <!-- boton de cancelacion visible en modo edicion -->
-      @if (idHabitacionEdicion) {
-        <button class="btn btn-secondary" (click)="onCancel()">Cancelar</button>
-      }
+      <!-- Fila 4: Disponible (c) y boton Registrar/Guardar (g) -->
+      <div class="grid-item checkbox-field">
+        <input type="checkbox" id="hab-disponible" [(ngModel)]="nuevaHabitacion.disponible">
+        <label for="hab-disponible">Disponible</label>
+      </div>
+      <div class="grid-item form-actions">
+        <!-- boton de confirmacion -->
+        <button class="btn btn-primary" (click)="onSubmit()">{{ idHabitacionEdicion ? 'Guardar' : 'Registrar Habitación' }}</button>
+        <!-- boton de cancelacion visible en modo edicion -->
+        @if (idHabitacionEdicion) {
+          <button class="btn btn-secondary" (click)="onCancel()">Cancelar</button>
+        }
+      </div>
     </div>
   </div>
 </div>

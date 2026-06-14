@@ -44,4 +44,9 @@ export class GestionHabitaciones implements OnInit {
     this.habitaciones = await this.habitacionService.obtenerHabitaciones();
     this.cdr.detectChanges();
   }
+
+  // Actualiza la vista cuando cambian las promociones
+  actualizarPromociones() {
+    this.cdr.detectChanges();
+  }
 }

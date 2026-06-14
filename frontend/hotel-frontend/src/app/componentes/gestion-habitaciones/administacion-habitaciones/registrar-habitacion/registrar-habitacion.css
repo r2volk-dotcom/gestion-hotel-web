@@ -25,21 +25,37 @@
   color: var(--text-primary);
 }
 
-/* campos y inputs */
-.form-stack {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+/* cuadricula de campos del formulario */
+.form-grid-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
   margin-top: 14px;
 }
 
-.form-stack select,
-.form-stack input[type="number"] {
+.grid-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   width: 100%;
 }
 
-.form-stack .checkbox-field {
+.grid-item.textarea-item {
+  justify-content: stretch;
+}
+
+/* inputs del formulario */
+.grid-item input[type="text"],
+.grid-item input[type="number"],
+.grid-item select {
+  width: 100%;
+}
+
+/* checkbox de disponible */
+.checkbox-field {
   display: flex;
+  flex-direction: row !important;
+  justify-content: flex-start;
   min-height: 42px;
   align-items: center;
   gap: 9px;
@@ -47,35 +63,29 @@
   border-radius: var(--radius);
   padding: 0 12px;
   background: var(--surface);
+  box-sizing: border-box;
 }
 
-.form-stack .checkbox-field label {
+.checkbox-field label {
   color: var(--text-secondary);
   font-size: 13px;
   font-weight: 580;
   cursor: pointer;
 }
 
-.form-stack .checkbox-field input[type="checkbox"] {
+.checkbox-field input[type="checkbox"] {
   width: 16px;
   height: 16px;
   accent-color: var(--text-primary);
 }
 
-.form-row-group {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  align-items: center;
-}
-
-.imagen-field {
-  display: flex;
-  align-items: center;
-  width: 100%;
-}
-
 /* boton de imagen */
+.imagen-field-container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
 .btn-image {
   display: inline-flex;
   align-items: center;
@@ -102,13 +112,13 @@
 
 /* nombre de imagen seleccionada */
 .imagen-nombre-wrapper {
-  margin-top: 4px;
   padding: 6px 12px;
   background: var(--success-soft);
   border: 1px solid rgba(21, 128, 61, 0.15);
   border-radius: 8px;
   display: inline-flex;
   align-items: center;
+  align-self: flex-start;
 }
 
 .imagen-nombre {
@@ -117,22 +127,48 @@
   font-weight: 600;
 }
 
-/* widget de servicios */
-.servicios-section {
-  margin-top: 16px;
+/* descripcion textarea */
+.descripcion-textarea {
+  width: 100%;
+  height: 100%;
+  min-height: 220px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: #ffffff;
+  color: var(--text-primary);
+  font-size: 13px;
+  outline: none;
+  padding: 12px;
+  transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+  resize: none;
+  box-sizing: border-box;
 }
 
-.servicios-section h4 {
-  margin: 0 0 8px 0;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text-primary);
+:host-context([data-theme="dark"]) .descripcion-textarea {
+  background: #27272a;
+}
+
+.descripcion-textarea:focus {
+  border-color: #a1a1aa;
+  background: #ffffff;
+  box-shadow: 0 0 0 4px var(--focus);
+}
+
+:host-context([data-theme="dark"]) .descripcion-textarea:focus {
+  background: #27272a;
+}
+
+/* widget de servicios */
+.servicios-section {
+  display: flex;
+  flex-direction: column;
 }
 
 .servicios-widget {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   overflow: hidden;
+  box-sizing: border-box;
 }
 
 .tabla-basica thead {
@@ -204,10 +240,20 @@
 /* acciones del formulario */
 .form-actions {
   display: flex;
+  flex-direction: row !important;
   gap: 10px;
-  margin-top: 16px;
+  align-items: center;
+  width: 100%;
 }
 
 .form-actions .btn {
   flex: 1;
+}
+
+/* responsive */
+@media (max-width: 760px) {
+  .form-grid-layout {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
 }

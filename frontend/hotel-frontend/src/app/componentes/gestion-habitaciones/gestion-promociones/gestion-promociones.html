@@ -5,7 +5,8 @@
   </div>
 
   <div class="form-grid">
-      <input type="text" placeholder="Nueva Promoción" [(ngModel)]="nuevaPromocion"> 
+    <input type="text" placeholder="Nueva Promoción" [(ngModel)]="nuevaPromocion">
+    <input type="number" placeholder="Descuento (%)" [(ngModel)]="descuentoPromocion" min="0" max="100">  
     <div class="form-actions">
       <button class="btn btn-primary" (click)="guardarPromocion()">✚</button>
     </div>
@@ -22,7 +23,7 @@
                 <th class="col-id">#</th>
                 <th>Promoción</th>
                 <th>Descuento</th>
-                <th class="col-toggle">Activar</th>
+                <th>Activar</th>
                 <th>Borrar</th>
               </tr>
             </thead>
@@ -33,7 +34,7 @@
                   <td class="col-id">{{ promocion.id }}</td>
                   <td>{{ promocion.nombre }}</td>
                   <td>{{ (promocion.descuento * 100) }}%</td>
-                  <td class="col-toggle">
+                  <td>
                     <label class="toggle">
                       <!-- checkbox para cambiar el estado activo de la promocion -->
                       <input type="checkbox"

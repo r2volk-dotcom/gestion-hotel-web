@@ -22,9 +22,11 @@ export class FormularioHabitacion {
   @Input() nombreImagen: string = '';
   @Input() nuevaHabitacion: Habitacion = {
     tipo: '',
-    precio: 0,
+    precio: null,
     disponible: true,
     imagen: '',
+    codigo: null,
+    descripcion: null,
     servicios: []
   };
   @Input() idHabitacionEdicion: number | null = null;

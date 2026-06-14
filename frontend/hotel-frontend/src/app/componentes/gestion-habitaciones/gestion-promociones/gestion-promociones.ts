@@ -26,9 +26,24 @@ export class GestionPromociones implements OnInit {
 
   promocionesDisponibles: Promociones[] = [];
   nuevaPromocion: string = '';
+  descuentoPromocion: number | null = null;
 
-  onTogglePromocion(id: number) {
-    this.TogglePromocion.emit(id);
+  async onTogglePromocion(id: number) {
+    const promo = this.promocionesDisponibles.find(p => p.id === id);
+    if (!promo) return;
+
+    if (promo.activa) {
+      // Si ya estaba activa se desactivan todas
+      await this.promocionService.desactivarTodas();
+    } else {
+      // Si estaba inactiva la activamos
+      await this.promocionService.activarPromocion(id);
+    }
+
+    // Recarga la lista de promociones
+    await this.cargarPromociones();
+    // Emite el cambio
+    this.promocionesCambiar.emit();
   }
 
   async cargarPromociones() {
@@ -40,8 +55,10 @@ export class GestionPromociones implements OnInit {
   // guarda una nueva promocion
   async guardarPromocion() {
     if (!this.nuevaPromocion.trim()) return;
-    await this.promocionService.guardarPromocion(this.nuevaPromocion.trim());
+    const descuento = this.descuentoPromocion !== null ? this.descuentoPromocion : 0;
+    await this.promocionService.guardarPromocion(this.nuevaPromocion.trim(), descuento / 100);
     this.nuevaPromocion = '';
+    this.descuentoPromocion = null;
     await this.cargarPromociones();
     this.promocionesCambiar.emit();
   }

@@ -38,9 +38,11 @@ export class PanelHabitaciones implements OnInit {
   // Modelo temporal para nueva habitacion
   nuevaHabitacion: Habitacion = {
     tipo: '',                        
-    precio: 0,                       
+    precio: null,                       
     disponible: true,
     imagen:'',
+    codigo: null,
+    descripcion: null,
     servicios: []      
   };
 
@@ -115,6 +117,10 @@ export class PanelHabitaciones implements OnInit {
       return { id: id } as Servicios;
     });
 
+    if (this.nuevaHabitacion.precio === null) {
+      this.nuevaHabitacion.precio = 0;
+    }
+
     if (this.idHabitacionEdicion !== null) {
       // Modo edicion, mantiene imagen anterior si no se sube una nueva
       if (!this.nuevaHabitacion.imagen) {
@@ -135,9 +141,11 @@ export class PanelHabitaciones implements OnInit {
     // Reinicia el modelo del formulario
     this.nuevaHabitacion = {
       tipo: '',
-      precio: 0,
+      precio: null,
       disponible: true,
-      imagen: ''
+      imagen: '',
+      codigo: null,
+      descripcion: null
     };
 
     // Limpia variables locales
@@ -159,6 +167,8 @@ export class PanelHabitaciones implements OnInit {
       precio: habitacion.precio,
       disponible: habitacion.disponible,
       imagen: '', 
+      codigo: habitacion.codigo || null,
+      descripcion: habitacion.descripcion || null,
       servicios: habitacion.servicios || []
     };
 
@@ -176,9 +186,11 @@ export class PanelHabitaciones implements OnInit {
     // Reinicia modelo temporal
     this.nuevaHabitacion = {
       tipo: '',
-      precio: 0,
+      precio: null,
       disponible: true,
       imagen: '',
+      codigo: null,
+      descripcion: null,
       servicios: []
     };
 

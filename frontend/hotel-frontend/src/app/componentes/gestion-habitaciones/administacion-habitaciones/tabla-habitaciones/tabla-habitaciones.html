@@ -13,7 +13,8 @@
             <tr>
               <th>#</th>
               <th>Tipo</th>
-              <th>Precio</th>
+              <th>Precio Base</th>
+              <th>Precio Actual</th>
               <th>Estado</th>
               <th>Editar</th>
               <th>Borrar</th>
@@ -26,6 +27,7 @@
                 <td class="col-id">{{ habitacion.id }}</td>
                 <td>{{ habitacion.tipo }}</td>
                 <td>S/ {{ habitacion.precio }}</td>
+                <td>S/ {{ promocionService.calcularPrecioFinal(habitacion.precio) | number:'1.2-2' }}</td>
                 <td>
                   <!-- badge de disponibilidad adaptable -->
                   <span class="badge"

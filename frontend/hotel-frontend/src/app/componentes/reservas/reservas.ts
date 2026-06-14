@@ -83,26 +83,13 @@ export class Reservas implements OnInit {
     this.cdr.detectChanges(); // Notifica cambios a Angular
   }
 
-  // Edita el estado de una reserva
+  // Edita el estado de una reserva usando el servicio
   async editarEstado(event: { estado: string, id: number, reserva: Reserva }){
-    let endpoint = ""; // variable para el endpoint especifico
-    // Selecciona el endpoint segun el estado
-    if (event.estado === "CheckOut") {
-        endpoint = "checkout";
-      } else if (event.estado === "CheckIn") {
-        endpoint = "checkin";
-      } else if (event.estado === "Cancelado"){
-        endpoint = "cancelar";
-      } else {
-        return;
-      }
-    
-    // Peticion HTTP PUT para actualizar el estado
-     await this.reservaService.actualizarEstado(event.id, endpoint);
+    await this.reservaService.actualizarEstado(event.id, event.estado);
 
     // Desactiva modo edicion y recarga datos
     event.reserva.editando = false;
-    this.cargarDatos();
+    await this.cargarDatos();
   }
 
 }

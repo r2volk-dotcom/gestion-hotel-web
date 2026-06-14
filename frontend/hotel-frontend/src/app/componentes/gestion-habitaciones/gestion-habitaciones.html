@@ -4,7 +4,7 @@
   <app-grafico-habitaciones [habitaciones]="habitaciones"></app-grafico-habitaciones>
 
   <!-- gestion de promociones -->
-  <app-gestion-promociones></app-gestion-promociones>
+  <app-gestion-promociones (promocionesCambiar)="actualizarPromociones()"></app-gestion-promociones>
 
   <!-- gestion de servicios -->
   <app-gestion-servicios (serviciosCambiar)="panelHabitaciones.cargarServicios()"></app-gestion-servicios>

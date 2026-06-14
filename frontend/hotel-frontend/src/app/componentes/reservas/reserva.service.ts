@@ -29,8 +29,19 @@ export class ReservaService {
     });
   }
   
-  // Actualiza el estado de la reserva (CheckIn, CheckOut, Cancelar)
-  async actualizarEstado(id: number, endpoint: string): Promise<void> {
+  // Actualiza el estado de la reserva mapeandolo al endpoint correcto
+  async actualizarEstado(id: number, estado: string): Promise<void> {
+    let endpoint = "";
+    if (estado === "CheckOut") {
+      endpoint = "checkout";
+    } else if (estado === "CheckIn") {
+      endpoint = "checkin";
+    } else if (estado === "Cancelado") {
+      endpoint = "cancelar";
+    } else {
+      return;
+    }
+
     await fetch(`${API_BASE_URL}/reservas/${id}/${endpoint}`, {
       method: 'PUT'
     });

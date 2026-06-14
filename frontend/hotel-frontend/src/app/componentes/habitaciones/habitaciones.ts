@@ -1,8 +1,8 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Habitacion } from '../../models';
+import { Habitacion, Promociones } from '../../models';
 import { HabitacionService } from './habitacion.service';
-
+import { PromocionService } from '../gestion-habitaciones/gestion-promociones/promocion.service';
 
 @Component({
   selector: 'app-habitaciones', 
@@ -15,15 +15,18 @@ export class Habitaciones implements OnInit {
 
   constructor(
     private habitacionService: HabitacionService, // servicios
+    // Inyecta el servicio de promociones como publico
+    public promocionService: PromocionService,
     private cdr: ChangeDetectorRef // detector de cambios
   ) {}
 
-  // Habitaciones cargadas
   habitaciones: Habitacion[] = [];
 
   // Metodo del ciclo de vida: se ejecuta al iniciar el componente
   async ngOnInit() {
     await this.cargarHabitaciones();
+    // Carga la promocion activa usando el servicio
+    await this.promocionService.cargarPromocionActiva();
   }
 
   async cargarHabitaciones() {
