@@ -33,9 +33,36 @@
   transform: none !important;
 }
 
-/* contenedor con scroll */
+/* Contenedor con scroll */
 .table-scroll {
   flex: 1;
   overflow-y: auto;
   min-height: 0;
+}
+
+/* Badge para la promocion aplicada */
+.badge-promo {
+  display: inline-flex;
+  min-height: 24px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(180, 83, 9, 0.2);
+  border-radius: 6px;
+  padding: 0 8px;
+  background: var(--warning-soft);
+  color: var(--warning);
+  font-size: 11px;
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+/* Valor de precio total resaltado */
+.price-total {
+  font-weight: 650;
+  color: var(--text-primary);
+}
+
+/* Sin promocion */
+.no-promo {
+  color: var(--text-muted);
 }
