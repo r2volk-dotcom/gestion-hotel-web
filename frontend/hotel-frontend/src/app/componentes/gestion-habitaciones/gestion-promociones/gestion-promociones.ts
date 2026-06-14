@@ -2,7 +2,8 @@ import { Component, OnInit, Output, EventEmitter, ElementRef, ChangeDetectorRef 
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Promociones } from '../../../models';
-import { API_BASE_URL } from '../../../api.config'; // URL base del backend
+import { PromocionService } from './promocion.service';
+
 
 @Component({
   selector: 'app-gestion-promociones',
@@ -10,10 +11,14 @@ import { API_BASE_URL } from '../../../api.config'; // URL base del backend
   templateUrl: './gestion-promociones.html',
   styleUrl: './gestion-promociones.css',
 })
+
 // OnInit para que se incialicen apartados que definimos en ngOnInit()
 export class GestionPromociones implements OnInit {
 
-  constructor(private cdr: ChangeDetectorRef) {} // detector de cambios
+  constructor(
+    private promocionService: PromocionService,
+    private cdr: ChangeDetectorRef // detector de cambios
+  ) {}
   
   // Datos de salida para comunicarse con el padre
   @Output() promocionesCambiar = new EventEmitter<void>();
@@ -26,32 +31,24 @@ export class GestionPromociones implements OnInit {
     this.TogglePromocion.emit(id);
   }
 
-  async cargarPromociones(){
-    const respuesta = await fetch(`${API_BASE_URL}/promociones`);
-    const datos = await respuesta.json();
-    this.promocionesDisponibles = datos;
+  async cargarPromociones() {
+    this.promocionesDisponibles = await this.promocionService.obtenerPromociones();
     this.cdr.detectChanges();
   }
 
-  //Guarda nueva promocion en el servidor
-  async guardarPromocion(){
+
+  // guarda una nueva promocion
+  async guardarPromocion() {
     if (!this.nuevaPromocion.trim()) return;
-
-    //Peticion HTTP POST
-    await fetch(`${API_BASE_URL}/promociones`,{
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ nombre: this.nuevaPromocion.trim(), descuento: 0.1, activa: false})
-    });
-
+    await this.promocionService.guardarPromocion(this.nuevaPromocion.trim());
     this.nuevaPromocion = '';
     await this.cargarPromociones();
+    this.promocionesCambiar.emit();
   }
 
+
   async eliminarPromocion(id:number){
-    await fetch(`${API_BASE_URL}/promociones/${id}`, {
-      method: 'DELETE'
-    });
+    await this.promocionService.eliminarPromocion(id);
 
     // reemplaza la lista antigua, por una nueva sin esa promocion
     this.promocionesDisponibles = this.promocionesDisponibles.filter(
@@ -59,7 +56,9 @@ export class GestionPromociones implements OnInit {
     );
 
     this.cdr.detectChanges();
+    this.promocionesCambiar.emit(); // Emitimos cambio en promocion
   }
+  
   
   async ngOnInit() {
    await this.cargarPromociones();

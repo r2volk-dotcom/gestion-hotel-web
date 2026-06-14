@@ -1,26 +1,25 @@
-// Importa Component, OnInit y ChangeDetectorRef de Angular
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-// Importa CommonModule para directivas basicas
 import { CommonModule } from '@angular/common';
-// Importa la interfaz Cliente
 import { Cliente } from '../../models';
-// Importa la URL base del backend
-import { API_BASE_URL } from '../../api.config';
-// Importa los subcomponentes del modulo
+import { ClienteService } from './cliente.service';
 import { FormularioCliente } from './formulario-cliente/formulario-cliente';
 import { TablaClientes } from './tabla-clientes/tabla-clientes';
 
-// Decorador del componente
 @Component({
-  selector: 'app-clientes', // etiqueta HTML
-  imports: [CommonModule, FormularioCliente, TablaClientes], // modulos importados
-  templateUrl: './clientes.html', // plantilla HTML
-  styleUrl: './clientes.css' // archivo de estilos
+  selector: 'app-clientes', 
+  imports: [CommonModule, FormularioCliente, TablaClientes], 
+  templateUrl: './clientes.html',
+  styleUrl: './clientes.css' 
 })
+
+
 // Componente principal para gestionar clientes
 export class Clientes implements OnInit {
-  // Inyecta detector de cambios
-  constructor(private cdr: ChangeDetectorRef) {}
+
+  constructor(
+    private clienteService: ClienteService, // servicios
+    private cdr: ChangeDetectorRef // detector de cambios
+  ) {} 
 
   // Listas de clientes cargados y buscados
   clientes: Cliente[] = [];
@@ -31,35 +30,24 @@ export class Clientes implements OnInit {
     await this.cargarClientes(); // carga inicial de clientes
   }
 
-  // Carga todos los clientes desde el servidor
+
   async cargarClientes() {
-    // Peticion HTTP GET
-    const respuesta = await fetch(`${API_BASE_URL}/clientes`);
-    // Convierte respuesta a JSON
-    const datos = await respuesta.json();
-    // Guarda clientes en la lista
-    this.clientes = datos;
-    // Notifica cambios a Angular
-    this.cdr.detectChanges();
+    // Carga todos los clientes desde el servidor
+    this.clientes = await this.clienteService.obtenerClientes();
+    this.cdr.detectChanges(); // Notifica cambios a Angular
   }
 
-  // Busca clientes por nombre
+
   async buscarClientes(name:string){
-    // Peticion de busqueda
-    const respuesta = await fetch(`${API_BASE_URL}/clientes/nombre/${name}`);
-    // Convierte resultados a JSON
-    this.clientesBuscados = await respuesta.json();
-    // Notifica cambios a Angular
-    this.cdr.detectChanges();
+    // Busca clientes por nombre
+    this.clientesBuscados = await this.clienteService.buscarClientes(name);
+    this.cdr.detectChanges(); // Notifica cambios a Angular
   }
 
-  // Elimina un cliente por su ID
+
   async eliminarCliente(idEliminar:number){
-    // Peticion HTTP DELETE
-    await fetch(`${API_BASE_URL}/clientes/${idEliminar}`,
-    {
-      method: 'DELETE'
-    });
+    // Elimina un cliente por su ID
+    await this.clienteService.eliminarCliente(idEliminar);
 
     // Remueve el cliente de la lista local
     this.clientes = this.clientes.filter(
@@ -69,27 +57,18 @@ export class Clientes implements OnInit {
     this.clientesBuscados = this.clientesBuscados.filter(
       clientesBuscado => clientesBuscado.id !== idEliminar
     )
-    // Notifica cambios a Angular
-    this.cdr.detectChanges();
+    
+    this.cdr.detectChanges(); // Notifica cambios a Angular
   }
 
-  // Guarda un nuevo cliente
-  async guardarCliente(nuevoCliente: Cliente) {
-    // Peticion HTTP POST
-    const respuesta = await fetch(`${API_BASE_URL}/clientes`, {
-      method: 'POST', // metodo HTTP
-      headers: {
-        'Content-Type': 'application/json' // cabecera JSON
-      },
-      body: JSON.stringify(nuevoCliente) // datos del cliente
-    });
 
-    // Convierte el cliente guardado a JSON
-    const clienteGuardado = await respuesta.json();
+  async guardarCliente(nuevoCliente: Cliente) {
+    // Guarda un nuevo cliente
+    const clienteGuardado = await this.clienteService.guardarCliente(nuevoCliente);
 
     // Agrega el cliente a la lista local
     this.clientes.push(clienteGuardado);
-    // Notifica cambios a Angular
-    this.cdr.detectChanges();
+
+    this.cdr.detectChanges(); // Notifica cambios a Angular
   }
 }

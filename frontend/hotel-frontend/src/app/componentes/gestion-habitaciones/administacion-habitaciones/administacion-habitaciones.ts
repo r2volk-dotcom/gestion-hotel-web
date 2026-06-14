@@ -2,7 +2,9 @@ import { Component, OnInit, ChangeDetectorRef, Input, Output, EventEmitter } fro
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Habitacion, Servicios } from '../../../models'; // interfaces necesarias
-import { API_BASE_URL } from '../../../api.config'; //URL base del backend
+
+import { HabitacionService } from '../../habitaciones/habitacion.service';
+import { ServicioService } from '../gestion-servicios/servicio.service';
 
 // subcomponentes del modulo
 import { FormularioHabitacion } from './registrar-habitacion/registrar-habitacion';
@@ -22,7 +24,11 @@ export class PanelHabitaciones implements OnInit {
   @Output() habitacionesCambiar = new EventEmitter<void>();
 
   // Inyecta detector de cambios
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(
+    private habitacionService: HabitacionService,
+    private servicioService: ServicioService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   // Listas y estados locales
   serviciosDisponibles: Servicios[] = [];
@@ -47,32 +53,23 @@ export class PanelHabitaciones implements OnInit {
     await this.cargarServicios(); // carga de servicios inicial
   }
 
-  // Obtiene los servicios del servidor
+
   async cargarServicios() {
-    // Peticion HTTP GET
-    const respuesta = await fetch(`${API_BASE_URL}/servicios`);
-    // Convierte respuesta a JSON
-    const datos = await respuesta.json();
-    // Asigna servicios disponibles
-    this.serviciosDisponibles = datos;
-    
+
+    this.serviciosDisponibles = await this.servicioService.obtenerServicios();
+
     // Remueve de la seleccion local los servicios eliminados
     const idsDisponibles = this.serviciosDisponibles.map(s => s.id);
     this.serviciosSeleccionados = this.serviciosSeleccionados.filter(id => idsDisponibles.includes(id));
     
-    // Notifica cambios a Angular
-    this.cdr.detectChanges();
+    this.cdr.detectChanges(); // Notifica cambios a Angular
   }
 
-  // Elimina una habitacion
   async eliminarHabitacion(idEliminar: number) {
-    // Peticion HTTP DELETE
-    await fetch(`${API_BASE_URL}/habitaciones/${idEliminar}`, {
-      method: 'DELETE'
-    });
-    // Notifica cambios al padre
+    await this.habitacionService.eliminarHabitacion(idEliminar);
     this.habitacionesCambiar.emit();
   }
+
 
   // Selecciona o deselecciona un servicio
   toggleServicio(id: number) {
@@ -119,33 +116,20 @@ export class PanelHabitaciones implements OnInit {
     });
 
     if (this.idHabitacionEdicion !== null) {
-      // Modo edicion: mantiene imagen anterior si no se sube una nueva
+      // Modo edicion, mantiene imagen anterior si no se sube una nueva
       if (!this.nuevaHabitacion.imagen) {
         this.nuevaHabitacion.imagen = this.imagenOriginalEdicion;
       }
 
       // Peticion HTTP PUT para actualizar
-      await fetch(`${API_BASE_URL}/habitaciones/${this.idHabitacionEdicion}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(this.nuevaHabitacion)
-      });
+      await this.habitacionService.actualizarHabitacion(this.idHabitacionEdicion, this.nuevaHabitacion);
 
       // Limpia estados de edicion
       this.idHabitacionEdicion = null;
       this.imagenOriginalEdicion = '';
 
-    } else {
-      // Modo registro: peticion HTTP POST
-      await fetch(`${API_BASE_URL}/habitaciones`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(this.nuevaHabitacion)
-      });
+    } else { // Modo registro, nueva habitacion
+      await this.habitacionService.guardarHabitacion(this.nuevaHabitacion);
     }
 
     // Reinicia el modelo del formulario

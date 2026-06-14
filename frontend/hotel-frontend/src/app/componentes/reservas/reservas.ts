@@ -1,26 +1,32 @@
-// Importa Component, OnInit y ChangeDetectorRef de Angular
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-// Importa CommonModule para directivas basicas
 import { CommonModule } from '@angular/common';
-// Importa las interfaces necesarias
 import { Cliente, Habitacion, Reserva } from '../../models';
-// Importa la URL base del backend
-import { API_BASE_URL } from '../../api.config';
-// Importa los subcomponentes del modulo
+
+// Servicios necesarios
+import { ClienteService } from '../clientes/cliente.service';
+import { HabitacionService } from '../habitaciones/habitacion.service';
+import { ReservaService } from './reserva.service';
+
+// Subcomponentes del modulo
 import { FormularioReserva } from './formulario-reserva/formulario-reserva';
 import { ListaReservas } from './lista-reservas/lista-reservas';
 
-// Decorador del componente
+
 @Component({
-  selector: 'app-reservas', // etiqueta HTML
-  imports: [CommonModule, FormularioReserva, ListaReservas], // componentes importados
-  templateUrl: './reservas.html', // plantilla HTML
-  styleUrl: './reservas.css' // archivo de estilos
+  selector: 'app-reservas',
+  imports: [CommonModule, FormularioReserva, ListaReservas],
+  templateUrl: './reservas.html',
+  styleUrl: './reservas.css'
 })
-// Componente principal para la gestion de reservas
+
 export class Reservas implements OnInit {
   // Inyecta detector de cambios
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(
+    private clienteService: ClienteService,
+    private habitacionService: HabitacionService,
+    private reservaService: ReservaService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   // Listas de clientes, habitaciones y reservas
   clientes: Cliente[] = [];
@@ -32,80 +38,49 @@ export class Reservas implements OnInit {
     await this.cargarDatos(); // carga inicial de datos
   }
 
-  // Carga todos los datos necesarios
+  // Carga los datos necesarios
   async cargarDatos() {
-    await this.cargarClientes(); // carga clientes
-    await this.cargarHabitaciones(); // carga habitaciones
-    await this.cargarReservas(); // carga reservas
+    await this.cargarClientes(); 
+    await this.cargarHabitaciones(); 
+    await this.cargarReservas();
   }
 
-  // Obtiene los clientes desde el servidor
+
   async cargarClientes() {
-    // Peticion HTTP GET
-    const respuesta = await fetch(`${API_BASE_URL}/clientes`);
-    // Convierte respuesta a JSON
-    const datos = await respuesta.json();
-    // Asigna clientes a la lista
-    this.clientes = datos;
+    this.clientes = await this.clienteService.obtenerClientes();
   }
 
-  // Obtiene las habitaciones desde el servidor
+
   async cargarHabitaciones() {
-    // Peticion HTTP GET
-    const respuesta = await fetch(`${API_BASE_URL}/habitaciones`);
-    // Convierte respuesta a JSON
-    const datos = await respuesta.json();
-    // Asigna habitaciones a la lista
-    this.habitaciones = datos;
+    this.habitaciones = await this.habitacionService.obtenerHabitaciones();
   }
 
-  // Obtiene las reservas desde el servidor
-  async cargarReservas() {
-    // Peticion HTTP GET
-    const respuesta = await fetch(`${API_BASE_URL}/reservas`);
-    // Convierte respuesta a JSON
-    const datos = await respuesta.json();
-    // Asigna reservas a la lista
-    this.reservas = datos;
-    // Notifica cambios a Angular
+
+  async cargarReservas(){
+    this.reservas = await this.reservaService.obtenerReservas();
     this.cdr.detectChanges();
   }
 
   // Guarda una nueva reserva
   async guardarReserva(nuevaReserva: Reserva) {
     // Peticion HTTP POST
-    const respuesta = await fetch(`${API_BASE_URL}/reservas`, {
-      method: 'POST', // metodo HTTP
-      headers: {
-        'Content-Type': 'application/json' // cabecera JSON
-      },
-      body: JSON.stringify(nuevaReserva) // datos de la reserva
-    });
+    const reservaGuardada = await this.reservaService.guardarReserva(nuevaReserva);
 
-    // Convierte la respuesta a JSON
-    const reservaGuardada = await respuesta.json();
-
-    // Agrega la reserva a la lista local
-    this.reservas.push(reservaGuardada);
-    // Notifica cambios a Angular
-    this.cdr.detectChanges();
+    this.reservas.push(reservaGuardada); // Agrega la reserva a la lista local
+    this.cdr.detectChanges(); // Notifica cambios a Angular
   }
 
-  // Elimina una reserva por su ID
+
   async eliminarReserva(idEliminar:number){
     // Peticion HTTP DELETE
-    await fetch(`${API_BASE_URL}/reservas/${idEliminar}`,
-    {
-      method: 'DELETE'
-    });
+    await this.reservaService.eliminarReserva(idEliminar);
 
-    // Filtra y remueve la reserva de la lista
+    // Filtra y remueve la reserva de la lista local
     this.reservas = this.reservas.filter(
       reserva => reserva.id !== idEliminar
     );
 
-    // Notifica cambios a Angular
-    this.cdr.detectChanges();
+    this.cdr.detectChanges(); // Notifica cambios a Angular
   }
 
   // Edita el estado de una reserva
@@ -123,12 +98,11 @@ export class Reservas implements OnInit {
       }
     
     // Peticion HTTP PUT para actualizar el estado
-    await fetch(`${API_BASE_URL}/reservas/${event.id}/${endpoint}`,{
-        method: 'PUT'
-    })
+     await this.reservaService.actualizarEstado(event.id, endpoint);
 
     // Desactiva modo edicion y recarga datos
     event.reserva.editando = false;
     this.cargarDatos();
   }
+
 }
