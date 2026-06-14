@@ -19,19 +19,15 @@
             </div>
             <div class="room-card-body">
               <div class="room-card-header">
-                <h3 class="room-card-type">{{ habitacion.tipo }}</h3>
-                <!-- Badge dinamico de disponibilidad -->
-                <span class="badge"
-                      [class.badge-available]="habitacion.disponible"
-                      [class.badge-occupied]="!habitacion.disponible">
-                  {{ habitacion.disponible ? "Disponible" : "Ocupado" }}
-                </span>
-                <div class="room-card-servicios">
-                  <!-- Muestra los servicios de la habitacion -->
-                  @for (servicio of habitacion.servicios; track servicio.id) {
-                    <span class="servicio-tag">{{ servicio.nombre }}</span>
-                  }
+                <div class="room-card-title-row">
+                  <h3 class="room-card-type">{{ habitacion.tipo }}</h3>
+                  <!-- Indicador circular de disponibilidad -->
+                  <span class="status-dot" [class.dot-available]="habitacion.disponible"></span>
                 </div>
+                <!-- Cantidad de servicios incluidos -->
+                <span class="servicios-count">
+                  {{ habitacion.servicios?.length || 0 }} servicios
+                </span>
               </div>
               <div class="room-card-footer">
                 <!-- Muestra precio con descuento si hay promocion activa -->
@@ -43,15 +39,12 @@
                 } @else {
                   <span class="room-card-price">S/ {{ habitacion.precio }}</span>
                 }
-                <!-- Boton para eliminar la habitacion -->
-                <button class="boton-basura-bordeado" (click)="eliminarHabitacion(habitacion.id!)">
-                  <svg width="17" height="17" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="2">
-                    <polyline points="3 6 5 6 21 6"/>
-                    <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
-                    <path d="M10 11v6"/>
-                    <path d="M14 11v6"/>
-                    <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+                <!-- Boton para abrir el modal con detalles de la habitacion -->
+                <button class="boton-basura-bordeado" (click)="abrirModal(habitacion)">
+                  <!-- Icono de ojo -->
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                    <circle cx="12" cy="12" r="3" />
                   </svg>
                 </button>
               </div>
@@ -63,4 +56,12 @@
       <div class="empty-list">No hay habitaciones registradas</div>
     }
   </div>
+
+  <!-- Modal de detalle de habitacion -->
+  @if (mostrarModal) {
+    <app-modal-habitacion
+      [habitacion]="habitacionSeleccionada"
+      (cerrar)="cerrarModal()">
+    </app-modal-habitacion>
+  }
 </section>

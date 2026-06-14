@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 import { Habitacion, Promociones } from '../../models';
 import { HabitacionService } from './habitacion.service';
 import { PromocionService } from '../gestion-habitaciones/gestion-promociones/promocion.service';
+import { ModalHabitacion } from './modal-habitacion/modal-habitacion';
 
 @Component({
   selector: 'app-habitaciones', 
-  imports: [CommonModule],
+  imports: [CommonModule, ModalHabitacion],
   templateUrl: './habitaciones.html', 
   styleUrl: './habitaciones.css'
 })
@@ -21,6 +22,11 @@ export class Habitaciones implements OnInit {
   ) {}
 
   habitaciones: Habitacion[] = [];
+
+  // Controla la visibilidad del modal
+  mostrarModal = false;
+  // Almacena la habitacion seleccionada para el modal
+  habitacionSeleccionada: Habitacion | null = null;
 
   // Metodo del ciclo de vida: se ejecuta al iniciar el componente
   async ngOnInit() {
@@ -49,6 +55,20 @@ export class Habitaciones implements OnInit {
       habitacion => habitacion.id !== idEliminar
     );
     // Notifica cambios a Angular
+    this.cdr.detectChanges();
+  }
+
+  // Abre el modal de habitacion
+  abrirModal(habitacion: Habitacion) {
+    this.habitacionSeleccionada = habitacion;
+    this.mostrarModal = true;
+    this.cdr.detectChanges();
+  }
+
+  // Cierra el modal de habitacion
+  cerrarModal() {
+    this.mostrarModal = false;
+    this.habitacionSeleccionada = null;
     this.cdr.detectChanges();
   }
 

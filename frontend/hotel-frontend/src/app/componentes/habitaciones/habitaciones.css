@@ -69,25 +69,30 @@
   font-weight: 680;
 }
 
-.badge-available {
-  border-color: rgba(21, 128, 61, 0.18);
-  background: var(--success-soft);
-  color: var(--success);
+.room-card-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.badge-occupied {
-  border-color: rgba(220, 38, 38, 0.18);
-  background: var(--danger-soft);
-  color: var(--danger);
-}
-
-.servicio-tag {
+/* Punto indicador de disponibilidad */
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--danger);
   display: inline-block;
-  background: var(--border);
-  padding: 2px 8px;
-  border-radius: 4px;
-  font-size: 12px;
-  margin: 2px;
+}
+
+.status-dot.dot-available {
+  background-color: var(--success);
+}
+
+/* Contador de servicios incluidos */
+.servicios-count {
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-weight: 500;
 }
 
 /* Contenedor de precios */

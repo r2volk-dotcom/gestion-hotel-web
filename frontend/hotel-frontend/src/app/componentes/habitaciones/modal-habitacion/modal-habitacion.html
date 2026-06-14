@@ -1,0 +1,65 @@
+<div class="modal-backdrop" (click)="cerrarModal()">
+  <div class="modal-card" (click)="$event.stopPropagation()">
+    <!-- Boton de cierre -->
+    <button class="btn-close" (click)="cerrarModal()">×</button>
+
+    @if (habitacion) {
+      <!-- Titulo del modal -->
+      <div class="modal-header">
+        <h2>{{ habitacion.codigo || 'S/C' }} - {{ habitacion.tipo }}</h2>
+      </div>
+
+      <!-- Imagen de la habitacion -->
+      @if (habitacion.imagen) {
+        <div class="modal-image">
+          <img [src]="habitacion.imagen" alt="{{ habitacion.tipo }}">
+        </div>
+      }
+
+      <div class="modal-body">
+        <!-- Descripcion de la habitacion -->
+        @if (habitacion.descripcion) {
+          <div class="modal-info-section">
+            <span class="info-label">Descripción</span>
+            <p class="info-desc">{{ habitacion.descripcion }}</p>
+          </div>
+        }
+
+        <!-- Lista de servicios asociados -->
+        @if (habitacion.servicios && habitacion.servicios.length > 0) {
+          <div class="modal-info-section">
+            <span class="info-label">Servicios incluidos</span>
+            <div class="servicios-tags">
+              @for (servicio of habitacion.servicios; track servicio.id) {
+                <span class="servicio-tag">{{ servicio.nombre }}</span>
+              }
+            </div>
+          </div>
+        }
+
+        <!-- Seccion de precios -->
+        <div class="modal-price-section">
+          @if (promocionService.promocionActiva) {
+            <div class="price-row">
+              <span class="price-label">Precio Base:</span>
+              <span class="price-original">S/ {{ habitacion.precio }}</span>
+            </div>
+            <div class="price-row">
+              <span class="price-label">Descuento aplicado:</span>
+              <span class="badge-discount">-{{ promocionService.promocionActiva.descuento * 100 }}% ({{ promocionService.promocionActiva.nombre }})</span>
+            </div>
+            <div class="price-row highlight">
+              <span class="price-label">Precio Actual:</span>
+              <span class="price-discounted">S/ {{ promocionService.calcularPrecioFinal(habitacion.precio) | number:'1.2-2' }}</span>
+            </div>
+          } @else {
+            <div class="price-row highlight">
+              <span class="price-label">Precio:</span>
+              <span class="price-standard">S/ {{ habitacion.precio }}</span>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</div>
