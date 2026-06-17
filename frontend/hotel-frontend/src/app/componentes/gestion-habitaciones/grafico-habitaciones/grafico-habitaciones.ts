@@ -55,7 +55,7 @@ export class GraficoHabitaciones implements OnChanges, OnInit, OnDestroy {
     const conteos: { [key: string]: number } = {};
     
     // Lista ordenada de tipos para consistencia visual en el grafico
-    const tiposOrdenados = ['Individual', 'Doble', 'Twin', 'Triple', 'Cuadruple', 'Deluxe', 'Suite'];
+    const tiposOrdenados = ['Simple', 'Doble', 'Matrimonial', 'Suite', 'Familiar', 'Deluxe', 'Ejecutiva', 'Presidencial'];
     // Inicializa cada tipo en cero
     tiposOrdenados.forEach(t => conteos[t] = 0);
 

@@ -1,0 +1,54 @@
+@import "../../../boton.css";
+@import "../../../tabla.css";
+
+/* Estilos especificos para la tabla de empleados */
+.col-acciones {
+  width: 100px;
+  white-space: nowrap;
+}
+
+.col-acciones button:not(.boton-basura) {
+  border: none !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  color: var(--text-muted) !important;
+  padding: 6px !important;
+  margin: 0 !important;
+  box-shadow: none !important;
+  min-height: unset !important;
+  height: 28px !important;
+  width: 28px !important;
+  border-radius: 6px !important;
+  transition: color 150ms ease, background-color 150ms ease !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transform: none !important;
+  cursor: pointer;
+}
+
+.col-acciones button:not(.boton-basura):hover {
+  background: var(--surface-soft) !important;
+  background-color: var(--surface-soft) !important;
+  color: var(--text-primary) !important;
+  transform: none !important;
+}
+
+.table-scroll {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+/* Badges para los roles de empleados */
+.badge-admin {
+  border-color: rgba(24, 24, 27, 0.12);
+  background: var(--surface-soft);
+  color: var(--text-primary);
+}
+
+.badge-recep {
+  border-color: rgba(21, 128, 61, 0.18);
+  background: var(--success-soft);
+  color: var(--success);
+}

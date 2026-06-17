@@ -616,6 +616,7 @@ svg {
 }
 
 input[type="text"],
+input[type="password"],
 input[type="number"],
 input[type="date"],
 input[type="email"],
@@ -633,6 +634,7 @@ select {
 }
 
 [data-theme="dark"] input[type="text"],
+[data-theme="dark"] input[type="password"],
 [data-theme="dark"] input[type="number"],
 [data-theme="dark"] input[type="date"],
 [data-theme="dark"] input[type="email"],
@@ -646,9 +648,8 @@ input::placeholder {
 
 input:focus,
 select:focus {
-  border-color: #a1a1aa;
-  background: #ffffff;
-  box-shadow: 0 0 0 4px var(--focus);
+  border-color: var(--text-primary);
+  box-shadow: 0 0 0 2px var(--focus);
 }
 
 .form-actions {

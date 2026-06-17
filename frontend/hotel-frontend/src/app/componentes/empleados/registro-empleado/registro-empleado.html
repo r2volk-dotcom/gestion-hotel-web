@@ -1,0 +1,38 @@
+<!-- Formulario de registro y edicion de empleados -->
+<div class="form-container">
+  <h3>{{ editando ? 'Editar Empleado' : 'Registrar Empleado' }}</h3>
+  
+  <div class="form-field-vertical">
+    <input type="text" placeholder="Nombre" [(ngModel)]="empleado.nombre">
+  </div>
+  
+  <div class="form-field-vertical">
+    <input type="text" placeholder="Apellido" [(ngModel)]="empleado.apellido">
+  </div>
+  
+  <div class="form-field-vertical">
+    <input type="text" placeholder="Usuario" [(ngModel)]="empleado.usuario">
+  </div>
+  
+  <div class="form-field-vertical">
+    <input type="password" placeholder="Contraseña" [(ngModel)]="empleado.contrasena">
+  </div>
+  
+  <div class="form-field-vertical">
+    <select [(ngModel)]="empleado.rol">
+      <option value="" disabled selected>Selecciona un rol</option>
+      <option value="Administrador">Administrador</option>
+      <option value="Recepcionista">Recepcionista</option>
+    </select>
+  </div>
+  
+  <!-- Acciones del formulario -->
+  <div class="form-actions-row">
+    <button class="btn-primary" (click)="guardar()">
+      {{ editando ? 'Actualizar' : 'Guardar' }}
+    </button>
+    <button class="btn-secondary" (click)="cancelar()">
+      Cancelar
+    </button>
+  </div>
+</div>

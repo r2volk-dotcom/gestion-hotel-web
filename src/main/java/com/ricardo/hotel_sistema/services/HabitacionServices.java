@@ -87,20 +87,22 @@ public class HabitacionServices {
         }
 
         String prefijo = "";
-        if ("Individual".equals(tipo)) {
-            prefijo = "IND-";
+        if ("Simple".equals(tipo)) {
+            prefijo = "SMP-";
         } else if ("Doble".equals(tipo)) {
             prefijo = "DOB-";
-        } else if ("Twin".equals(tipo)) {
-            prefijo = "TWN-";
-        } else if ("Triple".equals(tipo)) {
-            prefijo = "TRI-";
-        } else if ("Cuadruple".equals(tipo) || "Cuádruple".equals(tipo)) {
-            prefijo = "CUA-";
-        } else if ("Deluxe".equals(tipo)) {
-            prefijo = "DLX-";
+        } else if ("Matrimonial".equals(tipo)) {
+            prefijo = "MAT-";
         } else if ("Suite".equals(tipo)) {
             prefijo = "STE-";
+        } else if ("Familiar".equals(tipo)) {
+            prefijo = "FAM-";
+        } else if ("Deluxe".equals(tipo)) {
+            prefijo = "DLX-";
+        } else if ("Ejecutiva".equals(tipo)) {
+            prefijo = "EJE-";
+        } else if ("Presidencial".equals(tipo)) {
+            prefijo = "PRE-";
         }
 
         // Evita duplicar el prefijo si ya existe

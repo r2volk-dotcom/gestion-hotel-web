@@ -1,0 +1,19 @@
+/* Contenedor principal con grid en disposicion de dos columnas */
+.empleados-grid-container {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 24px;
+  padding: 24px;
+  align-items: start;
+}
+
+/* Panel de widget individual */
+.widget-panel {
+  overflow: hidden;
+}
+
+@media (max-width: 900px) {
+  .empleados-grid-container {
+    grid-template-columns: 1fr;
+  }
+}

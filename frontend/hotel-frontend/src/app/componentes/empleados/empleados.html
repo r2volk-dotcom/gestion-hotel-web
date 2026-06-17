@@ -1,0 +1,30 @@
+<section class="section">
+  <!-- Cabecera de la seccion -->
+  <div class="section-header">
+    <h2>Empleados</h2>
+  </div>
+
+  <!-- Contenedor grid de widgets en disposicion 2x1 -->
+  <div class="empleados-grid-container">
+    
+    <!-- Widget A: Formulario de registro -->
+    <div class="widget-panel">
+      <app-registro-empleado
+        [empleado]="empleadoForm"
+        [editando]="editando"
+        (empleadoGuardar)="guardar($event)"
+        (empleadoCancelar)="limpiarFormulario()">
+      </app-registro-empleado>
+    </div>
+
+    <!-- Widget B: Tabla de empleados -->
+    <div class="widget-panel">
+      <app-tabla-empleados
+        [empleados]="empleados"
+        (empleadoEditar)="seleccionarParaEditar($event)"
+        (empleadoEliminar)="eliminar($event)">
+      </app-tabla-empleados>
+    </div>
+
+  </div>
+</section>
