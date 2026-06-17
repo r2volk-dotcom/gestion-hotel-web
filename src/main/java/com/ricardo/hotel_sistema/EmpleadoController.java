@@ -45,4 +45,19 @@ public class EmpleadoController {
     public Empleado eliminar(@PathVariable Long id) {
         return empleadoServices.eliminarEmpleado(id);
     }
+
+    // POST /empleados/login - Autenticar un empleado
+    @PostMapping("/login")
+    public Empleado login(@RequestBody Empleado credenciales) {
+        Empleado empleado = empleadoServices.buscarEmpleadoPorUsuario(credenciales.getUsuario());
+
+        if (empleado == null || !empleado.getContrasena().equals(credenciales.getContrasena())) {
+            throw new org.springframework.web.server.ResponseStatusException(
+                org.springframework.http.HttpStatus.UNAUTHORIZED,
+                "Usuario o contrasena incorrectos"
+            );
+        }
+
+        return empleado;
+    }
 }

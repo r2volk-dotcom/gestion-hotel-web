@@ -1,42 +1,73 @@
-// importa el decorador Component desde Angular
 import { Component, OnInit, ElementRef } from '@angular/core';
-// importa modulos de enrutamiento: RouterOutlet, RouterLink, RouterLinkActive
-import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
+import { RouterOutlet, RouterLink, RouterLinkActive, Router, NavigationEnd } from '@angular/router';
+import { EmpleadoService } from './componentes/empleados/empleado.service';
 
-// decorador que define el componente principal de la app
 @Component({
-  selector: 'app-root',              // etiqueta HTML para usar este componente
-  imports: [RouterOutlet, RouterLink, RouterLinkActive], // modulos necesarios
-  templateUrl: './app.html',         // archivo de plantilla HTML
-  styleUrl: './app.css'              // archivo de estilos CSS
+  selector: 'app-root',
+  imports: [RouterOutlet, RouterLink, RouterLinkActive],
+  templateUrl: './app.html',
+  styleUrl: './app.css'
 })
-// clase principal del componente de la aplicacion
 export class App implements OnInit {
+  esLogin: boolean = false;
+  esModoOscuro: boolean = false;
   
-  constructor(private elementRef: ElementRef) {}
+  constructor(
+    private elementRef: ElementRef,
+    private router: Router,
+    private empleadoService: EmpleadoService
+  ) {}
   
-  ngOnInit() {
-    // Obtener el estado del tema del localStorage
-    const isDarkMode = localStorage.getItem('theme-dark-mode') === 'true';
-    
-    // Establecer el estado inicial del checkbox
-    const toggle = this.elementRef.nativeElement.querySelector('#theme-toggle') as HTMLInputElement;
-    if (toggle) {
-      toggle.checked = isDarkMode;
-      this.applyTheme(isDarkMode);
+  // Obtiene el usuario logueado actualmente
+  get usuarioActual() {
+    return this.empleadoService.obtenerUsuarioActual();
+  }
+
+  // Genera las iniciales del usuario logueado
+  obtenerIniciales(): string {
+    const usuario = this.usuarioActual;
+    if (!usuario) {
+      return 'SH';
     }
-    
-    // Escuchar cambios en el toggle
-    if (toggle) {
-      toggle.addEventListener('change', (event: Event) => {
-        const isChecked = (event.target as HTMLInputElement).checked;
-        this.applyTheme(isChecked);
-        localStorage.setItem('theme-dark-mode', isChecked ? 'true' : 'false');
-      });
-    }
+    const nombreIni = usuario.nombre ? usuario.nombre.charAt(0).toUpperCase() : '';
+    const apellidoIni = usuario.apellido ? usuario.apellido.charAt(0).toUpperCase() : '';
+    return (nombreIni + apellidoIni) || 'SH';
+  }
+
+  // Cierra la sesion del usuario y redirige al login
+  cerrarSesion() {
+    this.empleadoService.cerrarSesion();
+    this.router.navigate(['/login']);
   }
   
-  // Aplicar el tema oscuro o claro
+  ngOnInit() {
+    // 1. Obtener el estado del tema del localStorage
+    this.esModoOscuro = localStorage.getItem('theme-dark-mode') === 'true';
+    
+    // 2. Aplicar el tema inicial
+    this.applyTheme(this.esModoOscuro);
+    
+    // 3. Escuchar cambios de ruta para detectar si estamos en la pantalla de login
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        if (event.urlAfterRedirects.includes('/login') == true) {
+          this.esLogin = true;
+        } else {
+          this.esLogin = false;
+        }
+      }
+    });
+  }
+  
+  // Función nativa para escuchar el cambio de switch de tema en el HTML
+  onThemeChange(event: Event) {
+    const isChecked = (event.target as HTMLInputElement).checked;
+    this.esModoOscuro = isChecked;
+    this.applyTheme(isChecked);
+    localStorage.setItem('theme-dark-mode', isChecked ? 'true' : 'false');
+  }
+  
+  // Aplicar el tema oscuro o claro en el documento raíz
   applyTheme(isDarkMode: boolean) {
     const root = document.documentElement;
     if (isDarkMode) {

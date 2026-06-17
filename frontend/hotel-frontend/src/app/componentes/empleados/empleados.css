@@ -31,16 +31,20 @@
 
 /* Tarjeta de widget individual con bordes redondeados y sombra */
 .widget-card {
-  border: 1px solid rgba(228, 228, 231, 0.94);
+  border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   background: var(--surface);
   box-shadow: var(--shadow-xs);
   padding: 24px;
+  overflow: hidden;
+  height: 440px;
+  display: flex;
+  flex-direction: column;
 }
 
-[data-theme="dark"] .widget-card {
-  border-color: rgba(63, 63, 70, 0.94);
-  background: rgba(24, 24, 27, 0.88);
+:host-context([data-theme="dark"]) .widget-card {
+  border-color: var(--border);
+  background: var(--surface);
 }
 
 @media (max-width: 900px) {

@@ -126,3 +126,12 @@
   outline: 2px solid #000000;
   outline-offset: 2px;
 }
+
+/* Overrides para la pantalla de Login a pantalla completa */
+.main-wrapper.no-sidebar {
+  margin-left: 0 !important;
+}
+
+.page-content.no-padding {
+  padding: 0 !important;
+}

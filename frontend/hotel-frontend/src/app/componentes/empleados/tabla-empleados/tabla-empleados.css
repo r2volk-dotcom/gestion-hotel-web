@@ -1,11 +1,17 @@
 @import "../../../boton.css";
 @import "../../../tabla.css";
 
+:host {
+  display: block;
+  height: 100%;
+}
+
 /* Contenedor de la tabla widget */
 .tabla-container {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 0;
+  height: 100%;
 }
 
 .tabla-container h3 {
@@ -14,7 +20,8 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--text-secondary);
-  margin-bottom: 4px;
+  margin: 0 0 14px 0;
+  padding: 0;
 }
 
 /* Estilos especificos para la tabla de empleados */
@@ -54,6 +61,32 @@
   flex: 1;
   overflow-y: auto;
   min-height: 0;
+  border: none !important;
+}
+
+/* Mensaje de lista vacia con padding interno */
+.empty-list {
+  padding: 16px 0;
+  color: var(--text-muted);
+  font-size: 14px;
+  text-align: center;
+}
+
+/* Quitar bordes laterales redundantes y fondo del encabezado */
+.tabla-compleja {
+  border: none !important;
+}
+
+.tabla-compleja th,
+.tabla-compleja td {
+  border-left: none !important;
+  border-right: none !important;
+  border-top: none !important;
+}
+
+/* Fondo transparente en cabecera para evitar el rectangulo dentro del widget */
+.tabla-compleja th {
+  background: transparent !important;
 }
 
 /* Badges para los roles de empleados */

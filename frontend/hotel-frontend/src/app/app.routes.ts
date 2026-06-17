@@ -4,15 +4,20 @@ import { Clientes } from './componentes/clientes/clientes';
 import { Reservas } from './componentes/reservas/reservas';
 import { GestionHabitaciones } from './componentes/gestion-habitaciones/gestion-habitaciones';
 import { Empleados } from './componentes/empleados/empleados';
+import { Login } from './login/login';
+import { authGuard } from './auth.guard';
 
 // define las rutas de la aplicación, cada una carga un componente diferente
 export const routes: Routes = [
   { path: '', redirectTo: 'habitaciones', pathMatch: 'full' }, // redirige al inicio
-  { path: 'habitaciones', component: Habitaciones }, // ruta de habitaciones
-  { path: 'gestionHabitaciones', component: GestionHabitaciones }, // ruta de gestión de habitaciones 
-  { path: 'clientes', component: Clientes },          // ruta de clientes
-  { path: 'reservas', component: Reservas },          // ruta de reservas
-  { path: 'empleados', component: Empleados },        // Ruta de empleados
-  { path: 'pestana1', component: Habitaciones },      // pestaña vacía 1
-  { path: 'pestana2', component: Habitaciones },      // pestaña vacía 2
+  { path: 'login', component: Login },                          // ruta de login (PÚBLICA)
+  
+  // Rutas protegidas por el guard de autenticación
+  { path: 'habitaciones', component: Habitaciones, canActivate: [authGuard] },
+  { path: 'gestionHabitaciones', component: GestionHabitaciones, canActivate: [authGuard] },
+  { path: 'clientes', component: Clientes, canActivate: [authGuard] },
+  { path: 'reservas', component: Reservas, canActivate: [authGuard] },
+  { path: 'empleados', component: Empleados, canActivate: [authGuard] },
+  { path: 'pestana1', component: Habitaciones, canActivate: [authGuard] },
+  { path: 'pestana2', component: Habitaciones, canActivate: [authGuard] },
 ];

@@ -1,10 +1,16 @@
 @import "../../../boton.css";
 
+:host {
+  display: block;
+  height: 100%;
+}
+
 /* Contenedor del formulario widget */
 .form-container {
   display: flex;
   flex-direction: column;
   gap: 14px;
+  height: 100%;
 }
 
 .form-container h3 {
