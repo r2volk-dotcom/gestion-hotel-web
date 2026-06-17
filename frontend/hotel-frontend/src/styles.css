@@ -649,7 +649,7 @@ input::placeholder {
 input:focus,
 select:focus {
   border-color: var(--text-primary);
-  box-shadow: 0 0 0 2px var(--focus);
+  box-shadow: none;
 }
 
 .form-actions {
