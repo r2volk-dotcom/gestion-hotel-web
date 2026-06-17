@@ -1,6 +1,22 @@
 @import "../../../boton.css";
 @import "../../../tabla.css";
 
+/* Contenedor de la tabla widget */
+.tabla-container {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.tabla-container h3 {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+
 /* Estilos especificos para la tabla de empleados */
 .col-acciones {
   width: 100px;
