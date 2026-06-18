@@ -7,11 +7,15 @@
   </div>
 
   <!-- formulario de registro -->
-  <app-formulario-reserva
-    [clientes]="clientes"
-    [habitaciones]="habitaciones"
-    (reservaGuardar)="guardarReserva($event)">
-  </app-formulario-reserva>
+  @if (usuarioActivo){
+    <app-formulario-reserva
+      [clientes]="clientes"
+      [habitaciones]="habitaciones"
+      [empleados]="empleados"
+      [usuarioActivo]="usuarioActivo"
+      (reservaGuardar)="guardarReserva($event)">
+    </app-formulario-reserva>
+  }
 
   <!-- lista de reservas -->
   <app-lista-reservas

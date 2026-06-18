@@ -1,17 +1,18 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Cliente, Habitacion, Reserva } from '../../models';
+import { Cliente, Habitacion, Reserva,Empleado } from '../../models';
 
 // Servicios necesarios
 import { ClienteService } from '../clientes/cliente.service';
 import { HabitacionService } from '../habitaciones/habitacion.service';
 import { ReservaService } from './reserva.service';
+import { EmpleadoService } from '../empleados/empleado.service';
 
 // Subcomponentes del modulo
 import { FormularioReserva } from './formulario-reserva/formulario-reserva';
 import { ListaReservas } from './lista-reservas/lista-reservas';
 
-
+ 
 @Component({
   selector: 'app-reservas',
   imports: [CommonModule, FormularioReserva, ListaReservas],
@@ -25,6 +26,7 @@ export class Reservas implements OnInit {
     private clienteService: ClienteService,
     private habitacionService: HabitacionService,
     private reservaService: ReservaService,
+    private empleadoService: EmpleadoService,
     private cdr: ChangeDetectorRef
   ) {}
 
@@ -32,6 +34,8 @@ export class Reservas implements OnInit {
   clientes: Cliente[] = [];
   habitaciones: Habitacion[] = [];
   reservas: Reserva[] = [];
+  empleados: Empleado[] = [];
+  usuarioActivo: Empleado | null = null;
 
   // Se ejecuta al iniciar el componente
   async ngOnInit() {
@@ -43,25 +47,28 @@ export class Reservas implements OnInit {
     await this.cargarClientes(); 
     await this.cargarHabitaciones(); 
     await this.cargarReservas();
+    await this.cargarEmpleados();
+
+    this.usuarioActivo = this.empleadoService.obtenerUsuarioActual();
   }
 
+  async cargarEmpleados() {
+    this.empleados = await this.empleadoService.obtenerEmpleados();
+  }
 
   async cargarClientes() {
     this.clientes = await this.clienteService.obtenerClientes();
   }
 
-
   async cargarHabitaciones() {
     this.habitaciones = await this.habitacionService.obtenerHabitaciones();
   }
-
 
   async cargarReservas(){
     this.reservas = await this.reservaService.obtenerReservas();
     this.cdr.detectChanges();
   }
 
-  // Guarda una nueva reserva
   async guardarReserva(nuevaReserva: Reserva) {
     // Peticion HTTP POST
     const reservaGuardada = await this.reservaService.guardarReserva(nuevaReserva);
@@ -69,7 +76,6 @@ export class Reservas implements OnInit {
     this.reservas.push(reservaGuardada); // Agrega la reserva a la lista local
     this.cdr.detectChanges(); // Notifica cambios a Angular
   }
-
 
   async eliminarReserva(idEliminar:number){
     // Peticion HTTP DELETE

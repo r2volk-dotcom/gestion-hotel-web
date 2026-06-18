@@ -1,46 +1,54 @@
-// Importa Component, Input, Output y EventEmitter de Angular
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-// Importa CommonModule para directivas basicas
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-// Importa FormsModule para enlazar formularios
 import { FormsModule } from '@angular/forms';
-// Importa las interfaces necesarias
-import { Cliente, Habitacion, Reserva } from '../../../models';
+import { Cliente, Habitacion, Reserva, Empleado } from '../../../models';
 
-// Decorador del componente
 @Component({
-  selector: 'app-formulario-reserva', // etiqueta HTML
-  imports: [CommonModule, FormsModule], // modulos importados
-  templateUrl: './formulario-reserva.html', // plantilla HTML
-  styleUrl: './formulario-reserva.css', // archivo de estilos
+  selector: 'app-formulario-reserva',
+  imports: [CommonModule, FormsModule],
+  templateUrl: './formulario-reserva.html', 
+  styleUrl: './formulario-reserva.css',
 })
-// Componente de formulario para registrar reservas
+
+
 export class FormularioReserva {
   // Datos de entrada y eventos de salida
   @Input() clientes: Cliente[] = [];
   @Input() habitaciones: Habitacion[] = [];
+  @Input() empleados: Empleado[] = [];
+  @Input() usuarioActivo: Empleado | null = null;
   @Output() reservaGuardar = new EventEmitter<Reserva>();
 
   // Modelo temporal para nueva reserva
   nuevaReserva: Reserva = {
     clienteId: 0,
     habitacionId: 0,
+    empleadoId: 0,
     fechaEntrada: '',
     fechaSalida: '',
     estado: 'RESERVADO'
   };
 
+  ngOnInit() {
+    if (this.usuarioActivo) {
+      this.nuevaReserva.empleadoId = this.usuarioActivo.id || 0;
+    }
+  }
+
   // Valida y envia la reserva al componente padre
   guardar() {
-    if (this.nuevaReserva.clienteId === 0 || this.nuevaReserva.habitacionId === 0) {
-      alert('selecciona cliente y habitacion');
+    // Validamos que se haya seleccionado cliente, habitacion y un empleado
+    if (this.nuevaReserva.clienteId === 0 || this.nuevaReserva.habitacionId === 0 || this.nuevaReserva.empleadoId === 0) {
+      alert('Por favor selecciona cliente, habitacion y empleado.');
       return;
     }
     this.reservaGuardar.emit(this.nuevaReserva);
-    // Reinicia el formulario
+    
+    // Reiniciamos el formulario limpiando cliente y habitacion, pero manteniendo el ID del empleado logueado
     this.nuevaReserva = {
       clienteId: 0,
       habitacionId: 0,
+      empleadoId: this.usuarioActivo?.id || 0,
       fechaEntrada: '',
       fechaSalida: '',
       estado: 'RESERVADO'

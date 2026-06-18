@@ -27,6 +27,16 @@
       }
     </select>
 
+    <!-- seleccion de empleado  -->
+    <select [(ngModel)]="nuevaReserva.empleadoId" [disabled]="usuarioActivo?.rol !== 'Administrador'">
+      <option [ngValue]="0">Seleccione empleado</option>
+      @for (emp of empleados; track emp.id) {
+        <option [ngValue]="emp.id">
+          {{ emp.nombre }} {{ emp.apellido }} ({{ emp.rol }})
+        </option>
+      }
+    </select>
+
     <input type="date" [(ngModel)]="nuevaReserva.fechaEntrada">
     <input type="date" [(ngModel)]="nuevaReserva.fechaSalida">
   </div>

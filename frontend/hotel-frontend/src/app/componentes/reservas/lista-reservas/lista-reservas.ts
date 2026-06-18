@@ -1,25 +1,24 @@
-// Importa Component, Input, Output y EventEmitter de Angular
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-// Importa CommonModule para directivas basicas
 import { CommonModule } from '@angular/common';
-// Importa FormsModule para formularios
 import { FormsModule } from '@angular/forms';
-// Importa las interfaces necesarias
-import { Cliente, Habitacion, Reserva } from '../../../models';
+import { Cliente, Habitacion, Reserva, Empleado } from '../../../models';
 
-// Decorador del componente
+
 @Component({
-  selector: 'app-lista-reservas', // etiqueta HTML
-  imports: [CommonModule, FormsModule], // modulos importados
-  templateUrl: './lista-reservas.html', // plantilla HTML
-  styleUrl: './lista-reservas.css', // archivo de estilos
+  selector: 'app-lista-reservas', 
+  imports: [CommonModule, FormsModule],
+  templateUrl: './lista-reservas.html',
+  styleUrl: './lista-reservas.css',
 })
-// Componente para mostrar el listado de reservas
+
+
 export class ListaReservas {
   // Datos de entrada y eventos de salida
   @Input() reservas: Reserva[] = [];
   @Input() clientes: Cliente[] = [];
   @Input() habitaciones: Habitacion[] = [];
+  @Input() empleados: Empleado[] = [];
+  @Input() usuarioActivo: Empleado | null = null;
   @Output() reservaEliminar = new EventEmitter<number>();
   @Output() reservaEditarEstado = new EventEmitter<{ estado: string, id: number, reserva: Reserva }>();
 
@@ -35,6 +34,31 @@ export class ListaReservas {
       return 'cliente no encontrado';
     }
     return cliente.nombre + ' ' + cliente.apellido;
+  }
+
+    // Busca y retorna el nombre completo del empleado
+  obtenerNombreEmpleado(empleadoId?: number): string {
+    if (!empleadoId) {
+      return 'Sistema'; // Si la reserva no tiene empleado registrado
+    }
+    const emp = this.empleados.find(e => e.id === empleadoId);
+    if (!emp) {
+      return 'Empleado no encontrado';
+    }
+    return emp.nombre + ' ' + emp.apellido;
+  }
+  
+  // Retorna true si el usuario activo tiene permiso para editar/eliminar esta reserva
+  puedeEditarOBorrar(reserva: Reserva): boolean {
+    if (!this.usuarioActivo) {
+      return false;
+    }
+    // Si es administrador, tiene permiso total
+    if (this.usuarioActivo.rol === 'Administrador') {
+      return true;
+    }
+    // Si es recepcionista, solo puede editar sus propias reservas
+    return reserva.empleadoId === this.usuarioActivo.id;
   }
 
   // Busca la habitacion y retorna su tipo y precio de reserva
