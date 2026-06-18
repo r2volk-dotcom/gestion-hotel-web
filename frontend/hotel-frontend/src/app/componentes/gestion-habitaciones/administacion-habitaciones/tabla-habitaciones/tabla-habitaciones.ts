@@ -1,5 +1,5 @@
-// Importa Component, Input, Output, EventEmitter y OnInit de Angular
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+// Importa Component, Input, Output, EventEmitter, OnInit y ChangeDetectorRef de Angular
+import { Component, Input, Output, EventEmitter, OnInit, ChangeDetectorRef } from '@angular/core';
 // Importa CommonModule para directivas basicas
 import { CommonModule } from '@angular/common';
 // Importa la interfaz Habitacion y Promociones
@@ -21,13 +21,17 @@ export class TablaHabitaciones implements OnInit {
   @Output() iniciarEdicion = new EventEmitter<Habitacion>();
   @Output() eliminarHabitacion = new EventEmitter<number>();
 
-  // Inyecta el servicio de promociones como publico
-  constructor(public promocionService: PromocionService) {}
+  // Inyecta el servicio de promociones como publico y detector de cambios
+  constructor(
+    public promocionService: PromocionService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   // Se ejecuta al iniciar el componente
   async ngOnInit() {
     // Carga la promocion activa usando el servicio
     await this.promocionService.cargarPromocionActiva();
+    this.cdr.detectChanges();
   }
 
   // Envia la habitacion a editar al componente padre

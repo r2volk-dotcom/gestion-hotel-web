@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Habitacion, Promociones } from '../../models';
+import { Habitacion} from '../../models';
 import { HabitacionService } from './habitacion.service';
 import { PromocionService } from '../gestion-habitaciones/gestion-promociones/promocion.service';
 import { ModalHabitacion } from './modal-habitacion/modal-habitacion';
@@ -31,8 +31,9 @@ export class Habitaciones implements OnInit {
   // Metodo del ciclo de vida: se ejecuta al iniciar el componente
   async ngOnInit() {
     await this.cargarHabitaciones();
-    // Carga la promocion activa usando el servicio
+    
     await this.promocionService.cargarPromocionActiva();
+    this.cdr.detectChanges();
   }
 
   async cargarHabitaciones() {

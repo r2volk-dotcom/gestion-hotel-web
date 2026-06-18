@@ -50,6 +50,7 @@ export class Reservas implements OnInit {
     await this.cargarEmpleados();
 
     this.usuarioActivo = this.empleadoService.obtenerUsuarioActual();
+    this.cdr.detectChanges();
   }
 
   async cargarEmpleados() {
