@@ -66,3 +66,14 @@
 .no-promo {
   color: var(--text-muted);
 }
+
+/* Icono de candado minimalista y atenuado */
+.icon-lock-muted {
+  color: var(--text-muted) !important;
+  opacity: 0.65;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+  width: 28px;
+}

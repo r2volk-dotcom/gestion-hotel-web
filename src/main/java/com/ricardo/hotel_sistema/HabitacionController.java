@@ -32,8 +32,7 @@ public class HabitacionController {
     }
 
     @PutMapping("/{id}")
-    public Habitacion actualizar(@PathVariable Long id,
-                                 @RequestBody Habitacion nuevaHabitacion) {
+    public Habitacion actualizar(@PathVariable Long id, @RequestBody Habitacion nuevaHabitacion) {
         return habitacionServicio.actualizarHabitacion(id, nuevaHabitacion);
     }
 

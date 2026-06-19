@@ -19,7 +19,7 @@ public class ClienteServices {
         this.clienteRepository = clienteRepository;
     }
 
-    //metodo para mostrar la lista de clientes
+    //mostrar lista de clientes
     public List<Cliente> listar(){
         return clienteRepository.findAll();
     }
@@ -42,7 +42,7 @@ public class ClienteServices {
         return List.of();
     }
 
-    //metodo para guardar un cliente a la lista de clientes
+    // guardar un cliente a la lista de clientes
     public Cliente guardar(Cliente cliente){
         cliente.setNombre(formatear(cliente.getNombre()));
         cliente.setApellido(formatear(cliente.getApellido()));

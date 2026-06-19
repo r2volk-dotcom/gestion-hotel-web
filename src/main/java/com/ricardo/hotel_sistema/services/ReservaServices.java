@@ -1,5 +1,6 @@
 package com.ricardo.hotel_sistema.services;
 
+import com.ricardo.hotel_sistema.modelo.Pago;
 import com.ricardo.hotel_sistema.modelo.Reserva;
 import com.ricardo.hotel_sistema.modelo.Habitacion;
 import com.ricardo.hotel_sistema.modelo.Promocion;
@@ -17,12 +18,17 @@ public class ReservaServices {
     private final ReservaRepository reservaRepository;
     private final HabitacionRepository habitacionRepository;
     private final PromocionRepository promocionRepository;
+    private final PagoServices pagoServices;
 
     // constructor
-    public ReservaServices(ReservaRepository reservaRepository, HabitacionRepository habitacionRepository, PromocionRepository promocionRepository) {
+    public ReservaServices(ReservaRepository reservaRepository,
+                           HabitacionRepository habitacionRepository,
+                           PromocionRepository promocionRepository,
+                           PagoServices pagoServices) {
         this.reservaRepository = reservaRepository;
         this.habitacionRepository = habitacionRepository;
         this.promocionRepository = promocionRepository;
+        this.pagoServices = pagoServices;
     }
 
     //listar reservas
@@ -41,7 +47,14 @@ public class ReservaServices {
     //guardar reserva
     public Reserva guardar(Reserva reserva) {
         calcularValoresFinancieros(reserva);
-        return reservaRepository.save(reserva);
+        Reserva reservaGuardada = reservaRepository.save(reserva);
+        pagoServices.guardar(nuevoPago(reservaGuardada.getId(), reservaGuardada.getPrecioTotal()));
+        return reservaGuardada;
+    }
+
+    public Pago nuevoPago(Long idReserva, Double precioReserva){
+        Pago pago = new Pago(idReserva,precioReserva,null,"Pendiente", null);
+        return pago;
     }
 
     //actualizar reserva
@@ -106,6 +119,7 @@ public class ReservaServices {
         Optional<Reserva> reserva = reservaRepository.findById(id);
 
         if (reserva.isPresent()) {
+            pagoServices.eliminarPagoPorReserva(reserva.get().getId());
             reservaRepository.deleteById(id);
             return reserva.get();
         }

@@ -56,7 +56,6 @@ public class HabitacionServices {
         Optional<Habitacion> habitacionExistente = habitacionRepository.findById(id);
 
         if (habitacionExistente.isPresent()) {
-
             //pedimos los datos para actualizarlos
             Habitacion h = habitacionExistente.get();
             List<Servicio> serviciosSeleccionados = new ArrayList<>();
