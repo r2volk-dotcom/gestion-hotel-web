@@ -16,7 +16,12 @@
             <td>#{{ pago.reservaId }}</td>
             <td>S/ {{ pago.monto.toFixed(2) }}</td>
             <td>{{ pago.metodoPago || '—' }}</td>
-            <td>{{ pago.estado }}</td>
+            <td>
+              <!-- Dibuja una etiqueta de color: verde si ya esta Pagado, o amarillo si aun esta Pendiente -->
+              <span class="badge" [class.badge-pagado]="pago.estado === 'Pagado'" [class.badge-pendiente]="pago.estado === 'Pendiente'">
+                {{ pago.estado }}
+              </span>
+            </td>
             <td>
               @if (pago.estado === 'Pendiente') {
                 <button class="btn-pagar" (click)="pagar.emit(pago)">Pagar</button>

@@ -1,5 +1,99 @@
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+[data-theme="dark"] .modal-backdrop {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.modal-card {
+  position: relative;
+  width: 90%;
+  max-width: 440px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(228, 228, 231, 0.8);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  animation: modalEnter 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+[data-theme="dark"] .modal-card {
+  background: rgba(24, 24, 27, 0.9);
+  border-color: rgba(63, 63, 70, 0.8);
+}
+
+@keyframes modalEnter {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.modal-header {
+  padding: 24px 24px 16px;
+  border-bottom: 1px solid rgba(228, 228, 231, 0.5);
+}
+
+[data-theme="dark"] .modal-header {
+  border-bottom-color: rgba(63, 63, 70, 0.5);
+}
+
+.modal-header h2 {
+  font-size: 18px;
+  font-weight: 650;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.btn-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border) !important;
+  border-radius: 50%;
+  background: var(--surface) !important;
+  color: var(--text-secondary);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 150ms ease;
+  z-index: 10;
+}
+
+.btn-close:hover {
+  border-color: var(--border-strong) !important;
+  color: var(--text-primary);
+  background: var(--surface-soft) !important;
+}
+
 .modal-body {
-  padding: 0 24px 16px;
+  padding: 20px 24px;
+}
+
+.modal-body p {
+  font-size: 14px;
+  color: var(--text-primary);
+  margin-bottom: 10px;
 }
 
 .modal-body label {
@@ -7,18 +101,31 @@
   margin-top: 16px;
   margin-bottom: 6px;
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 11px;
   color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .modal-body select {
   width: 100%;
-  padding: 10px 12px;
+  min-height: 42px;
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: var(--radius);
   background: var(--surface);
-  color: var(--text);
-  font-size: 0.95rem;
+  color: var(--text-primary);
+  font-size: 13px;
+  outline: none;
+  padding: 0 12px;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+[data-theme="dark"] .modal-body select {
+  background: #27272a;
+}
+
+.modal-body select:focus {
+  border-color: var(--text-primary);
 }
 
 .modal-footer {
@@ -26,25 +133,63 @@
   gap: 10px;
   justify-content: flex-end;
   padding: 16px 24px;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid rgba(228, 228, 231, 0.5);
+  background: var(--surface-soft);
+}
+
+[data-theme="dark"] .modal-footer {
+  border-top-color: rgba(63, 63, 70, 0.5);
+  background: #18181b;
 }
 
 .btn-cancelar, .btn-confirmar {
-  padding: 8px 20px;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 0.9rem;
+  min-height: 38px;
+  padding: 0 16px;
+  border-radius: var(--radius);
+  font-weight: 590;
+  font-size: 13px;
   cursor: pointer;
-  border: none;
+  transition: all 160ms ease;
 }
 
 .btn-cancelar {
-  background: var(--surface);
-  color: var(--text);
-  border: 1px solid var(--border);
+  border: 1px solid var(--border) !important;
+  background: rgba(255, 255, 255, 0.78) !important;
+  color: var(--text-secondary) !important;
+}
+
+.btn-cancelar:hover {
+  border-color: var(--border-strong) !important;
+  background: #ffffff !important;
+  color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .btn-cancelar {
+  background: rgba(39, 39, 42, 0.78) !important;
+}
+
+[data-theme="dark"] .btn-cancelar:hover {
+  background: #27272a !important;
 }
 
 .btn-confirmar {
-  background: var(--accent);
-  color: white;
+  border: 1px solid var(--text-primary) !important;
+  background: var(--text-primary) !important;
+  color: var(--surface) !important;
+}
+
+.btn-confirmar:hover {
+  background: var(--text-secondary) !important;
+  border-color: var(--text-secondary) !important;
+}
+
+[data-theme="dark"] .btn-confirmar {
+  border-color: #fafafa !important;
+  background: #fafafa !important;
+  color: #09090b !important;
+}
+
+[data-theme="dark"] .btn-confirmar:hover {
+  background: #e4e4e7 !important;
+  border-color: #e4e4e7 !important;
 }
