@@ -1,0 +1,26 @@
+<div class="modal-backdrop" (click)="cerrarModal()">
+  <div class="modal-card" (click)="$event.stopPropagation()">
+    <button class="btn-close" (click)="cerrarModal()">×</button>
+
+    <div class="modal-header">
+      <h2>Confirmar Pago</h2>
+    </div>
+
+    <div class="modal-body">
+      <p><strong>Reserva #{{ pago?.reservaId }}</strong></p>
+      <p><strong>Monto:</strong> S/ {{ pago?.monto?.toFixed(2) }}</p>
+
+      <label for="metodoPago">Método de pago</label>
+      <select id="metodoPago" [(ngModel)]="metodoSeleccionado">
+        @for (metodo of metodosPago; track metodo) {
+          <option [value]="metodo">{{ metodo }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-cancelar" (click)="cerrarModal()">Cancelar</button>
+      <button class="btn-confirmar" (click)="confirmarPago()">Confirmar Pago</button>
+    </div>
+  </div>
+</div>

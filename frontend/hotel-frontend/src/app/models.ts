@@ -1,4 +1,4 @@
-//export significa que peude usarse en otros archivos
+//export significa que puede usarse en otros archivos
 
 // Interface de Cliente
 export interface Cliente {
@@ -65,4 +65,14 @@ export interface Promociones {
   nombre: string;
   descuento: number; // Ej: 0.10 para 10%
   activa: boolean;
+}
+
+//Interface de Pago
+export interface Pago {
+  id?: number;
+  reservaId: number;
+  monto: number;
+  metodoPago: string | null;    // null mientras esté pendiente
+  estado: 'Pendiente' | 'Pagado';
+  fechaPago: string | null;     // null mientras esté pendiente
 }

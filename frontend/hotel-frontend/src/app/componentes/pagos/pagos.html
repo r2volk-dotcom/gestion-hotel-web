@@ -1,0 +1,21 @@
+<section class="section">
+  
+  <!-- header con titulo -->
+  <div class="section-header">
+    <h2>Pagos</h2>
+  </div>
+
+  <app-tabla-pagos
+    [pagos] = "pagos"
+    (pagar)="abrirModal($event)"
+    (imprimir)="imprimirBoleta($event)">
+  </app-tabla-pagos>
+
+  @if (mostrarModal) {
+    <app-registro-pagos-modal
+        [pago]="pagoSeleccionado"
+        (cerrar)="cerrarModal()"
+        (confirmar)="confirmarPago($event)">
+    </app-registro-pagos-modal>
+  }
+</section>

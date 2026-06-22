@@ -1,0 +1,35 @@
+@if (pagos.length > 0) {
+  <div class="table-scroll">
+    <table class="tabla-compleja">
+      <thead>
+        <tr>
+          <th># Reserva</th>
+          <th>Monto</th>
+          <th>Método</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (pago of pagos; track pago.id) {
+          <tr>
+            <td>#{{ pago.reservaId }}</td>
+            <td>S/ {{ pago.monto.toFixed(2) }}</td>
+            <td>{{ pago.metodoPago || '—' }}</td>
+            <td>{{ pago.estado }}</td>
+            <td>
+              @if (pago.estado === 'Pendiente') {
+                <button class="btn-pagar" (click)="pagar.emit(pago)">Pagar</button>
+                <button class="btn-imprimir" disabled>Imprimir</button>
+              } @else {
+                <button class="btn-imprimir activo" (click)="imprimir.emit(pago)">Imprimir</button>
+              }
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+} @else {
+  <div class="empty-list">No hay pagos registrados</div>
+}

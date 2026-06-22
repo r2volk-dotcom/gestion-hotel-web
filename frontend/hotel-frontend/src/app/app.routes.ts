@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { Habitaciones } from './componentes/habitaciones/habitaciones';
 import { Clientes } from './componentes/clientes/clientes';
 import { Reservas } from './componentes/reservas/reservas';
+import { Pagos } from './componentes/pagos/pagos';
 import { GestionHabitaciones } from './componentes/gestion-habitaciones/gestion-habitaciones';
 import { Empleados } from './componentes/empleados/empleados';
 import { Login } from './login/login';
@@ -18,6 +19,5 @@ export const routes: Routes = [
   { path: 'clientes', component: Clientes, canActivate: [authGuard] },
   { path: 'reservas', component: Reservas, canActivate: [authGuard] },
   { path: 'empleados', component: Empleados, canActivate: [authGuard] },
-  { path: 'pestana1', component: Habitaciones, canActivate: [authGuard] },
-  { path: 'pestana2', component: Habitaciones, canActivate: [authGuard] },
+  { path: 'pagos', component: Pagos, canActivate: [authGuard] },
 ];
