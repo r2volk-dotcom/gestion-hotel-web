@@ -15,17 +15,21 @@ public class Empleado {
     private String contrasena;
     private String rol;
 
+    @Column(columnDefinition = "LONGTEXT")
+    private String imagen;
+
     // Constructor vacío necesario para JPA
     public Empleado() {}
 
     // Constructor completo
-    public Empleado(Long id, String nombre, String apellido, String usuario, String contrasena, String rol) {
+    public Empleado(Long id, String nombre, String apellido, String usuario, String contrasena, String rol, String imagen) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.usuario = usuario;
         this.contrasena = contrasena;
         this.rol = rol;
+        this.imagen = imagen;
     }
 
     // Getters y Setters
@@ -76,4 +80,8 @@ public class Empleado {
     public void setRol(String rol) {
         this.rol = rol;
     }
+
+    public String getImagen() { return imagen; }
+
+    public void setImagen(String imagen) { this.imagen = imagen; }
 }

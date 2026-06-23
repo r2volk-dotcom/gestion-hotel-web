@@ -57,6 +57,7 @@ export interface Empleado {
   usuario: string;
   contrasena: string;
   rol: string;
+  imagen: string;
 }
 
 // Interface de Promocion

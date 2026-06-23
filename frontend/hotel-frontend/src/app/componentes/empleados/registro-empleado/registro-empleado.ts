@@ -17,14 +17,22 @@ export class RegistroEmpleado {
     apellido: '',
     usuario: '',
     contrasena: '',
-    rol: ''
+    rol: '',
+    imagen: ''
   };
   @Input() editando: boolean = false;
+  @Input() nombreImagen: string = '';
 
   // Eventos emitidos al padre
   @Output() empleadoGuardar = new EventEmitter<Empleado>();
   @Output() empleadoCancelar = new EventEmitter<void>();
+  @Output() alSeleccionarImagen = new EventEmitter<any>();
 
+  // Envia evento de seleccion de archivo de imagen
+  onFileSelected(event: any) {
+    this.alSeleccionarImagen.emit(event);
+  }
+  
   // Guarda los datos del formulario emitiendo el evento
   guardar() {
     this.empleadoGuardar.emit(this.empleado);

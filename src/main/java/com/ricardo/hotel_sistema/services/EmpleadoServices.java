@@ -52,6 +52,7 @@ public class EmpleadoServices {
             e.setUsuario(empleado.getUsuario());
             e.setContrasena(empleado.getContrasena());
             e.setRol(empleado.getRol());
+            e.setImagen(empleado.getImagen());
 
             return empleadoRepository.save(e);
         }

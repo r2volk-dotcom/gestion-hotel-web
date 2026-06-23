@@ -17,14 +17,6 @@ export class RegistroPagosModal {
 
   metodoSeleccionado: string = `Efectivo`;
 
-  metodosPago: String[] = [
-    'Efectivo',
-    'Tarjeta de Crédito',
-    'Tarjeta de Débito',
-    'Transferencia Bancaria',
-    'Plin / Yape'
-  ];
-
   cerrarModal(){
     this.cerrar.emit();
   }

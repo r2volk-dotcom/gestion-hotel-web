@@ -2,6 +2,7 @@ package com.ricardo.hotel_sistema;
 
 import com.ricardo.hotel_sistema.modelo.Empleado;
 import com.ricardo.hotel_sistema.services.EmpleadoServices;
+import org.jspecify.annotations.NonNull;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -48,7 +49,7 @@ public class EmpleadoController {
 
     // POST /empleados/login - Autenticar un empleado
     @PostMapping("/login")
-    public Empleado login(@RequestBody Empleado credenciales) {
+    public Empleado login(@RequestBody @NonNull Empleado credenciales) {
         Empleado empleado = empleadoServices.buscarEmpleadoPorUsuario(credenciales.getUsuario());
 
         if (empleado == null || !empleado.getContrasena().equals(credenciales.getContrasena())) {

@@ -16,6 +16,7 @@ export class Empleados implements OnInit {
 
   // Listado local de empleados
   empleados: Empleado[] = [];
+  nombreImagen: string = '';
 
   // Datos enlazados para registrar o editar un empleado
   empleadoForm: Empleado = {
@@ -23,11 +24,13 @@ export class Empleados implements OnInit {
     apellido: '',
     usuario: '',
     contrasena: '',
-    rol: ''
+    rol: '',
+    imagen: ''
   };
 
   // Estado de edicion para pasar al componente formulario
   editando: boolean = false;
+  imagenOriginalEdicion: string = '';
 
   constructor(
     private empleadoService: EmpleadoService,
@@ -43,6 +46,32 @@ export class Empleados implements OnInit {
   async cargarEmpleados() {
     this.empleados = await this.empleadoService.obtenerEmpleados();
     this.cdr.detectChanges();
+  }
+
+  alSeleccionarImagen(event: any) {
+    const archivo = event.target.files[0];
+    if (!archivo) return;
+
+    // Valida que el formato sea PNG
+    if (archivo.type !== 'image/png') {
+      alert('Solo se permiten archivos PNG');
+      return;
+    }
+
+    // Valida tamaño maximo
+    if (archivo.size > 1048576) {
+      alert('La imagen no debe superar 1MB');
+      return;
+    }
+
+    // Lector de archivos para conversion
+    const lector = new FileReader();
+    lector.onload = () => {
+      this.empleadoForm.imagen = lector.result as string;
+      this.nombreImagen = archivo.name;
+      this.cdr.detectChanges();
+    };
+    lector.readAsDataURL(archivo);
   }
 
   // Guarda un empleado (creacion o edicion)
@@ -61,6 +90,10 @@ export class Empleados implements OnInit {
       // Peticion HTTP POST para registrar
       const nuevo = await this.empleadoService.crearEmpleado(empleadoAGuardar);
       this.empleados.push(nuevo);
+    }
+
+    if (!this.empleadoForm.imagen) {
+        this.empleadoForm.imagen = this.imagenOriginalEdicion;
     }
 
     this.limpiarFormulario();
@@ -91,7 +124,8 @@ export class Empleados implements OnInit {
       apellido: '',
       usuario: '',
       contrasena: '',
-      rol: ''
+      rol: '',
+      imagen: ''
     };
     this.editando = false;
     this.cdr.detectChanges();

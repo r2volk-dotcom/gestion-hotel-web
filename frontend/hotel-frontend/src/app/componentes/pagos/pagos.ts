@@ -156,7 +156,7 @@ export class Pagos implements OnInit{
       </head>
       <body>
         <div class="header">
-          <div class="hotel-title">HOTEL ANTIGRAVEDAD</div>
+          <div class="hotel-title">HOTEL OS</div>
           <div class="subtitle">Calle Principal 123, Lima - Perú</div>
           <div class="subtitle">RUC: 20123456789</div>
         </div>
