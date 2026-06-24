@@ -4,10 +4,11 @@ import { Empleado } from '../../models';
 import { EmpleadoService } from './empleado.service';
 import { RegistroEmpleado } from './registro-empleado/registro-empleado';
 import { TablaEmpleados } from './tabla-empleados/tabla-empleados';
+import { FotosEmpleados } from './fotos-empleados/fotos-empleados';
 
 @Component({
   selector: 'app-empleados',
-  imports: [CommonModule, RegistroEmpleado, TablaEmpleados],
+  imports: [CommonModule, RegistroEmpleado, TablaEmpleados,FotosEmpleados],
   templateUrl: './empleados.html',
   styleUrl: './empleados.css'
 })
@@ -83,6 +84,9 @@ export class Empleados implements OnInit {
 
     if (this.editando && empleadoAGuardar.id) {
       // Peticion HTTP PUT para editar
+      if (!empleadoAGuardar.imagen) {
+        empleadoAGuardar.imagen = this.imagenOriginalEdicion;
+      }
       const actualizado = await this.empleadoService.actualizarEmpleado(empleadoAGuardar.id, empleadoAGuardar);
       this.empleados = this.empleados.map(e => e.id === actualizado.id ? actualizado : e);
       this.editando = false;
@@ -90,10 +94,6 @@ export class Empleados implements OnInit {
       // Peticion HTTP POST para registrar
       const nuevo = await this.empleadoService.crearEmpleado(empleadoAGuardar);
       this.empleados.push(nuevo);
-    }
-
-    if (!this.empleadoForm.imagen) {
-        this.empleadoForm.imagen = this.imagenOriginalEdicion;
     }
 
     this.limpiarFormulario();
@@ -105,6 +105,7 @@ export class Empleados implements OnInit {
     // Clonamos para evitar que cambios temporales en el input alteren la lista inmediatamente
     this.empleadoForm = { ...empleadoAEditar };
     this.editando = true;
+    this.imagenOriginalEdicion = empleadoAEditar.imagen || '';
     this.cdr.detectChanges();
   }
 

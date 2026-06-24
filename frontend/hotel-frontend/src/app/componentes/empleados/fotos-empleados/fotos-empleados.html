@@ -1,0 +1,33 @@
+<!-- Listado de empleados -->
+<div class="tabla-container">
+  <h3>Lista de empleados</h3>
+
+  @if (empleados.length > 0) {
+    <div class="table-scroll">
+      <table class="tabla-compleja">
+        <thead>
+          <tr>
+            <th>Nombre Completo</th>
+            <th>Rol</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (empleado of empleados; track empleado.id) {
+            <tr>
+              <td>{{ empleado.nombre }} {{ empleado.apellido }}</td>
+              <td>
+                <span class="badge" 
+                      [class.badge-admin]="empleado.rol === 'Administrador'"
+                      [class.badge-recep]="empleado.rol === 'Recepcionista'">
+                  {{ empleado.rol }}
+                </span>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  } @else {
+    <div class="empty-list">No hay empleados registrados</div>
+  }
+</div>

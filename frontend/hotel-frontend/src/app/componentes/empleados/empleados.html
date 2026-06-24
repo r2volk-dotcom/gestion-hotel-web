@@ -12,8 +12,10 @@
     <app-registro-empleado
       [empleado]="empleadoForm"
       [editando]="editando"
+      [nombreImagen]="nombreImagen"
       (empleadoGuardar)="guardar($event)"
-      (empleadoCancelar)="limpiarFormulario()">
+      (empleadoCancelar)="limpiarFormulario()"
+      (alSeleccionarImagen)="alSeleccionarImagen($event)">
     </app-registro-empleado>
   </div>
 
@@ -24,6 +26,12 @@
       (empleadoEditar)="seleccionarParaEditar($event)"
       (empleadoEliminar)="eliminar($event)">
     </app-tabla-empleados>
+  </div>
+
+  <div class="widget-card widget-tabla">
+    <app-fotos-empleados
+    [empleados]="empleados">
+    </app-fotos-empleados>
   </div>
 
 </div>

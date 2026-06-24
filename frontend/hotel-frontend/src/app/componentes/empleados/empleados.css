@@ -37,7 +37,7 @@
   box-shadow: var(--shadow-xs);
   padding: 24px;
   overflow: hidden;
-  height: 440px;
+  height: 470px;
   display: flex;
   flex-direction: column;
 }

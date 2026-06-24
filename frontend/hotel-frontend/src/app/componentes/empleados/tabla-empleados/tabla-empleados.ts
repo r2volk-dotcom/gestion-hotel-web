@@ -8,10 +8,10 @@ import { Empleado } from '../../../models';
   templateUrl: './tabla-empleados.html',
   styleUrl: './tabla-empleados.css',
 })
-// Componente para listar empleados en una tabla
+
 export class TablaEmpleados {
-  // Lista de empleados recibida del componente padre
-  @Input() empleados: Empleado[] = [];
+
+  @Input() empleados: Empleado[] = []; // Lista de empleados recibida del padre
 
   // Eventos emitidos al padre para editar y eliminar
   @Output() empleadoEditar = new EventEmitter<Empleado>();
