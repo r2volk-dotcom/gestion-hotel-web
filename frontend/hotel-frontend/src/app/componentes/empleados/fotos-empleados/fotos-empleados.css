@@ -3,93 +3,132 @@
 
 :host {
   display: block;
-  height: 100%;
+  width: 100%;
 }
 
-/* Contenedor de la tabla widget */
-.tabla-container {
+.fotos-container {
   display: flex;
   flex-direction: column;
-  gap: 0;
   height: 100%;
 }
 
-.tabla-container h3 {
+.fotos-container h3 {
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--text-secondary);
-  margin: 0 0 14px 0;
+  margin: 0 0 12px 0;
   padding: 0;
 }
 
-/* Estilos especificos para la tabla de empleados */
-.col-acciones {
-  width: 100px;
-  white-space: nowrap;
+/* Horizontal scrolling container */
+.cards-scroll-container {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding: 4px 4px 12px 4px; /* Space for box shadow and scrollbar spacing */
+  scroll-behavior: smooth;
+  width: 100%;
+  -webkit-overflow-scrolling: touch;
 }
 
-.col-acciones button:not(.boton-basura) {
-  border: none !important;
-  background: transparent !important;
-  background-color: transparent !important;
-  color: var(--text-muted) !important;
-  padding: 6px !important;
-  margin: 0 !important;
-  box-shadow: none !important;
-  min-height: unset !important;
-  height: 28px !important;
-  width: 28px !important;
-  border-radius: 6px !important;
-  transition: color 150ms ease, background-color 150ms ease !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  transform: none !important;
-  cursor: pointer;
-}
-
-.col-acciones button:not(.boton-basura):hover {
-  background: var(--surface-soft) !important;
-  background-color: var(--surface-soft) !important;
-  color: var(--text-primary) !important;
-  transform: none !important;
-}
-
-.table-scroll {
-  flex: 1;
-  overflow-y: auto;
-  min-height: 0;
-  border: none !important;
-}
-
-/* Mensaje de lista vacia con padding interno */
-.empty-list {
-  padding: 16px 0;
-  color: var(--text-muted);
-  font-size: 14px;
+/* Individual card styling */
+.empleado-card {
+  flex: 0 0 190px; /* Enlarged by ~10% (170px -> 190px) */
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px;
   text-align: center;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), 
+              box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1), 
+              border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-xs);
+  cursor: default;
 }
 
-/* Quitar bordes laterales redundantes y fondo del encabezado */
-.tabla-compleja {
-  border: none !important;
+.empleado-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-sm);
+  border-color: var(--border-strong);
 }
 
-.tabla-compleja th,
-.tabla-compleja td {
-  border-left: none !important;
-  border-right: none !important;
-  border-top: none !important;
+/* Image wrapper keeping aspects and overflow uniform */
+.empleado-imagen-wrapper {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--surface-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  border: 1px solid var(--border-sm);
 }
 
-/* Fondo transparente en cabecera para evitar el rectangulo dentro del widget */
-.tabla-compleja th {
-  background: transparent !important;
+.empleado-foto {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
 }
 
-/* Badges para los roles de empleados */
+.empleado-card:hover .empleado-foto {
+  transform: scale(1.05);
+}
+
+/* Image placeholder styling if no photo is available */
+.empleado-foto-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--surface-soft), var(--border));
+  color: var(--text-secondary);
+  font-size: 24px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* Details area within the card */
+.empleado-detalles {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.empleado-nombre {
+  font-size: 14.5px; /* Slightly larger font */
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  line-height: 1.3;
+}
+
+/* Badges styling */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 10px;
+  font-size: 11.5px; /* Slightly larger font */
+  font-weight: 600;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  line-height: 1.1;
+  text-transform: capitalize;
+}
+
 .badge-admin {
   border-color: rgba(24, 24, 27, 0.12);
   background: var(--surface-soft);
@@ -100,4 +139,11 @@
   border-color: rgba(21, 128, 61, 0.18);
   background: var(--success-soft);
   color: var(--success);
+}
+
+.empty-list {
+  padding: 32px 0;
+  color: var(--text-muted);
+  font-size: 14px;
+  text-align: center;
 }

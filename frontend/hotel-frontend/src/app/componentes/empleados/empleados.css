@@ -52,3 +52,12 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Make the photos card span full width at the bottom, overriding the height to auto */
+.widget-fotos {
+  grid-column: 1 / -1;
+  height: auto;
+  min-height: auto;
+  padding: 12px 18px;
+}
+

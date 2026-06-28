@@ -1,33 +1,35 @@
-<!-- Listado de empleados -->
-<div class="tabla-container">
-  <h3>Lista de empleados</h3>
+<!-- Listado de empleados en tarjetas horizontales -->
+<div class="fotos-container">
+  <h3>Fichas de Empleados</h3>
 
   @if (empleados.length > 0) {
-    <div class="table-scroll">
-      <table class="tabla-compleja">
-        <thead>
-          <tr>
-            <th>Nombre Completo</th>
-            <th>Rol</th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (empleado of empleados; track empleado.id) {
-            <tr>
-              <td>{{ empleado.nombre }} {{ empleado.apellido }}</td>
-              <td>
-                <span class="badge" 
-                      [class.badge-admin]="empleado.rol === 'Administrador'"
-                      [class.badge-recep]="empleado.rol === 'Recepcionista'">
-                  {{ empleado.rol }}
-                </span>
-              </td>
-            </tr>
-          }
-        </tbody>
-      </table>
+    <div class="cards-scroll-container">
+      @for (empleado of empleados; track empleado.id) {
+        <div class="empleado-card">
+          <div class="empleado-imagen-wrapper">
+            @if (empleado.imagen) {
+              <img [src]="empleado.imagen" alt="{{ empleado.nombre }}" class="empleado-foto">
+            } @else {
+              <div class="empleado-foto-placeholder">
+                <span>{{ empleado.nombre.charAt(0) }}{{ empleado.apellido.charAt(0) }}</span>
+              </div>
+            }
+          </div>
+          <div class="empleado-detalles">
+            <span class="empleado-nombre" title="{{ empleado.nombre }} {{ empleado.apellido }}">
+              {{ empleado.nombre }} {{ empleado.apellido }}
+            </span>
+            <span class="badge" 
+                  [class.badge-admin]="empleado.rol === 'Administrador'"
+                  [class.badge-recep]="empleado.rol === 'Recepcionista'">
+              {{ empleado.rol }}
+            </span>
+          </div>
+        </div>
+      }
     </div>
   } @else {
     <div class="empty-list">No hay empleados registrados</div>
   }
 </div>
+
