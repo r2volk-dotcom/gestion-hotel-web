@@ -106,6 +106,7 @@ export class Empleados implements OnInit {
     this.empleadoForm = { ...empleadoAEditar };
     this.editando = true;
     this.imagenOriginalEdicion = empleadoAEditar.imagen || '';
+    this.nombreImagen = empleadoAEditar.imagen ? 'imagen_guardada.png' : '';
     this.cdr.detectChanges();
   }
 
@@ -128,6 +129,7 @@ export class Empleados implements OnInit {
       rol: '',
       imagen: ''
     };
+    this.nombreImagen = '';
     this.editando = false;
     this.cdr.detectChanges();
   }
