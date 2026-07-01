@@ -95,8 +95,8 @@ export class PanelHabitaciones implements OnInit {
     }
 
     // Valida tamaño maximo
-    if (archivo.size > 1048576) {
-      alert('La imagen no debe superar 1MB');
+    if (archivo.size > 3145728) {
+      alert('La imagen no debe superar 3MB');
       return;
     }
 
